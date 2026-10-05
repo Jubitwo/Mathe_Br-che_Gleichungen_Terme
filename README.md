@@ -1,0 +1,2 @@
+# Mathe_Br-che_Gleichungen_Terme
+Mathe_Brüche_Gleichungen_Terme_Variablen zur Vorbereitung auf die Klassenarbeit
