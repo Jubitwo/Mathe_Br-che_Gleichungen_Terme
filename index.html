@@ -3,120 +3,131 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f7f5ef">
-  <title>Mathe-Lernwerkstatt · fit für Klasse 8</title>
+  <meta name="theme-color" content="#f5f6f5">
+  <title>Wunschzettel &amp; Bestellung · innovativ AG</title>
   <style>
     :root {
-      --paper: #f7f5ef;
-      --ink: #202a36;
-      --muted: #65717d;
-      --blue: #315be8;
-      --blue-dark: #2347c5;
-      --line: #e4e2dc;
-      --green: #237a54;
-      --red: #b4493d;
-      --hint: #f1f3ff;
-      --shadow: 0 14px 38px rgb(32 42 54 / 7%);
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color-scheme: light;
+      --ink: #242424;
+      --muted: #626b6d;
+      --orange: #df741c;
+      --orange-dark: #a84d08;
+      --yellow-soft: #fff8d8;
+      --teal: #007f99;
+      --paper: #f5f6f5;
+      --line: #e0e3e1;
+      --white: #fff;
+      font-family: "Avenir Next", "Segoe UI", Arial, sans-serif;
       color: var(--ink);
     }
 
     * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; scroll-padding-top: 82px; }
+    html { scroll-behavior: smooth; }
     body { margin: 0; background: var(--paper); line-height: 1.55; }
-    button, input, select { font: inherit; }
-    button:focus-visible, input:focus-visible, select:focus-visible, a:focus-visible, canvas:focus-visible { outline: 3px solid #96aafa; outline-offset: 3px; }
-    .wrap { width: min(1040px, calc(100% - 36px)); margin-inline: auto; }
-    .topbar { display: flex; justify-content: space-between; align-items: center; gap: 18px; padding-block: 18px; }
-    .brand { display: inline-flex; align-items: center; gap: 9px; font-weight: 850; letter-spacing: -.04em; text-decoration: none; }
-    .brand-mark { display: grid; width: 35px; height: 35px; place-items: center; border-radius: 10px; background: var(--blue); color: white; font-size: 20px; }
-    .nav { display: flex; flex-wrap: wrap; gap: 8px; }
-    .nav a { padding: 7px 10px; border-radius: 9px; color: var(--muted); font-size: .87rem; font-weight: 700; text-decoration: none; }
-    .nav a:hover { background: white; color: var(--blue); }
-    .hero { display: grid; grid-template-columns: 1.15fr .85fr; gap: 30px; align-items: center; padding-block: 42px 54px; }
-    .eyebrow { margin: 0 0 9px; color: var(--blue); font-size: .75rem; font-weight: 850; letter-spacing: .13em; text-transform: uppercase; }
-    h1 { margin: 0 0 14px; font-size: clamp(2.55rem, 6vw, 4.65rem); line-height: .99; letter-spacing: -.075em; }
-    h1 span { color: var(--blue); }
-    h2 { margin: 0 0 10px; font-size: clamp(1.55rem, 4vw, 2.25rem); line-height: 1.12; letter-spacing: -.055em; }
-    h3 { margin: 0 0 7px; font-size: 1.14rem; letter-spacing: -.025em; }
-    p { margin: 0 0 10px; }
-    .hero-copy { max-width: 590px; color: var(--muted); font-size: 1.08rem; }
-    .hero-art { padding: 22px; border: 1px solid #ebe7dc; border-radius: 24px; background: #f1eddf; }
-    .hero-art svg { display: block; width: 100%; max-height: 210px; }
-    .progress-card { display: grid; gap: 9px; margin-top: 22px; padding: 15px; border: 1px solid var(--line); border-radius: 14px; background: white; }
-    .progress-top { display: flex; justify-content: space-between; gap: 10px; font-size: .86rem; font-weight: 750; }
-    .progress-top span:last-child { color: var(--blue); }
-    .progress-track { height: 9px; overflow: hidden; border-radius: 99px; background: #edf0f4; }
-    .progress-fill { width: 0; height: 100%; border-radius: inherit; background: var(--blue); transition: width .25s; }
-    .section { padding-block: 56px; }
-    .section.white { background: white; }
-    .section-head { display: flex; justify-content: space-between; align-items: end; gap: 20px; margin-bottom: 22px; }
-    .section-head p { max-width: 560px; margin: 0; color: var(--muted); }
-    .module-list { display: grid; gap: 18px; }
-    .module { overflow: hidden; border: 1px solid var(--line); border-radius: 20px; background: white; box-shadow: var(--shadow); }
-    .module-head { display: grid; grid-template-columns: auto 1fr auto; gap: 13px; align-items: center; padding: 19px 21px; border-bottom: 1px solid #efeee9; }
-    .number { display: grid; width: 39px; height: 39px; place-items: center; border-radius: 12px; background: #edf0ff; color: var(--blue-dark); font-weight: 900; }
-    .module-head h3 { margin: 0 0 2px; font-size: 1.18rem; }
-    .module-head p { margin: 0; color: var(--muted); font-size: .86rem; }
-    .status { color: var(--muted); font-size: .8rem; font-weight: 750; }
-    .module-body { padding: 19px 21px 22px; }
-    .lesson { display: grid; grid-template-columns: 1fr 1fr; gap: 13px; margin-bottom: 18px; }
-    .lesson-box { padding: 14px; border: 1px solid #e7eafa; border-radius: 13px; background: #f8f9ff; }
-    .lesson-box p:last-child { margin-bottom: 0; }
-    .lesson-label { margin-bottom: 5px; color: var(--blue-dark); font-size: .75rem; font-weight: 850; letter-spacing: .06em; text-transform: uppercase; }
-    .formula { margin-top: 8px; padding: 9px 11px; border-radius: 9px; background: white; color: #39476f; font-weight: 800; }
-    .example { border-left: 3px solid var(--blue); }
-    .worked-line { display: block; margin-top: 5px; font-weight: 750; }
-    .exercise { margin-top: 18px; padding: 18px; border: 1px solid #d8dce4; border-radius: 15px; background: #fff; }
-    .exercise-title { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
-    .exercise-title strong { font-size: .96rem; }
-    .exercise-title span { color: var(--muted); font-size: .78rem; }
-    .question { margin: 8px 0 11px; }
-    .math { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin: 8px 0 12px; padding: 10px 12px; border-radius: 10px; background: #f5f6ff; font-size: 1.14rem; font-weight: 800; }
-    .math > span { display: inline-flex; min-height: 1.7em; align-items: center; gap: .22em; }
-    .frac { display: inline-grid; grid-template-rows: 1fr 1fr; min-width: 1.1em; align-items: center; vertical-align: middle; text-align: center; line-height: 1.05; font-size: .86em; }
-    .frac > span:first-child { padding: 0 .14em .08em; border-bottom: 1px solid currentColor; }
-    .frac > span:last-child { padding: .08em .14em 0; }
-    .fraction-inline { display: inline-flex; align-items: center; vertical-align: middle; white-space: nowrap; line-height: 1; }
-    .worked-line { display: flex; align-items: center; gap: .25em; }
-    .question { line-height: 1.8; }
-    .inputs { display: flex; flex-wrap: wrap; gap: 10px; align-items: end; }
-    .field { display: grid; min-width: 125px; flex: 1 1 135px; gap: 5px; color: #48525d; font-size: .82rem; font-weight: 750; }
-    .field input, .field select { width: 100%; min-height: 42px; padding: 8px 10px; border: 1px solid #d5d8de; border-radius: 10px; background: white; color: var(--ink); }
-    .button { display: inline-flex; min-height: 42px; align-items: center; justify-content: center; gap: 7px; padding: 0 14px; border: 0; border-radius: 10px; background: var(--blue); color: white; font-weight: 780; cursor: pointer; }
-    .button:hover { background: var(--blue-dark); }
-    .button.secondary { border: 1px solid #dce3ff; background: #f2f4ff; color: var(--blue-dark); }
-    .button.secondary:hover { background: #e6eaff; }
-    .feedback { min-height: 22px; margin: 9px 0 0; font-size: .9rem; font-weight: 750; }
-    .feedback.good { color: var(--green); }
-    .feedback.bad { color: var(--red); }
-    .hint-area { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 10px; }
-    .hint-area .button { min-height: 35px; font-size: .82rem; }
-    .hint-text { flex: 1 1 100%; margin: 0; padding: 9px 11px; border-left: 3px solid #aab8f8; border-radius: 0 8px 8px 0; background: var(--hint); color: #46516a; font-size: .88rem; }
-    .solution { margin-top: 9px; padding: 11px 13px; border: 1px solid #cce6d8; border-radius: 10px; background: #f0f8f3; color: #236345; font-size: .9rem; }
-    .solution[hidden], .hint-text[hidden] { display: none; }
-    .draw-wrap { margin-top: 10px; }
-    .rectangle-board { display: block; width: 100%; height: 245px; border: 1px solid #bac0c9; border-radius: 9px; background: white; }
-    .rectangle-board text { fill: var(--green); font: 700 18px Inter, ui-sans-serif, system-ui, sans-serif; }
-    .rectangle-board .shape-line, .rectangle-board .angle-mark { fill: none; stroke: var(--green); stroke-width: 3; }
-    .rectangle-board .placeholder { fill: var(--muted); font: 16px Inter, ui-sans-serif, system-ui, sans-serif; }
-    .draw-controls { display: flex; flex-wrap: wrap; gap: 9px; align-items: center; margin-top: 9px; }
-    .check-list { display: grid; gap: 8px; margin-top: 12px; }
-    .check-row { display: flex; gap: 9px; align-items: flex-start; }
-    .check-row input { width: 18px; height: 18px; margin-top: 2px; accent-color: var(--blue); }
-    .final-card { padding: 20px; border: 1px solid #dce3ff; border-radius: 18px; background: #f4f6ff; }
-    .final-card ul { margin: 8px 0 0; padding-left: 20px; }
-    footer { padding: 28px 0; color: var(--muted); font-size: .84rem; text-align: center; }
-    @media (max-width: 700px) {
-      .topbar { align-items: flex-start; }
-      .nav { justify-content: flex-end; }
-      .hero { grid-template-columns: 1fr; padding-block: 28px 38px; }
+    button, input, select, textarea { font: inherit; }
+    button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible, a:focus-visible {
+      outline: 3px solid #00a9c7;
+      outline-offset: 3px;
+    }
+    .wrap { width: min(1060px, calc(100% - 36px)); margin-inline: auto; }
+    .topbar { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 18px; padding-block: 8px; }
+    .brand { display: inline-flex; align-items: center; text-decoration: none; }
+    .brand img { display: block; width: 92px; height: 92px; object-fit: contain; mix-blend-mode: multiply; }
+    .school-logo { display: block; width: 170px; max-height: 100px; object-fit: contain; }
+    .top-note { color: var(--muted); font-size: .88rem; text-align: center; }
+    .hero { display: grid; grid-template-columns: 1.2fr .8fr; align-items: center; gap: 32px; padding-block: 36px 48px; }
+    .eyebrow { margin: 0 0 10px; color: var(--teal); font-size: .75rem; font-weight: 850; letter-spacing: .13em; text-transform: uppercase; }
+    h1 { margin: 0 0 15px; font-size: clamp(2.5rem, 6vw, 4.6rem); line-height: .99; letter-spacing: -.075em; }
+    h1 span { color: var(--orange-dark); }
+    h2 { margin: 0 0 8px; font-size: clamp(1.5rem, 4vw, 2rem); line-height: 1.15; letter-spacing: -.045em; }
+    p { margin: 0 0 11px; }
+    .hero-copy { max-width: 620px; color: var(--muted); font-size: 1.08rem; }
+    .hero-art { display: grid; min-height: 220px; place-items: center; overflow: hidden; border: 1px solid #b8e5eb; border-radius: 26px; background: #e5f6f8; }
+    .hero-art svg { width: min(90%, 350px); }
+    .steps { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 19px; }
+    .step { padding: 7px 11px; border-radius: 999px; background: white; color: #42494a; font-size: .82rem; font-weight: 750; }
+    .form-section { padding: 30px 0 65px; background: white; }
+    .form-card { padding: clamp(20px, 4vw, 34px); border: 1px solid var(--line); border-radius: 22px; background: white; box-shadow: 0 15px 42px rgb(35 49 44 / 7%); }
+    .intro { margin-bottom: 23px; color: var(--muted); }
+    .form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    .field { display: grid; align-content: start; gap: 6px; }
+    .field.full { grid-column: 1 / -1; }
+    label, .legend { font-size: .9rem; font-weight: 760; }
+    .optional { color: var(--muted); font-size: .78rem; font-weight: 500; }
+    input, select, textarea {
+      width: 100%;
+      min-height: 46px;
+      padding: 10px 12px;
+      border: 1px solid #cbd2d2;
+      border-radius: 11px;
+      background: #fff;
+      color: var(--ink);
+    }
+    textarea { min-height: 112px; resize: vertical; }
+    input::placeholder, textarea::placeholder { color: #737d7f; }
+    .help { color: var(--muted); font-size: .78rem; }
+    fieldset { min-width: 0; margin: 0; padding: 0; border: 0; }
+    legend { margin-bottom: 8px; }
+    .choice-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .choice {
+      display: flex;
+      min-height: 56px;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+      cursor: pointer;
+    }
+    .choice:has(input:checked) { border-color: var(--teal); background: #eaf7f9; }
+    .choice input { width: 18px; min-height: 18px; height: 18px; flex: 0 0 18px; margin: 2px 0 0; accent-color: var(--teal); }
+    .choice-copy { display: grid; gap: 2px; }
+    .choice-copy strong { font-size: .91rem; }
+    .choice-copy small { color: var(--muted); font-size: .77rem; }
+    .conditional { display: grid; grid-column: 1 / -1; gap: 16px; padding: 16px; border: 1px solid #cce8ec; border-radius: 14px; background: #f3fafb; }
+    .conditional[hidden] { display: none; }
+    .consent { display: flex; align-items: flex-start; gap: 10px; padding: 13px; border: 1px solid #e1e4e2; border-radius: 11px; background: #fafbfa; }
+    .consent input { width: 18px; min-height: 18px; height: 18px; flex: 0 0 18px; margin: 2px 0 0; accent-color: var(--teal); }
+    .consent span { color: #484f50; font-size: .85rem; }
+    .privacy-note { padding: 13px 15px; border-left: 3px solid var(--orange); border-radius: 0 10px 10px 0; background: var(--yellow-soft); color: #51400f; font-size: .84rem; }
+    .submit-row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 21px; }
+    .button { display: inline-flex; min-height: 48px; align-items: center; justify-content: center; gap: 8px; padding: 0 19px; border: 0; border-radius: 12px; background: var(--orange-dark); color: white; font-weight: 800; cursor: pointer; transition: background .2s, transform .2s; }
+    .button:hover { transform: translateY(-1px); background: #803a06; }
+    .submit-note { color: var(--muted); font-size: .82rem; }
+    .status { margin: 17px 0 0; font-weight: 700; }
+    .status.error { color: #a23c32; }
+    .status.success { color: var(--teal); }
+    .fallback { margin-top: 15px; padding: 15px; border: 1px solid var(--line); border-radius: 12px; background: #fafbfa; }
+    .fallback[hidden] { display: none; }
+    .fallback textarea { min-height: 140px; margin-top: 9px; font-size: .83rem; }
+    .fallback-actions { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 9px; }
+    .button.secondary { border: 1px solid #a9dce3; background: #eaf7f9; color: #005e71; }
+    .button.secondary:hover { background: #d7f0f3; }
+    .info-panel { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 0 0 26px; }
+    .info-card { padding: 18px; border: 1px solid var(--line); border-radius: 16px; background: #fbfcfb; }
+    .calculator-note { border-color: #e7b98f; border-left: 5px solid var(--orange); background: var(--yellow-soft); }
+    .info-card strong { display: block; margin-bottom: 5px; }
+    .info-card p { margin: 0; color: var(--muted); font-size: .88rem; }
+    footer { padding-block: 25px; color: var(--muted); font-size: .83rem; text-align: center; }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; clip-path: inset(50%); }
+
+    @media (max-width: 720px) {
+      .hero { grid-template-columns: 1fr; padding-top: 25px; }
       .hero-art { display: none; }
-      .section-head { align-items: flex-start; flex-direction: column; }
-      .lesson { grid-template-columns: 1fr; }
-      .module-head { padding: 15px; }
-      .module-body { padding: 15px; }
-      .status { text-align: right; }
+      .info-panel { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 520px) {
+      .wrap { width: min(100% - 26px, 1060px); }
+      .topbar { grid-template-columns: 1fr 1fr; row-gap: 0; }
+      .brand img { width: 68px; height: 68px; }
+      .school-logo { width: 136px; max-height: 76px; justify-self: end; }
+      .top-note { grid-column: 1 / -1; grid-row: 2; text-align: center; }
+      .form-grid, .choice-grid { grid-template-columns: 1fr; }
+      .field.full, .conditional { grid-column: auto; }
+      .form-card { padding: 18px; }
+      .button { width: 100%; }
+      .fallback-actions .button { width: auto; }
     }
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
@@ -125,505 +136,358 @@
 </head>
 <body>
   <header class="wrap topbar">
-    <a class="brand" href="#" aria-label="Mathe-Lernwerkstatt Startseite"><span class="brand-mark" aria-hidden="true">◇</span> Mathe-Lernwerkstatt</a>
-    <nav class="nav" aria-label="Lernmodule">
-      <a href="#brueche">Brüche</a><a href="#rechnen">Rechnen</a><a href="#terme">Terme</a><a href="#gleichungen">Gleichungen</a><a href="#vierecke">Vierecke</a><a href="#winkel">Winkel</a>
-    </nav>
+    <a class="brand" href="#" aria-label="innovativ AG Startseite">
+      <img src="images/Logo%202.jpg" alt="Logo der innovativ AG">
+    </a>
+    <span class="top-note">Gute Ideen? Wir gravieren sie. Naja – manche davon.</span>
+    <img class="school-logo" src="images/Logo%201.png" alt="Walter Knoll Schulverbund · Realschule und Werkrealschule">
   </header>
 
   <main>
-    <section class="wrap hero">
+    <section class="wrap hero" aria-labelledby="hero-title">
       <div>
-        <p class="eyebrow">Üben · Verstehen · Sicher werden</p>
-        <h1>Schritt für Schritt<br><span>zur Klassenarbeit</span></h1>
-        <p class="hero-copy">Diese Lernwerkstatt übt genau die Themen deiner Mathe-Klassenarbeit: Brüche, Terme, Gleichungen und Vierecke. Lies zuerst die Erklärung, probiere dann selbst und nutze Hinweise, wenn du festhängst.</p>
-        <div class="progress-card" aria-live="polite">
-          <div class="progress-top"><span>Dein Lernfortschritt</span><span id="progress-text">0 von 6 Themen geübt</span></div>
-          <div class="progress-track" role="progressbar" aria-label="Lernfortschritt" aria-valuemin="0" aria-valuemax="6" aria-valuenow="0"><div class="progress-fill" id="progress-fill"></div></div>
+        <p class="eyebrow">Schulbedarf · Gravur · gute Einfälle</p>
+        <h1 id="hero-title">Dein Wunsch.<br><span>Unser Auftrag.</span></h1>
+        <p class="hero-copy">Du brauchst im Schuljahr einen neuen Taschenrechner? Eure Klasse wünscht sich etwas Besonderes? Oder hast du eine Idee, die den Schulalltag schlauer, praktischer oder einfach schöner macht? Erzähl's uns hier.</p>
+        <div class="steps" aria-label="So funktioniert es">
+          <span class="step">1. Wunsch eintragen</span>
+          <span class="step">2. E-Mail-Entwurf öffnen</span>
+          <span class="step">3. Prüfen &amp; absenden</span>
         </div>
       </div>
-      <div class="hero-art" aria-label="Illustration: Bruch, Gleichung und Viereck">
-        <svg viewBox="0 0 380 210" role="img" aria-labelledby="art-title">
-          <title id="art-title">Mathe-Bausteine zum Üben</title>
-          <rect x="25" y="40" width="100" height="130" rx="18" fill="#fff" stroke="#dce3ff" stroke-width="2"/>
-          <text x="57" y="95" font-size="32" font-weight="700" fill="#315be8">3</text><path d="M48 105h52" stroke="#202a36" stroke-width="3"/><text x="57" y="143" font-size="32" font-weight="700" fill="#202a36">4</text>
-          <rect x="143" y="40" width="100" height="130" rx="18" fill="#fff" stroke="#dce3ff" stroke-width="2"/>
-          <text x="166" y="112" font-size="26" font-weight="700" fill="#237a54">x + 4</text><text x="165" y="143" font-size="18" fill="#65717d">= 12</text>
-          <polygon points="305,42 351,103 305,164 259,103" fill="#dcefe4" stroke="#237a54" stroke-width="3"/>
-          <circle cx="305" cy="103" r="4" fill="#237a54"/>
+      <div class="hero-art" aria-hidden="true">
+        <svg viewBox="0 0 360 230" role="img" aria-label="Illustration eines 3D-Druckers und eines Gravurlasers">
+          <g fill="none" stroke="#242424" stroke-linecap="round" stroke-linejoin="round" stroke-width="8">
+            <path d="M45 166V66a12 12 0 0 1 12-12h108a12 12 0 0 1 12 12v100"/>
+            <path d="M45 166h132M53 79h116"/>
+            <path d="M208 166V66a12 12 0 0 1 12-12h94a12 12 0 0 1 12 12v100"/>
+            <path d="M208 166h118M216 79h102"/>
+          </g>
+          <circle cx="83" cy="94" r="17" fill="#fff8d8" stroke="#df741c" stroke-width="7"/>
+          <path d="M83 77v-9h33v11" fill="none" stroke="#df741c" stroke-linecap="round" stroke-width="5"/>
+          <rect x="121" y="71" width="30" height="19" rx="5" fill="#007f99"/>
+          <path d="M136 90v26" stroke="#007f99" stroke-linecap="round" stroke-width="5"/>
+          <path d="m111 144 25-17 26 17-26 17z" fill="#df741c"/>
+          <path d="M111 144v19l25 17v-19z" fill="#f3a04c"/>
+          <path d="M136 161v19l26-17v-19z" fill="#e5822b"/>
+          <rect x="244" y="66" width="40" height="20" rx="6" fill="#007f99"/>
+          <path d="M264 86v32" stroke="#df741c" stroke-dasharray="4 6" stroke-linecap="round" stroke-width="5"/>
+          <path d="M232 144h70l-8 20h-54z" fill="#fff8d8" stroke="#df741c" stroke-linejoin="round" stroke-width="5"/>
+          <path d="M249 154h37" stroke="#df741c" stroke-dasharray="4 5" stroke-linecap="round" stroke-width="4"/>
+          <path d="m301 116 5-9m3 18 10-3m-17 11 7 7" fill="none" stroke="#df741c" stroke-linecap="round" stroke-width="4"/>
+          <text x="74" y="207" fill="#007f99" font-size="14" font-family="sans-serif" font-weight="700">3D-Druck</text>
+          <text x="225" y="207" fill="#007f99" font-size="14" font-family="sans-serif" font-weight="700">Gravur</text>
         </svg>
       </div>
     </section>
 
-    <section class="section white" aria-labelledby="modules-heading">
+    <section class="form-section" aria-labelledby="form-title">
       <div class="wrap">
-        <div class="section-head">
-          <div><p class="eyebrow">Dein Lernweg</p><h2 id="modules-heading">Sechs Themen, ein guter Plan</h2></div>
-          <p>Versuche jede Übung zuerst selbst. Bei einem Fehler bekommst du einen Hinweis und kannst es noch einmal probieren.</p>
-        </div>
-        <div class="module-list">
-          <article class="module" id="brueche" data-module="fractions">
-            <div class="module-head"><span class="number">1</span><div><h3>Brüche verstehen und berechnen</h3><p>Zähler, Nenner, Erweitern, Kürzen, Addieren und Bruchteile</p></div><span class="status">Noch offen</span></div>
-            <div class="module-body">
-              <div class="lesson">
-                <div class="lesson-box"><p class="lesson-label">Das musst du wissen</p><p>Der <strong>Nenner</strong> sagt, in wie viele gleich große Teile das Ganze geteilt ist. Der <strong>Zähler</strong> sagt, wie viele dieser Teile gemeint sind.</p><p>Beim Erweitern oder Kürzen werden Zähler und Nenner mit derselben Zahl multipliziert oder dividiert. Der Wert des Bruchs bleibt gleich.</p></div>
-                <div class="lesson-box example"><p class="lesson-label">Beispiel mit Denkweg</p><p><span class="fraction-inline"><span class="frac"><span>3</span><span>4</span></span></span> in Zwanzigstel umwandeln:</p><span class="worked-line">4 · 5 = 20, also auch oben · 5</span><span class="worked-line"><span class="frac"><span>3</span><span>4</span></span> = <span class="frac"><span>15</span><span>20</span></span></span></div>
-              </div>
-              <div class="exercise" data-exercise>
-                <div class="exercise-title"><strong>Übung A · gleichwertige Brüche</strong><span>Trage beide Antworten ein</span></div>
-                <p class="question">Ergänze: <span class="fraction-inline"><span class="frac"><span>2</span><span>5</span></span></span> = <span class="fraction-inline"><span class="frac"><span>?</span><span>20</span></span></span> und kürze <span class="fraction-inline"><span class="frac"><span>21</span><span>28</span></span></span> vollständig.</p>
-                <div class="inputs">
-                  <label class="field">Zähler des ersten Bruchs<input data-answer="8" inputmode="decimal" autocomplete="off" aria-label="Zähler des ersten Bruchs"></label>
-                  <label class="field">Gekürzter Bruch, z. B. 3/4<input data-answer="3/4" inputmode="text" autocomplete="off" aria-label="Gekürzter Bruch"></label>
-                  <button class="button check-answer" type="button">Prüfen</button>
-                </div>
-                <p class="feedback" aria-live="polite"></p>
-                <div class="hint-area"><button class="button secondary next-hint" type="button">Tipp 1 anzeigen</button><button class="button secondary show-solution" type="button">Lösungsweg ansehen</button><p class="hint-text" hidden></p><div class="solution" hidden><strong>Lösungsweg:</strong> 5 · 4 = 20, also 2 · 4 = 8. Bei <span class="frac"><span>21</span><span>28</span></span> sind Zähler und Nenner durch 7 teilbar: <span class="frac"><span>21</span><span>28</span></span> = <span class="frac"><span>3</span><span>4</span></span>.</div></div>
-              </div>
-              <div class="exercise" data-exercise>
-                <div class="exercise-title"><strong>Übung B · addieren und subtrahieren</strong><span>Beide Ergebnisse kürzen</span></div>
-                <div class="math"><span><span class="frac"><span>3</span><span>4</span></span> + <span class="frac"><span>1</span><span>8</span></span></span><span><span class="frac"><span>5</span><span>6</span></span> − <span class="frac"><span>1</span><span>3</span></span></span></div>
-                <div class="inputs"><label class="field">Ergebnis 1<input data-answer="7/8" inputmode="text" autocomplete="off" aria-label="Ergebnis der Addition"></label><label class="field">Ergebnis 2<input data-answer="1/2" inputmode="text" autocomplete="off" aria-label="Ergebnis der Subtraktion"></label><button class="button check-answer" type="button">Prüfen</button></div>
-                <p class="feedback" aria-live="polite"></p>
-                <div class="hint-area"><button class="button secondary next-hint" type="button">Tipp 1 anzeigen</button><button class="button secondary show-solution" type="button">Lösungsweg ansehen</button><p class="hint-text" hidden></p><div class="solution" hidden><strong>Lösungsweg:</strong> <span class="frac"><span>3</span><span>4</span></span> = <span class="frac"><span>6</span><span>8</span></span>, daher <span class="frac"><span>6</span><span>8</span></span> + <span class="frac"><span>1</span><span>8</span></span> = <span class="frac"><span>7</span><span>8</span></span>. <span class="frac"><span>1</span><span>3</span></span> = <span class="frac"><span>2</span><span>6</span></span>, daher <span class="frac"><span>5</span><span>6</span></span> − <span class="frac"><span>2</span><span>6</span></span> = <span class="frac"><span>3</span><span>6</span></span> = <span class="frac"><span>1</span><span>2</span></span>.</div></div>
-              </div>
-              <div class="exercise" data-exercise>
-                <div class="exercise-title"><strong>Übung C · einen Bruchteil berechnen</strong><span>Mit Rechenweg</span></div>
-                <p class="question">Wie viel sind <span class="fraction-inline"><span class="frac"><span>3</span><span>8</span></span></span> von 40 €?</p>
-                <div class="inputs"><label class="field">Betrag in Euro<input data-answer="15" inputmode="decimal" autocomplete="off" aria-label="Betrag in Euro"></label><button class="button check-answer" type="button">Prüfen</button></div>
-                <p class="feedback" aria-live="polite"></p>
-                <div class="hint-area"><button class="button secondary next-hint" type="button">Tipp 1 anzeigen</button><button class="button secondary show-solution" type="button">Lösungsweg ansehen</button><p class="hint-text" hidden></p><div class="solution" hidden><strong>Lösungsweg:</strong> Erst durch den Nenner teilen: 40 € : 8 = 5 €. Dann mit dem Zähler multiplizieren: 5 € · 3 = 15 €.</div></div>
-              </div>
-            </div>
+        <div class="info-panel" aria-label="Informationen zu Taschenrechnern und Angeboten">
+          <article class="info-card calculator-note">
+            <strong>📟 Taschenrechner im laufenden Schuljahr?</strong>
+            <p>Kein Problem: Trag ein, welches Modell oder welche Art von Rechner du brauchst. Falls du es nicht weißt, beschreib einfach, wofür du ihn benötigst.</p>
           </article>
-
-          <article class="module" id="rechnen" data-module="fraction-operations">
-            <div class="module-head"><span class="number">2</span><div><h3>Brüche multiplizieren und dividieren</h3><p>Produkte, Kehrwert und gemischte Zahlen</p></div><span class="status">Noch offen</span></div>
-            <div class="module-body">
-              <div class="lesson">
-                <div class="lesson-box"><p class="lesson-label">Regeln</p><p><strong>Multiplikation:</strong> Zähler mal Zähler und Nenner mal Nenner. Kürze möglichst vorher.</p><p><strong>Division:</strong> Den ersten Bruch stehen lassen, das Geteiltzeichen durch · ersetzen und den zweiten Bruch umdrehen.</p><p>Eine gemischte Zahl wird zuerst in einen unechten Bruch umgewandelt.</p></div>
-                <div class="lesson-box example"><p class="lesson-label">Beispiel</p><p class="math"><span><span class="frac"><span>3</span><span>4</span></span> : <span class="frac"><span>2</span><span>5</span></span></span></p><span class="worked-line">= <span class="frac"><span>3</span><span>4</span></span> · <span class="frac"><span>5</span><span>2</span></span></span><span class="worked-line">= <span class="frac"><span>15</span><span>8</span></span> = 1 <span class="frac"><span>7</span><span>8</span></span></span></div>
-              </div>
-              <div class="exercise" data-exercise>
-                <div class="exercise-title"><strong>Übung A · multiplizieren</strong><span>Ergebnis vollständig kürzen</span></div>
-                <div class="math"><span><span class="frac"><span>5</span><span>6</span></span> · <span class="frac"><span>3</span><span>10</span></span></span></div>
-                <div class="inputs"><label class="field">Ergebnis als Bruch<input data-answer="1/4" inputmode="text" autocomplete="off" aria-label="Ergebnis als Bruch"></label><button class="button check-answer" type="button">Prüfen</button></div>
-                <p class="feedback" aria-live="polite"></p>
-                <div class="hint-area"><button class="button secondary next-hint" type="button">Tipp 1 anzeigen</button><button class="button secondary show-solution" type="button">Lösungsweg ansehen</button><p class="hint-text" hidden></p><div class="solution" hidden><strong>Lösungsweg:</strong> <span class="frac"><span>5</span><span>6</span></span> · <span class="frac"><span>3</span><span>10</span></span> = <span class="frac"><span>15</span><span>60</span></span>. Zähler und Nenner durch 15 kürzen: <span class="frac"><span>1</span><span>4</span></span>.</div></div>
-              </div>
-              <div class="exercise" data-exercise>
-                <div class="exercise-title"><strong>Übung B · dividieren</strong><span>Kehrwert nicht vergessen</span></div>
-                <div class="math"><span><span class="frac"><span>4</span><span>7</span></span> : <span class="frac"><span>2</span><span>3</span></span></span></div>
-                <div class="inputs"><label class="field">Ergebnis als Bruch<input data-answer="6/7" inputmode="text" autocomplete="off" aria-label="Ergebnis als Bruch"></label><button class="button check-answer" type="button">Prüfen</button></div>
-                <p class="feedback" aria-live="polite"></p>
-                <div class="hint-area"><button class="button secondary next-hint" type="button">Tipp 1 anzeigen</button><button class="button secondary show-solution" type="button">Lösungsweg ansehen</button><p class="hint-text" hidden></p><div class="solution" hidden><strong>Lösungsweg:</strong> <span class="frac"><span>4</span><span>7</span></span> : <span class="frac"><span>2</span><span>3</span></span> = <span class="frac"><span>4</span><span>7</span></span> · <span class="frac"><span>3</span><span>2</span></span> = <span class="frac"><span>12</span><span>14</span></span> = <span class="frac"><span>6</span><span>7</span></span>.</div></div>
-              </div>
-              <div class="exercise" data-exercise>
-                <div class="exercise-title"><strong>Übung C · gemischte Zahl addieren</strong><span>Ergebnis als gemischte Zahl oder Bruch</span></div>
-                <div class="math"><span>2 <span class="frac"><span>1</span><span>3</span></span> + <span class="frac"><span>1</span><span>2</span></span></span></div>
-                <div class="inputs"><label class="field">Ergebnis, z. B. 17/6<input data-answer="17/6|2 5/6" inputmode="text" autocomplete="off" aria-label="Ergebnis der Addition"></label><button class="button check-answer" type="button">Prüfen</button></div>
-                <p class="feedback" aria-live="polite"></p>
-                <div class="hint-area"><button class="button secondary next-hint" type="button">Tipp 1 anzeigen</button><button class="button secondary show-solution" type="button">Lösungsweg ansehen</button><p class="hint-text" hidden></p><div class="solution" hidden><strong>Lösungsweg:</strong> 2 <span class="frac"><span>1</span><span>3</span></span> = <span class="frac"><span>7</span><span>3</span></span>. Dann <span class="frac"><span>7</span><span>3</span></span> + <span class="frac"><span>1</span><span>2</span></span> = <span class="frac"><span>14</span><span>6</span></span> + <span class="frac"><span>3</span><span>6</span></span> = <span class="frac"><span>17</span><span>6</span></span> = 2 <span class="frac"><span>5</span><span>6</span></span>.</div></div>
-              </div>
-              <div class="exercise" data-exercise>
-                <div class="exercise-title"><strong>Übung D · halbieren</strong><span>Eine Alltagssituation</span></div>
-                <p class="question">Für ein Rezept brauchst du <span class="fraction-inline"><span class="frac"><span>5</span><span>6</span></span></span> Liter Saft. Du bereitest die halbe Menge zu. Wie viele Liter Saft brauchst du?</p>
-                <div class="inputs"><label class="field">Menge in Litern<input data-answer="5/12" inputmode="text" autocomplete="off" aria-label="Menge in Litern"></label><button class="button check-answer" type="button">Prüfen</button></div>
-                <p class="feedback" aria-live="polite"></p>
-                <div class="hint-area"><button class="button secondary next-hint" type="button">Tipp 1 anzeigen</button><button class="button secondary show-solution" type="button">Lösungsweg ansehen</button><p class="hint-text" hidden></p><div class="solution" hidden><strong>Lösungsweg:</strong> Die Hälfte bedeutet Multiplikation mit <span class="frac"><span>1</span><span>2</span></span>. Also <span class="frac"><span>1</span><span>2</span></span> · <span class="frac"><span>5</span><span>6</span></span> = <span class="frac"><span>5</span><span>12</span></span> Liter.</div></div>
-              </div>
-            </div>
-          </article>
-
-          <article class="module" id="terme" data-module="terms">
-            <div class="module-head"><span class="number">3</span><div><h3>Terme und Variablen</h3><p>Gleichartige Terme, Klammern, Werte einsetzen und Sachterme</p></div><span class="status">Noch offen</span></div>
-            <div class="module-body">
-              <div class="lesson">
-                <div class="lesson-box"><p class="lesson-label">Terme ordnen</p><p>Eine Variable steht als Platzhalter für eine Zahl. Nur <strong>gleichartige Terme</strong> lassen sich zusammenfassen: 4x + 2x = 6x, aber x und eine einzelne Zahl nicht.</p><p>Bei einer Klammer wird jeder Summand mit der Zahl davor multipliziert.</p></div>
-                <div class="lesson-box example"><p class="lesson-label">Beispiel</p><p>3(x + 2) − x</p><span class="worked-line">= 3x + 6 − x</span><span class="worked-line">= 2x + 6</span><p>Die 3 wird auf beide Teile der Klammer verteilt.</p></div>
-              </div>
-              <div class="exercise" data-exercise>
-                <div class="exercise-title"><strong>Übung A · zusammenfassen</strong><span>Vereinfache so weit wie möglich</span></div>
-                <div class="math"><span>5x + 4 − 2x + 7</span></div>
-                <div class="inputs"><label class="field">Vereinfachter Term<input data-answer="3x+11" inputmode="text" autocomplete="off" aria-label="Vereinfachter Term"></label><button class="button check-answer" type="button">Prüfen</button></div>
-                <p class="feedback" aria-live="polite"></p>
-                <div class="hint-area"><button class="button secondary next-hint" type="button">Tipp 1 anzeigen</button><button class="button secondary show-solution" type="button">Lösungsweg ansehen</button><p class="hint-text" hidden></p><div class="solution" hidden><strong>Lösungsweg:</strong> 5x − 2x = 3x und 4 + 7 = 11. Ergebnis: 3x + 11.</div></div>
-              </div>
-              <div class="exercise" data-exercise>
-                <div class="exercise-title"><strong>Übung B · Klammer auflösen</strong><span>Multipliziere jeden Klammerteil</span></div>
-                <div class="math"><span>2(y + 5) − 3y</span></div>
-                <div class="inputs"><label class="field">Vereinfachter Term<input data-answer="-y+10" inputmode="text" autocomplete="off" aria-label="Vereinfachter Term"></label><button class="button check-answer" type="button">Prüfen</button></div>
-                <p class="feedback" aria-live="polite"></p>
-                <div class="hint-area"><button class="button secondary next-hint" type="button">Tipp 1 anzeigen</button><button class="button secondary show-solution" type="button">Lösungsweg ansehen</button><p class="hint-text" hidden></p><div class="solution" hidden><strong>Lösungsweg:</strong> 2(y + 5) − 3y = 2y + 10 − 3y = −y + 10.</div></div>
-              </div>
-              <div class="exercise" data-exercise>
-                <div class="exercise-title"><strong>Übung C · Zahl einsetzen</strong><span>Beachte Punkt vor Strich</span></div>
-                <p class="question">Berechne <strong>3x − 2</strong> für <strong>x = 5</strong>.</p>
-                <div class="inputs"><label class="field">Wert des Terms<input data-answer="13" inputmode="decimal" autocomplete="off" aria-label="Wert des Terms"></label><button class="button check-answer" type="button">Prüfen</button></div>
-                <p class="feedback" aria-live="polite"></p>
-                <div class="hint-area"><button class="button secondary next-hint" type="button">Tipp 1 anzeigen</button><button class="button secondary show-solution" type="button">Lösungsweg ansehen</button><p class="hint-text" hidden></p><div class="solution" hidden><strong>Lösungsweg:</strong> x durch 5 ersetzen: 3 · 5 − 2 = 15 − 2 = 13.</div></div>
-              </div>
-              <div class="exercise" data-exercise>
-                <div class="exercise-title"><strong>Übung D · Term aus einer Geschichte</strong><span>Schreibe nur den Term auf</span></div>
-                <p class="question">Ein Kinoticket kostet x Euro. Dazu kommen 2 € Buchungsgebühr. Wie lautet der Gesamtpreis für drei Tickets?</p>
-                <div class="inputs"><label class="field">Term<input data-answer="3x+2" inputmode="text" autocomplete="off" aria-label="Term für den Gesamtpreis"></label><button class="button check-answer" type="button">Prüfen</button></div>
-                <p class="feedback" aria-live="polite"></p>
-                <div class="hint-area"><button class="button secondary next-hint" type="button">Tipp 1 anzeigen</button><button class="button secondary show-solution" type="button">Lösungsweg ansehen</button><p class="hint-text" hidden></p><div class="solution" hidden><strong>Lösungsweg:</strong> Drei Tickets kosten 3 · x = 3x Euro. Danach kommt die einmalige Gebühr dazu: 3x + 2.</div></div>
-              </div>
-            </div>
-          </article>
-
-          <article class="module" id="gleichungen" data-module="equations">
-            <div class="module-head"><span class="number">4</span><div><h3>Gleichungen lösen</h3><p>Umkehroperationen, Waageprinzip und Sachaufgaben</p></div><span class="status">Noch offen</span></div>
-            <div class="module-body">
-              <div class="lesson">
-                <div class="lesson-box"><p class="lesson-label">Die Waage-Idee</p><p>Eine Gleichung bleibt im Gleichgewicht, wenn du auf beiden Seiten dieselbe Rechenoperation ausführst. Mache die Schritte rückwärts: erst plus/minus rückgängig machen, dann mal/geteilt.</p><p>Zum Schluss setzt du deine Lösung ein. Stimmen beide Seiten überein, ist die Probe richtig.</p></div>
-                <div class="lesson-box example"><p class="lesson-label">Beispiel</p><p>3x + 4 = 19</p><span class="worked-line">| −4 &nbsp;→&nbsp; 3x = 15</span><span class="worked-line">| :3 &nbsp;→&nbsp; x = 5</span><p>Probe: 3 · 5 + 4 = 19 ✓</p></div>
-              </div>
-              <div class="exercise" data-exercise>
-                <div class="exercise-title"><strong>Übung A · Addition rückgängig machen</strong><span>Löse und prüfe</span></div>
-                <div class="math"><span>a + 7 = 19</span></div>
-                <div class="inputs"><label class="field">Lösung für a<input data-answer="12" inputmode="decimal" autocomplete="off" aria-label="Lösung für a"></label><button class="button check-answer" type="button">Prüfen</button></div>
-                <p class="feedback" aria-live="polite"></p>
-                <div class="hint-area"><button class="button secondary next-hint" type="button">Tipp 1 anzeigen</button><button class="button secondary show-solution" type="button">Lösungsweg ansehen</button><p class="hint-text" hidden></p><div class="solution" hidden><strong>Lösungsweg:</strong> Auf beiden Seiten 7 abziehen: a = 19 − 7 = 12. Probe: 12 + 7 = 19.</div></div>
-              </div>
-              <div class="exercise" data-exercise>
-                <div class="exercise-title"><strong>Übung B · zwei Schritte</strong><span>Erst plus/minus, dann mal/geteilt</span></div>
-                <div class="math"><span>5x − 8 = 27</span></div>
-                <div class="inputs"><label class="field">Lösung für x<input data-answer="7" inputmode="decimal" autocomplete="off" aria-label="Lösung für x"></label><button class="button check-answer" type="button">Prüfen</button></div>
-                <p class="feedback" aria-live="polite"></p>
-                <div class="hint-area"><button class="button secondary next-hint" type="button">Tipp 1 anzeigen</button><button class="button secondary show-solution" type="button">Lösungsweg ansehen</button><p class="hint-text" hidden></p><div class="solution" hidden><strong>Lösungsweg:</strong> 5x − 8 = 27 | +8 → 5x = 35 | :5 → x = 7. Probe: 5 · 7 − 8 = 27.</div></div>
-              </div>
-              <div class="exercise" data-exercise>
-                <div class="exercise-title"><strong>Übung C · Text in eine Gleichung übersetzen</strong><span>Stelle erst die Gleichung auf</span></div>
-                <p class="question">Vier gleiche Hefte und ein Stift für 3 € kosten zusammen 19 €. Was kostet ein Heft?</p>
-                <div class="inputs"><label class="field">Preis eines Hefts in Euro<input data-answer="4" inputmode="decimal" autocomplete="off" aria-label="Preis eines Hefts in Euro"></label><button class="button check-answer" type="button">Prüfen</button></div>
-                <p class="feedback" aria-live="polite"></p>
-                <div class="hint-area"><button class="button secondary next-hint" type="button">Tipp 1 anzeigen</button><button class="button secondary show-solution" type="button">Lösungsweg ansehen</button><p class="hint-text" hidden></p><div class="solution" hidden><strong>Lösungsweg:</strong> 4x + 3 = 19 | −3 → 4x = 16 | :4 → x = 4 €. Probe: 4 · 4 + 3 = 19 €.</div></div>
-              </div>
-            </div>
-          </article>
-
-          <article class="module" id="vierecke" data-module="quadrilaterals">
-            <div class="module-head"><span class="number">5</span><div><h3>Vierecke erkennen und zeichnen</h3><p>Eigenschaften unterscheiden und ein Rechteck konstruieren</p></div><span class="status">Noch offen</span></div>
-            <div class="module-body">
-              <div class="lesson">
-                <div class="lesson-box"><p class="lesson-label">Eigenschaften im Überblick</p><p><strong>Rechteck:</strong> vier rechte Winkel; gegenüberliegende Seiten gleich lang und parallel.</p><p><strong>Quadrat:</strong> vier rechte Winkel und vier gleich lange Seiten. <strong>Raute:</strong> vier gleich lange Seiten. <strong>Parallelogramm:</strong> zwei Paare paralleler Seiten. <strong>Trapez:</strong> hier genau ein Paar paralleler Seiten.</p></div>
-                <div class="lesson-box example"><p class="lesson-label">Rechteck zeichnen</p><p>1. Zeichne AB = 6 cm. 2. Errichte in A und B rechte Winkel. 3. Trage jeweils 3 cm ab. 4. Verbinde D und C und beschrifte.</p><p>Prüfe: AB ∥ DC, AD ∥ BC und alle Winkel sind 90°.</p></div>
-              </div>
-              <div class="exercise" data-exercise>
-                <div class="exercise-title"><strong>Übung A · Eigenschaften zuordnen</strong><span>Wähle die passende Form</span></div>
-                <div class="check-list">
-                  <label class="field">Vier rechte Winkel und vier gleich lange Seiten<select data-answer="Quadrat" aria-label="Viereck mit vier rechten Winkeln und gleich langen Seiten"><option value="">Bitte wählen …</option><option>Rechteck</option><option>Quadrat</option><option>Raute</option><option>Parallelogramm</option><option>Trapez</option></select></label>
-                  <label class="field">Vier rechte Winkel, aber benachbarte Seiten nicht gleich lang<select data-answer="Rechteck" aria-label="Viereck mit vier rechten Winkeln, benachbarte Seiten nicht gleich lang"><option value="">Bitte wählen …</option><option>Rechteck</option><option>Quadrat</option><option>Raute</option><option>Parallelogramm</option><option>Trapez</option></select></label>
-                  <label class="field">Alle Seiten gleich lang, aber keine rechten Winkel<select data-answer="Raute" aria-label="Viereck mit gleich langen Seiten und ohne rechte Winkel"><option value="">Bitte wählen …</option><option>Rechteck</option><option>Quadrat</option><option>Raute</option><option>Parallelogramm</option><option>Trapez</option></select></label>
-                  <label class="field">Genau ein Paar gegenüberliegender Seiten parallel<select data-answer="Trapez" aria-label="Viereck mit genau einem Paar paralleler Seiten"><option value="">Bitte wählen …</option><option>Rechteck</option><option>Quadrat</option><option>Raute</option><option>Parallelogramm</option><option>Trapez</option></select></label>
-                </div>
-                <div class="inputs" style="margin-top:10px"><button class="button check-answer" type="button">Zuordnung prüfen</button></div>
-                <p class="feedback" aria-live="polite"></p>
-                <div class="hint-area"><button class="button secondary next-hint" type="button">Tipp 1 anzeigen</button><button class="button secondary show-solution" type="button">Lösungsweg ansehen</button><p class="hint-text" hidden></p><div class="solution" hidden><strong>Zuordnung:</strong> Quadrat · Rechteck · Raute · Trapez. Frage dich jeweils, welches Merkmal die Form eindeutig macht.</div></div>
-              </div>
-              <div class="exercise">
-                <div class="exercise-title"><strong>Übung B · Rechteck maßgenau konstruieren</strong><span>Du bestimmst die Seitenlängen</span></div>
-                <p class="question">Wähle die Längen für AB und BC. Die Lernwerkstatt zeichnet das Rechteck mit geraden Linien maßstabsgetreu auf das Raster.</p>
-                <div class="draw-controls">
-                  <label class="field">Länge AB (cm)<input class="side-length-a" type="number" min="2" max="14" step="1" value="6" inputmode="numeric"></label>
-                  <label class="field">Länge BC (cm)<input class="side-length-b" type="number" min="1" max="7" step="1" value="3" inputmode="numeric"></label>
-                  <button class="button construct-rectangle" type="button">Rechteck konstruieren</button>
-                  <button class="button secondary clear-drawing" type="button">Raster leeren</button>
-                </div>
-                <p class="feedback construction-feedback" aria-live="polite">Wähle Seitenlängen und starte die Konstruktion.</p>
-                <div class="draw-wrap">
-                  <svg class="rectangle-board" viewBox="0 0 900 400" role="img" aria-label="Leeres kariertes Zeichenfeld. Wähle Seitenlängen und klicke auf Rechteck konstruieren.">
-                    <defs><pattern id="construction-grid" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0H0V20" fill="none" stroke="#e5e9ee" stroke-width="1"/></pattern></defs>
-                    <rect width="900" height="400" fill="url(#construction-grid)"/>
-                    <text class="placeholder" x="450" y="205" text-anchor="middle">Dein maßgenaues Rechteck erscheint hier.</text>
-                    <g class="constructed-shape"></g>
-                  </svg>
-                </div>
-                <div class="hint-area">
-                  <button class="button secondary next-hint" type="button">Tipp 1 anzeigen</button>
-                  <button class="button secondary show-solution" type="button">Konstruktionsweg ansehen</button>
-                  <p class="hint-text" hidden></p>
-                  <div class="solution" hidden><strong>Konstruktionsweg:</strong> Die obere Seite hat genau die eingegebene Länge AB; die rechte Seite genau die Länge BC. Die beiden übrigen Seiten werden parallel und gleich lang ergänzt. So entstehen vier gerade Seiten und vier rechte Winkel.</div>
-                </div>
-              </div>
-              <div class="exercise" data-exercise>
-                <div class="exercise-title"><strong>Übung C · Rechteck oder nicht?</strong><span>Wähle die passende Begründung</span></div>
-                <p class="question">Ein Viereck hat vier rechte Winkel. Welche Aussage stimmt sicher?</p>
-                <div class="inputs"><label class="field">Aussage<select data-answer="Es ist ein Rechteck." aria-label="Eigenschaft eines Vierecks mit vier rechten Winkeln"><option value="">Bitte wählen …</option><option>Es ist immer ein Quadrat.</option><option>Es ist ein Rechteck.</option><option>Es ist immer eine Raute.</option></select></label><button class="button check-answer" type="button">Prüfen</button></div>
-                <p class="feedback" aria-live="polite"></p>
-                <div class="hint-area"><button class="button secondary next-hint" type="button">Tipp 1 anzeigen</button><button class="button secondary show-solution" type="button">Erklärung ansehen</button><p class="hint-text" hidden></p><div class="solution" hidden><strong>Erklärung:</strong> Vier rechte Winkel machen ein Viereck zu einem Rechteck. Es muss kein Quadrat sein, denn dafür müssten auch alle Seiten gleich lang sein.</div></div>
-              </div>
-            </div>
-          </article>
-
-          <article class="module" id="winkel" data-module="angles">
-            <div class="module-head"><span class="number">6</span><div><h3>Winkelsumme im Viereck</h3><p>Fehlende Winkel berechnen und Ergebnisse begründen</p></div><span class="status">Noch offen</span></div>
-            <div class="module-body">
-              <div class="lesson">
-                <div class="lesson-box"><p class="lesson-label">Merksatz</p><p>Die vier Innenwinkel jedes Vierecks ergeben zusammen <strong>360°</strong>. Um einen fehlenden Winkel zu finden, addierst du die bekannten Winkel und ziehst ihre Summe von 360° ab.</p><div class="formula">α + β + γ + δ = 360°</div></div>
-                <div class="lesson-box example"><p class="lesson-label">Beispiel</p><p>Bekannt sind 80°, 110° und 95°.</p><span class="worked-line">80° + 110° + 95° = 285°</span><span class="worked-line">360° − 285° = 75°</span><p>Der fehlende Winkel ist 75°.</p></div>
-              </div>
-              <div class="exercise" data-exercise>
-                <div class="exercise-title"><strong>Übung A · fehlenden Winkel bestimmen</strong><span>Rechenweg im Kopf oder auf Papier</span></div>
-                <p class="question">Ein Viereck hat die Winkel 76°, 118° und 91°. Wie groß ist der vierte Winkel?</p>
-                <div class="inputs"><label class="field">Fehlender Winkel in Grad<input data-answer="75" inputmode="decimal" autocomplete="off" aria-label="Fehlender Winkel in Grad"></label><button class="button check-answer" type="button">Prüfen</button></div>
-                <p class="feedback" aria-live="polite"></p>
-                <div class="hint-area"><button class="button secondary next-hint" type="button">Tipp 1 anzeigen</button><button class="button secondary show-solution" type="button">Lösungsweg ansehen</button><p class="hint-text" hidden></p><div class="solution" hidden><strong>Lösungsweg:</strong> 76° + 118° + 91° = 285°. Dann 360° − 285° = 75°.</div></div>
-              </div>
-              <div class="exercise" data-exercise>
-                <div class="exercise-title"><strong>Übung B · prüfen, ob Winkel möglich sind</strong><span>Nutze die Winkelsumme</span></div>
-                <p class="question">Können drei Winkel eines Vierecks 90°, 90° und 90° sein, wenn der vierte 80° beträgt?</p>
-                <div class="inputs"><label class="field">Antwort<select data-answer="Nein" aria-label="Prüfen, ob die vier Winkel möglich sind"><option value="">Bitte wählen …</option><option>Ja</option><option>Nein</option></select></label><button class="button check-answer" type="button">Prüfen</button></div>
-                <p class="feedback" aria-live="polite"></p>
-                <div class="hint-area"><button class="button secondary next-hint" type="button">Tipp 1 anzeigen</button><button class="button secondary show-solution" type="button">Lösungsweg ansehen</button><p class="hint-text" hidden></p><div class="solution" hidden><strong>Lösungsweg:</strong> 3 · 90° + 80° = 350°. Das ist nicht 360°, also können diese vier Winkel nicht die Innenwinkel eines Vierecks sein.</div></div>
-              </div>
-              <div class="exercise" data-exercise>
-                <div class="exercise-title"><strong>Übung C · besondere Form begründen</strong><span>Winkelsumme plus Formeigenschaft</span></div>
-                <p class="question">Ein Viereck hat vier Winkel von je 90°. Welche Form ist es mindestens?</p>
-                <div class="inputs"><label class="field">Form<select data-answer="Rechteck" aria-label="Form mit vier rechten Winkeln"><option value="">Bitte wählen …</option><option>Rechteck</option><option>Raute</option><option>Drachenviereck</option></select></label><button class="button check-answer" type="button">Prüfen</button></div>
-                <p class="feedback" aria-live="polite"></p>
-                <div class="hint-area"><button class="button secondary next-hint" type="button">Tipp 1 anzeigen</button><button class="button secondary show-solution" type="button">Erklärung ansehen</button><p class="hint-text" hidden></p><div class="solution" hidden><strong>Erklärung:</strong> Vier rechte Winkel kennzeichnen ein Rechteck. Es kann zusätzlich ein Quadrat sein, wenn alle Seiten gleich lang sind.</div></div>
-              </div>
-            </div>
+          <article class="info-card">
+            <strong>💡 Noch eine Idee im Kopf?</strong>
+            <p>Die innovativ AG freut sich über Vorschläge für Schülerinnen, Schüler, Lehrkräfte und ganze Klassen. Gute Ideen dürfen ruhig größer sein als ein Taschenrechner.</p>
           </article>
         </div>
-      </div>
-    </section>
 
-    <section class="section">
-      <div class="wrap final-card">
-        <p class="eyebrow">Vor der Klassenarbeit</p>
-        <h2>Kannst du dich selbst prüfen?</h2>
-        <p>Wenn du diese Dinge ohne Hilfe erklären und lösen kannst, bist du gut vorbereitet:</p>
-        <ul>
-          <li>Brüche gleichnamig machen, rechnen, kürzen und einen Bruchteil einer Menge bestimmen.</li>
-          <li>Brüche multiplizieren und dividieren, eine gemischte Zahl umwandeln.</li>
-          <li>Gleichartige Terme zusammenfassen, Klammern auflösen und Werte einsetzen.</li>
-          <li>Gleichungen mit Umkehroperationen lösen und durch Einsetzen prüfen.</li>
-          <li>Eigenschaften von Rechteck, Quadrat, Raute, Parallelogramm und Trapez unterscheiden.</li>
-          <li>Ein Rechteck mit Lineal und Geodreieck zeichnen und die Winkelsumme 360° nutzen.</li>
-        </ul>
+        <form class="form-card" id="request-form">
+          <p class="eyebrow">Der digitale Wunschzettel</p>
+          <h2 id="form-title">Was dürfen wir für dich tun?</h2>
+          <p class="intro">Füll nur die Felder aus, die für deinen Wunsch wichtig sind. Pflichtangaben sind mit * markiert. Vor dem Versand kannst du die vorbereitete E-Mail prüfen.</p>
+
+          <div class="form-grid">
+            <div class="field">
+              <label for="requester-type">Ich frage an als <span class="optional">(optional)</span></label>
+              <select id="requester-type" name="requester-type">
+                <option value="">Bitte auswählen …</option>
+                <option value="Schülerin oder Schüler">Schülerin oder Schüler</option>
+                <option value="Lehrkraft">Lehrkraft</option>
+                <option value="Klasse oder Gruppe">Klasse oder Gruppe</option>
+                <option value="Sonstiges">Sonstiges</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="full-name">Vor- und Nachname <span class="optional">(optional)</span></label>
+              <input id="full-name" name="full-name" type="text" autocomplete="name" maxlength="100" placeholder="Zum Beispiel Alex Beispiel">
+            </div>
+
+            <div class="conditional" id="student-fields" hidden>
+              <div class="form-grid">
+                <div class="field">
+                  <label for="student-class">Klasse <span class="optional">(optional)</span></label>
+                  <input id="student-class" name="student-class" type="text" maxlength="30" placeholder="Zum Beispiel 8b">
+                </div>
+                <div class="field">
+                  <label for="student-teacher">Klassen- oder betreuende Lehrkraft <span class="optional">(optional)</span></label>
+                  <input id="student-teacher" name="student-teacher" type="text" maxlength="100" placeholder="Vor- und Nachname">
+                </div>
+              </div>
+            </div>
+
+            <div class="conditional" id="teacher-fields" hidden>
+              <div class="form-grid">
+                <div class="field">
+                  <label for="teacher-subject">Fach / Funktion <span class="optional">(optional)</span></label>
+                  <input id="teacher-subject" name="teacher-subject" type="text" maxlength="80" placeholder="Zum Beispiel Mathematik, Klassenleitung">
+                </div>
+                <div class="field">
+                  <label for="teacher-class">Betroffene Klasse oder Gruppe <span class="optional">(optional)</span></label>
+                  <input id="teacher-class" name="teacher-class" type="text" maxlength="80" placeholder="Zum Beispiel 8b oder Mathe-AG">
+                </div>
+              </div>
+            </div>
+
+            <div class="conditional" id="class-fields" hidden>
+              <div class="form-grid">
+                <div class="field">
+                  <label for="group-name">Klasse / Gruppe <span class="optional">(optional)</span></label>
+                  <input id="group-name" name="group-name" type="text" maxlength="80" placeholder="Zum Beispiel 8b">
+                </div>
+                <div class="field">
+                  <label for="contact-person">Ansprechperson <span class="optional">(optional)</span></label>
+                  <input id="contact-person" name="contact-person" type="text" maxlength="100" placeholder="Name der Klassensprecherin / des Klassensprechers">
+                </div>
+                <div class="field full">
+                  <label for="group-teacher">Zuständige Lehrkraft <span class="optional">(optional)</span></label>
+                  <input id="group-teacher" name="group-teacher" type="text" maxlength="100" placeholder="Vor- und Nachname">
+                </div>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="contact-method">Wie erreichen wir dich am besten? *</label>
+              <select id="contact-method" name="contact-method" required>
+                <option value="">Bitte auswählen …</option>
+                <option value="E-Mail">E-Mail</option>
+                <option value="WebUntis">WebUntis</option>
+                <option value="Über die angegebene Lehrkraft">Über die angegebene Lehrkraft</option>
+                <option value="Über das Sekretariat">Über das Sekretariat</option>
+              </select>
+            </div>
+            <div class="field" id="email-contact-field" hidden>
+              <label for="contact-email">E-Mail für Rückfragen *</label>
+              <input id="contact-email" name="contact-email" type="email" autocomplete="email" maxlength="150" placeholder="name@beispiel.de" disabled>
+              <span class="help">Die E-Mail-Adresse wird nur zur Bearbeitung deiner Anfrage verwendet.</span>
+            </div>
+            <div class="field" id="webuntis-contact-field" hidden>
+              <label for="webuntis-name">Dein Name in WebUntis *</label>
+              <input id="webuntis-name" name="webuntis-name" type="text" autocomplete="username" maxlength="100" placeholder="Name, unter dem du in WebUntis zu finden bist" disabled>
+              <span class="help">Damit wir dich in unserer Schulsoftware finden können.</span>
+            </div>
+
+            <fieldset class="field full">
+              <legend>Worum geht's? Wähle alles Passende aus. *</legend>
+              <div class="choice-grid">
+                <label class="choice">
+                  <input type="checkbox" name="request-kind" value="Taschenrechner">
+                  <span class="choice-copy"><strong>Taschenrechner</strong><small>Ich brauche einen während des Schuljahres.</small></span>
+                </label>
+                <label class="choice">
+                  <input type="checkbox" name="request-kind" value="Gravur">
+                  <span class="choice-copy"><strong>Gravur</strong><small>Name, Initialen oder eine andere zulässige Beschriftung.</small></span>
+                </label>
+                <label class="choice">
+                  <input type="checkbox" name="request-kind" value="Angebot für Lehrkräfte">
+                  <span class="choice-copy"><strong>Angebot für Lehrkräfte</strong><small>Material, Unterrichtsidee oder praktischer Bedarf.</small></span>
+                </label>
+                <label class="choice">
+                  <input type="checkbox" name="request-kind" value="Angebot für Klasse oder Gruppe">
+                  <span class="choice-copy"><strong>Angebot für Klasse / Gruppe</strong><small>Ein gemeinsamer Wunsch oder eine Sammelanfrage.</small></span>
+                </label>
+                <label class="choice">
+                  <input type="checkbox" name="request-kind" value="Eigene Idee">
+                  <span class="choice-copy"><strong>Eigene Idee</strong><small>Etwas, das es an unserer Schule noch geben sollte.</small></span>
+                </label>
+                <label class="choice">
+                  <input type="checkbox" name="request-kind" value="Sonstige Anfrage">
+                  <span class="choice-copy"><strong>Etwas anderes</strong><small>Wir sind neugierig – erzähl uns davon.</small></span>
+                </label>
+              </div>
+              <span class="help" id="request-kind-help">Bitte mindestens eine Möglichkeit auswählen.</span>
+            </fieldset>
+
+            <div class="field">
+              <label for="quantity">Anzahl / gewünschte Menge <span class="optional">(falls relevant)</span></label>
+              <input id="quantity" name="quantity" type="number" min="1" max="500" step="1" inputmode="numeric" placeholder="Zum Beispiel 1">
+            </div>
+            <div class="field">
+              <label for="needed-by">Bis wann wird es ungefähr benötigt? <span class="optional">(optional)</span></label>
+              <input id="needed-by" name="needed-by" type="date">
+            </div>
+
+            <div class="field full">
+              <label for="engraving">Wunschtext für eine Gravur <span class="optional">(optional)</span></label>
+              <input id="engraving" name="engraving" type="text" maxlength="40" placeholder="Bitte keine sensiblen oder privaten Angaben eingravieren lassen.">
+              <span class="help">Gravurwünsche werden vor der Umsetzung geprüft. Keine beleidigenden, vertraulichen oder personenbezogenen Angaben anderer Personen eintragen.</span>
+            </div>
+
+            <div class="field full">
+              <label for="details">Dein Wunsch / deine Bestellung im Detail *</label>
+              <textarea id="details" name="details" maxlength="2000" placeholder="Was genau brauchst du? Gibt es ein bestimmtes Modell, einen Anlass oder weitere wichtige Infos?"></textarea>
+            </div>
+
+            <label class="consent field full">
+              <input id="privacy-consent" name="privacy-consent" type="checkbox" required>
+              <span>Ich bin einverstanden, dass meine Angaben zur Bearbeitung dieser Anfrage an die innovativ AG übermittelt werden. Ich trage nur Informationen ein, die dafür notwendig sind. *</span>
+            </label>
+
+            <div class="privacy-note field full">
+              <strong>Gut zu wissen:</strong> Diese Seite speichert deine Angaben nicht. Beim Klick wird eine vorausgefüllte E-Mail an <strong>bickel.julian@schulverbund-bad-saulgau.de</strong> vorbereitet. Dein E-Mail-Programm fragt dich anschließend, ob du sie senden möchtest. Bitte gib keine Passwörter, Gesundheitsdaten oder andere vertrauliche Informationen an.
+            </div>
+          </div>
+
+          <div class="submit-row">
+            <button class="button" type="submit">Wunschzettel losschicken ✉</button>
+            <span class="submit-note">Deine Anfrage ist noch keine Bestellung. Wir melden uns mit Infos zum Angebot und den nächsten Schritten.</span>
+          </div>
+          <p class="status" id="form-status" aria-live="polite"></p>
+
+          <div class="fallback" id="email-fallback" hidden>
+            <strong>Falls sich kein E-Mail-Programm geöffnet hat</strong>
+            <p class="help">Kopiere den vorbereiteten Text und sende ihn selbst an bickel.julian@schulverbund-bad-saulgau.de.</p>
+            <textarea id="email-copy" readonly aria-label="Vorbereiteter E-Mail-Text"></textarea>
+            <div class="fallback-actions">
+              <button class="button secondary" id="copy-email" type="button">Text kopieren</button>
+              <a class="button secondary" id="open-email" href="mailto:bickel.julian@schulverbund-bad-saulgau.de">E-Mail erneut öffnen</a>
+            </div>
+            <p class="status" id="copy-status" aria-live="polite"></p>
+          </div>
+        </form>
+
       </div>
     </section>
   </main>
-  <footer class="wrap">Mathe-Lernwerkstatt · Übe in deinem Tempo und nutze Hinweise, wenn du sie brauchst.</footer>
+
+  <footer class="wrap">innovativ AG · Gemeinsam machen wir den Schulalltag ein Stück praktischer.</footer>
 
   <script>
-    const tipSets = {
-      fractions: [
-        "Welche Zahl muss 5 vervielfachen, damit aus dem Nenner 5 der Nenner 20 wird?",
-        "Was du unten mit dem Nenner machst, musst du auch oben mit dem Zähler machen.",
-        "Beim Kürzen: Welche Zahl teilt sowohl 21 als auch 28 ohne Rest?"
-      ],
-      "fraction-operations": [
-        "Kannst du vor dem Multiplizieren über Kreuz kürzen?",
-        "Beim Teilen: Welcher der beiden Brüche wird umgedreht?",
-        "Wie viele Drittel sind zwei Ganze und ein Drittel?"
-      ],
-      terms: [
-        "Markiere zuerst alle x-Terme und danach alle einzelnen Zahlen.",
-        "Wenn vor einer Klammer eine 2 steht: Was bedeutet das für jeden Summanden in der Klammer?",
-        "Ersetze die Variable durch die angegebene Zahl und beachte Punkt vor Strich."
-      ],
-      equations: [
-        "Welche Zahl wird zu x addiert oder von x abgezogen?",
-        "Welche Umkehroperation macht den letzten Rechenschritt rückgängig?",
-        "Führe dieselbe Rechenoperation auf beiden Seiten aus, damit die Gleichung im Gleichgewicht bleibt."
-      ],
-      quadrilaterals: [
-        "Welche Länge soll die waagerechte Seite AB haben?",
-        "Welche Seiten müssen bei einem Rechteck parallel und gleich lang sein?",
-        "Ein Rechteck hat vier rechte Winkel. Wie müssen die Seiten verlaufen, damit sie entstehen?"
-      ],
-      angles: [
-        "Welche Winkelsumme gilt für jedes Viereck?",
-        "Addiere zuerst die bekannten Winkel.",
-        "Wie viel fehlt von deiner Summe bis 360°?"
-      ]
-    };
+    const recipient = "bickel.julian@schulverbund-bad-saulgau.de";
+    const form = document.querySelector("#request-form");
+    const requesterType = document.querySelector("#requester-type");
+    const studentFields = document.querySelector("#student-fields");
+    const teacherFields = document.querySelector("#teacher-fields");
+    const classFields = document.querySelector("#class-fields");
+    const contactMethod = document.querySelector("#contact-method");
+    const emailContactField = document.querySelector("#email-contact-field");
+    const emailContactInput = document.querySelector("#contact-email");
+    const webuntisContactField = document.querySelector("#webuntis-contact-field");
+    const webuntisNameInput = document.querySelector("#webuntis-name");
+    const status = document.querySelector("#form-status");
+    const fallback = document.querySelector("#email-fallback");
+    const emailCopy = document.querySelector("#email-copy");
+    const openEmail = document.querySelector("#open-email");
 
-    function normalise(value) {
-      return value.trim().toLowerCase().replace(/\s+/g, "").replace(",", ".");
-    }
-
-    function numericValue(value) {
-      const mixed = value.match(/^(-?\d+)(\d+)\/(\d+)$/);
-      if (mixed) {
-        const whole = Number(mixed[1]);
-        const numerator = Number(mixed[2]);
-        const denominator = Number(mixed[3]);
-        return Math.sign(whole || 1) * (Math.abs(whole) + numerator / denominator);
-      }
-      const fraction = value.match(/^(-?\d+)\/(-?\d+)$/);
-      if (fraction && Number(fraction[2]) !== 0) return Number(fraction[1]) / Number(fraction[2]);
-      if (/^-?\d+(\.\d+)?$/.test(value)) return Number(value);
-      return null;
-    }
-
-    function answerMatches(input, expected) {
-      const submitted = normalise(input.value);
-      return expected.split("|").some(candidate => {
-        const accepted = normalise(candidate);
-        const submittedNumber = numericValue(submitted);
-        const acceptedNumber = numericValue(accepted);
-        if (submittedNumber !== null && acceptedNumber !== null) return Math.abs(submittedNumber - acceptedNumber) < 1e-9;
-        return submitted === accepted;
+    function setSection(section, visible) {
+      section.hidden = !visible;
+      section.querySelectorAll("input").forEach(input => {
+        if (!visible) input.value = "";
       });
     }
 
-    function updateProgress() {
-      const modules = [...document.querySelectorAll("[data-module]")];
-      const complete = modules.filter(module => module.dataset.complete === "true").length;
-      document.querySelector("#progress-text").textContent = `${complete} von ${modules.length} Themen geübt`;
-      document.querySelector("#progress-fill").style.width = `${complete / modules.length * 100}%`;
-      document.querySelector(".progress-track").setAttribute("aria-valuenow", String(complete));
-      modules.forEach(module => {
-        module.querySelector(".status").textContent = module.dataset.complete === "true" ? "Geübt ✓" : "Noch offen";
-      });
+    requesterType.addEventListener("change", () => {
+      const type = requesterType.value;
+      setSection(studentFields, type === "Schülerin oder Schüler");
+      setSection(teacherFields, type === "Lehrkraft");
+      setSection(classFields, type === "Klasse oder Gruppe");
+    });
+
+    function updateContactFields() {
+      const method = contactMethod.value;
+      const needsEmail = method === "E-Mail";
+      const needsWebUntis = method === "WebUntis";
+
+      emailContactField.hidden = !needsEmail;
+      emailContactInput.disabled = !needsEmail;
+      emailContactInput.required = needsEmail;
+      if (!needsEmail) emailContactInput.value = "";
+
+      webuntisContactField.hidden = !needsWebUntis;
+      webuntisNameInput.disabled = !needsWebUntis;
+      webuntisNameInput.required = needsWebUntis;
+      if (!needsWebUntis) webuntisNameInput.value = "";
     }
 
-    document.querySelectorAll("[data-exercise]").forEach(exercise => {
-      const checkButton = exercise.querySelector(".check-answer");
-      const feedback = exercise.querySelector(".feedback");
+    contactMethod.addEventListener("change", updateContactFields);
+    updateContactFields();
 
-      checkButton.addEventListener("click", () => {
-        const fields = [...exercise.querySelectorAll("[data-answer]")];
-        const missing = fields.some(field => field.value.trim() === "");
-        if (missing) {
-          feedback.textContent = "Fülle erst alle Felder aus und prüfe dann deine Antworten.";
-          feedback.className = "feedback bad";
-          return;
-        }
-        const correct = fields.filter(field => answerMatches(field, field.dataset.answer)).length;
-        if (correct === fields.length) {
-          feedback.textContent = "Richtig! Vergleiche deinen Rechenweg mit den Schritten im Lösungsweg.";
-          feedback.className = "feedback good";
-          exercise.dataset.complete = "true";
-          const module = exercise.closest("[data-module]");
-          module.dataset.complete = [...module.querySelectorAll("[data-exercise]")].every(item => item.dataset.complete === "true")
-            ? "true"
-            : "false";
-          updateProgress();
-        } else {
-          feedback.textContent = correct
-            ? `${correct} von ${fields.length} Antworten stimmen. Prüfe besonders den nächsten Rechenschritt.`
-            : "Noch nicht ganz. Gehe mit den Tipps Schritt für Schritt vor und versuche es noch einmal.";
-          feedback.className = "feedback bad";
-        }
-      });
+    function fieldValue(name) {
+      return form.elements.namedItem(name)?.value.trim() || "Keine Angabe";
+    }
 
-      exercise.querySelectorAll("input[data-answer], select[data-answer]").forEach(field => {
-        field.addEventListener("input", () => {
-          feedback.textContent = "";
-          feedback.className = "feedback";
-        });
-        field.addEventListener("change", () => {
-          feedback.textContent = "";
-          feedback.className = "feedback";
-        });
-      });
-    });
+    function buildEmailBody() {
+      const selectedKinds = [...form.querySelectorAll('input[name="request-kind"]:checked')].map(input => input.value);
+      const details = [
+        "Neue Anfrage an die innovativ AG",
+        "",
+        `Anfragende Person: ${fieldValue("full-name")}`,
+        `Anfrage als: ${fieldValue("requester-type")}`,
+        `Kontaktwunsch: ${fieldValue("contact-method")}`,
+        `Kontakt-E-Mail: ${contactMethod.value === "E-Mail" ? fieldValue("contact-email") : "Keine Angabe"}`,
+        `WebUntis-Name: ${contactMethod.value === "WebUntis" ? fieldValue("webuntis-name") : "Keine Angabe"}`,
+        "",
+        "Schulbezug:",
+        `Klasse / Gruppe: ${fieldValue("student-class") !== "Keine Angabe" ? fieldValue("student-class") : fieldValue("teacher-class") !== "Keine Angabe" ? fieldValue("teacher-class") : fieldValue("group-name")}`,
+        `Zuständige Lehrkraft: ${fieldValue("student-teacher") !== "Keine Angabe" ? fieldValue("student-teacher") : fieldValue("group-teacher")}`,
+        `Fach / Funktion: ${fieldValue("teacher-subject")}`,
+        `Ansprechperson der Gruppe: ${fieldValue("contact-person")}`,
+        "",
+        `Thema: ${selectedKinds.join(", ")}`,
+        `Anzahl / Menge: ${fieldValue("quantity")}`,
+        `Benötigt bis: ${fieldValue("needed-by")}`,
+        `Gravurwunsch: ${fieldValue("engraving")}`,
+        "",
+        "Details:",
+        fieldValue("details"),
+        "",
+        "Die Einwilligung zur Verwendung der Angaben für diese Anfrage wurde bestätigt."
+      ];
+      return details.join("\n");
+    }
 
-    document.querySelectorAll(".next-hint").forEach(button => {
-      let shown = 0;
-      const exercise = button.closest(".exercise");
-      const hintText = exercise.querySelector(".hint-text");
-      const moduleId = exercise.closest("[data-module]").dataset.module;
-      const hints = tipSets[moduleId];
+    form.addEventListener("submit", event => {
+      event.preventDefault();
+      status.textContent = "";
+      status.className = "status";
 
-      button.addEventListener("click", () => {
-        if (shown >= hints.length) shown = 0;
-        hintText.textContent = `Denkanstoß ${shown + 1}: ${hints[shown]}`;
-        hintText.hidden = false;
-        shown += 1;
-        button.textContent = shown === hints.length ? "Hinweise neu beginnen" : `Tipp ${shown + 1} anzeigen`;
-      });
-    });
+      if (!form.reportValidity()) return;
 
-    document.querySelectorAll(".show-solution").forEach(button => {
-      button.addEventListener("click", () => {
-        const exercise = button.closest(".exercise");
-        const solution = exercise.querySelector(".solution");
-        solution.hidden = !solution.hidden;
-        button.textContent = solution.hidden ? "Lösungsweg ansehen" : "Lösungsweg ausblenden";
-      });
-    });
-
-    document.querySelectorAll(".draw-wrap").forEach(drawWrap => {
-      const board = drawWrap.querySelector(".rectangle-board");
-      const shape = board.querySelector(".constructed-shape");
-      const placeholder = board.querySelector(".placeholder");
-      const exercise = drawWrap.closest(".exercise");
-      const feedback = exercise.querySelector(".construction-feedback");
-      const sideA = exercise.querySelector(".side-length-a");
-      const sideB = exercise.querySelector(".side-length-b");
-      const svgNamespace = "http://www.w3.org/2000/svg";
-
-      function addSvgElement(tagName, attributes, text) {
-        const element = document.createElementNS(svgNamespace, tagName);
-        Object.entries(attributes).forEach(([name, value]) => element.setAttribute(name, String(value)));
-        if (text) element.textContent = text;
-        shape.append(element);
-        return element;
+      const requestKinds = [...form.querySelectorAll('input[name="request-kind"]:checked')];
+      if (requestKinds.length === 0) {
+        status.textContent = "Wähle bitte mindestens eine Art der Anfrage aus.";
+        status.className = "status error";
+        document.querySelector("#request-kind-help").scrollIntoView({ behavior: "smooth", block: "center" });
+        return;
       }
 
-      function clearConstruction() {
-        shape.replaceChildren();
-        placeholder.style.display = "";
-        board.setAttribute("aria-label", "Leeres kariertes Zeichenfeld. Wähle Seitenlängen und klicke auf Rechteck konstruieren.");
-        feedback.textContent = "Raster geleert. Wähle neue Seitenlängen für deine Konstruktion.";
-        feedback.className = "feedback construction-feedback";
-      }
+      const subject = `Anfrage innovativ AG – ${fieldValue("requester-type")} – ${fieldValue("full-name")}`;
+      const body = buildEmailBody();
+      const mailto = `mailto:${recipient}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 
-      function constructRectangle() {
-        const lengthA = Number(sideA.value);
-        const lengthB = Number(sideB.value);
-        const validA = Number.isInteger(lengthA) && lengthA >= 2 && lengthA <= 14;
-        const validB = Number.isInteger(lengthB) && lengthB >= 1 && lengthB <= 7;
+      emailCopy.value = body;
+      openEmail.href = mailto;
+      fallback.hidden = false;
+      status.textContent = "Deine E-Mail ist vorbereitet. Bitte prüfe sie im E-Mail-Programm und klicke dort auf „Senden“.";
+      status.className = "status success";
 
-        if (!validA || !validB) {
-          feedback.textContent = "Wähle ganze Zentimeter: AB zwischen 2 und 14 cm, BC zwischen 1 und 7 cm.";
-          feedback.className = "feedback bad construction-feedback";
-          return;
-        }
-
-        const scale = 40;
-        const width = lengthA * scale;
-        const height = lengthB * scale;
-        const x = (900 - width) / 2;
-        const y = (400 - height) / 2;
-        shape.replaceChildren();
-        placeholder.style.display = "none";
-
-        addSvgElement("rect", {
-          class: "shape-line",
-          x,
-          y,
-          width,
-          height
-        });
-        addSvgElement("path", {
-          class: "angle-mark",
-          d: `M${x} ${y + 18}h18v-18 M${x + width - 18} ${y}v18h18`
-        });
-        addSvgElement("text", { x: x - 24, y: y - 10, "text-anchor": "end" }, "A");
-        addSvgElement("text", { x: x + width + 12, y: y - 10 }, "B");
-        addSvgElement("text", { x: x + width + 12, y: y + height + 21 }, "C");
-        addSvgElement("text", { x: x - 24, y: y + height + 21, "text-anchor": "end" }, "D");
-        addSvgElement("text", { x: x + width / 2, y: y - 24, "text-anchor": "middle" }, `${lengthA} cm`);
-        addSvgElement("text", { x: x + width + 18, y: y + height / 2, "dominant-baseline": "middle" }, `${lengthB} cm`);
-        board.setAttribute("aria-label", `Konstruiertes Rechteck ABCD mit AB gleich ${lengthA} Zentimetern und BC gleich ${lengthB} Zentimetern. Alle Seiten sind gerade.`);
-        feedback.textContent = `Rechteck ABCD konstruiert: AB = ${lengthA} cm und BC = ${lengthB} cm. Die Rasterkästchen sind jeweils 0,5 cm breit.`;
-        feedback.className = "feedback good construction-feedback";
-      }
-
-      exercise.querySelector(".construct-rectangle").addEventListener("click", constructRectangle);
-      exercise.querySelector(".clear-drawing").addEventListener("click", clearConstruction);
+      window.location.href = mailto;
     });
 
-    updateProgress();
+    document.querySelector("#copy-email").addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(emailCopy.value);
+        document.querySelector("#copy-status").textContent = "E-Mail-Text wurde kopiert.";
+        document.querySelector("#copy-status").className = "status success";
+      } catch (error) {
+        emailCopy.focus();
+        emailCopy.select();
+        document.querySelector("#copy-status").textContent = "Automatisches Kopieren ist hier nicht verfügbar. Der Text ist markiert – kopiere ihn mit Strg+C oder ⌘C.";
+        document.querySelector("#copy-status").className = "status";
+      }
+    });
   </script>
 </body>
 </html>
