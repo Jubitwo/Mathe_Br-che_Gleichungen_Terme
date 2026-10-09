@@ -1,19 +1,11 @@
 # Mathe_Br-che_Gleichungen_Terme
 
-## Wichtiger Hinweis zum aktuellen Inhalt
-
-Obwohl der Repository-Name auf Mathe-Lernmaterial hindeutet, zeigt die aktuelle [index.html](./index.html) ein Wunschzettel- und Bestellformular für die Innovativ AG. Der HTML-Dateistand entspricht aktuell dem der [InnovativAG-Seite](https://github.com/Jubitwo/InnovativAG).
-
-Diese README beschreibt den tatsächlich vorhandenen Inhalt und nicht ein vermutetes Mathe-Angebot. Vor neuen Änderungen sollte geklärt werden, ob das Repository umbenannt, mit dem passenden Mathe-Inhalt befüllt oder als Kopie des Formulars weitergeführt werden soll.
-
-## Aktuelle Funktion
-
-Das Formular erfasst Wünsche und Anfragen, etwa zu Taschenrechnern, Gravuren, Material für Lehrkräfte oder Anliegen für Gruppen.
+> **Hinweis:** Der Repository-Name deutet auf Mathe hin. Die aktuelle [index.html](./index.html) enthält jedoch dasselbe Wunschzettel- und Bestellformular wie [InnovativAG](https://github.com/Jubitwo/InnovativAG). Die Dokumentation beschreibt daher den aktuellen HTML-Inhalt; der vorgesehene Zweck sollte geklärt werden.
 
 ## Schnellstart
 
-Repository herunterladen oder klonen und index.html in einem aktuellen Browser öffnen.
+Repository herunterladen oder klonen und [index.html](./index.html) in einem aktuellen Browser öffnen.
 
 ## Dokumentation
 
-- [Abweichung, Formularablauf und nächste Klärungsschritte](./docs/README.md)
+- [Aktueller Inhalt und offene Projektentscheidung](./docs/README.md)
