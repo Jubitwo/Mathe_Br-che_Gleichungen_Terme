@@ -11,9 +11,9 @@ Interaktive Lernwerkstatt zur Vorbereitung auf die Klassenarbeit. Sechs Themen v
 - Vierecke erkennen und Rechtecke konstruieren
 - Fehlende Winkel im Viereck berechnen
 
-## Online lernen
+## Online öffnen
 
-[Mathe-Lernwerkstatt öffnen](https://jubitwo.github.io/Mathe_Br-che_Gleichungen_Terme/)
+[Mathe-Lernwerkstatt](https://jubitwo.github.io/Mathe_Br-che_Gleichungen_Terme/)
 
 ## Lokal starten
 
