@@ -43,6 +43,27 @@
     .graph-wrap{max-width:600px;margin:18px auto}.graph-wrap svg{width:100%;height:auto;background:var(--surface);border:1px solid var(--line);border-radius:12px}
     .graph-controls{display:flex;gap:15px;flex-wrap:wrap;align-items:center}.graph-controls label{margin:5px 0}.graph-controls input{accent-color:var(--brand)}
     .graph-controls select{padding:7px;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:8px}
+    .curriculum{background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:16px 0}
+    .curriculum h3,.concept h3,.visual h3{margin:0 0 8px}.curriculum p:last-child,.concept p:last-child,.visual p:last-child{margin-bottom:0}
+    .tag{display:inline-block;border-radius:999px;background:var(--soft);border:1px solid var(--line);padding:2px 9px;margin:3px;font-size:.78rem;font-weight:700}
+    .visual{border:1px solid var(--line);border-radius:14px;padding:18px;margin:18px 0;background:var(--surface)}
+    .visual svg{display:block;width:100%;height:auto;max-width:560px;margin:12px auto}
+    .visual-controls{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+    .visual-controls label{margin:5px 0}.visual-controls input[type=range]{accent-color:var(--brand)}
+    .visual-controls input[type=range]{min-width:180px;max-width:100%}
+    .table-scroll{max-width:100%;overflow-x:auto;margin:14px 0}
+    .table-scroll table{border-collapse:collapse;min-width:520px;width:100%;text-align:center}
+    .table-scroll caption{text-align:left;color:var(--muted);padding:6px}
+    .table-scroll th,.table-scroll td{border:1px solid var(--line);padding:9px}
+    .table-scroll th{background:var(--soft)}
+    .level-picker{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+    .level-button{padding:8px 13px;border:1px solid var(--line);border-radius:9px;background:var(--surface);color:var(--ink)}
+    .level-button[aria-pressed=true]{background:var(--brand);border-color:var(--brand);color:#fff}
+    .level-note{font-size:.88rem;color:var(--muted)}
+    .task-level{color:var(--brand);font-size:.82rem;font-weight:750}
+    .self-check{background:var(--bg);border-radius:8px;padding:12px}
+    .self-check label{display:flex;gap:8px;align-items:flex-start;font-weight:450;margin:6px 0}
+    .simulation-result{font-variant-numeric:tabular-nums;font-weight:700}
     .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
     @media(max-width:860px){.layout{grid-template-columns:1fr;padding:14px;gap:14px}aside{position:static;max-height:none}.topic-list{max-height:260px;overflow:auto}header{padding:24px}.panel{padding:20px}}
     @media(prefers-color-scheme:dark){:root{--bg:#111a29;--surface:#19263b;--ink:#eef2fc;--muted:#b6c3d8;--brand:#82b0ff;--soft:#243857;--line:#40516b;--good:#8bddb1;--bad:#ffacac}.primary,.grade[aria-pressed=true],.tab[aria-selected=true]{color:#10203a}header{background:#0d203e}}
@@ -54,15 +75,15 @@
   <header>
     <div class="eyebrow">Entdecken · Verstehen · Anwenden</div>
     <h1>MatheKompass</h1>
-    <p>Deine Mathematik-Lernwerkstatt für die Realschule · Klasse 7 bis 10. Wähle deinen Jahrgang, entdecke ein Thema und lerne in deinem Tempo.</p>
+    <p>Deine Mathematik-Lernwerkstatt für die Realschule in Baden-Württemberg · Klassen 7 bis 10. Wähle deinen Jahrgang, entdecke ein Thema und lerne in deinem Tempo.</p>
   </header>
   <div class="layout">
     <aside aria-label="Jahrgang und Themen">
-      <h2 class="side-title">1. Deinen Jahrgang wählen</h2>
+      <h2 class="side-title">1. Dein Lernjahr wählen</h2>
       <div class="grades" id="grades" role="group" aria-label="Klassenstufe"></div>
       <label for="search">2. Thema suchen</label>
       <input id="search" type="search" placeholder="z. B. Prozent, Dreieck …" aria-describedby="search-info">
-      <p id="search-info" class="small muted">Die Suche umfasst alle Jahrgänge. Ohne Suchbegriff siehst du die gewählte Klasse.</p>
+      <p id="search-info" class="small muted">Jahrgang 7–9: Der Landesbildungsplan fasst die Standards in einer gemeinsamen Gruppe zusammen. Der Pfad nach Einzeljahren ist ein Vorschlag, keine verbindliche Landeszuordnung.</p>
       <p id="list-count" class="small muted" role="status"></p>
       <ul class="topic-list" id="topic-list"></ul>
       <button id="overview-button" class="secondary" type="button">Jahrgangsübersicht</button>
@@ -73,7 +94,7 @@
       <button id="reset-progress" class="secondary small" type="button">Fortschritt zurücksetzen</button>
     </aside>
     <main id="main" tabindex="-1">
-      <div class="notice small"><strong>Hinweis zur Einordnung:</strong> Die Themen bilden eine breite, bundeslandübergreifende Lernbasis. Die Jahrgangszuordnung ist typisch, aber nicht verbindlich. Reihenfolge, Vertiefung und zusätzliche Inhalte unterscheiden sich nach Bundesland und Wahlpflichtzweig. Ergänzungsthemen sind ausdrücklich gekennzeichnet.</div>
+      <div class="notice small"><strong>Orientierung am Bildungsplan Baden-Württemberg:</strong> Grundlage ist der Bildungsplan 2016, Mathematik Sekundarstufe I, Fassung vom 29. Februar 2024. Die verbindlichen inhaltsbezogenen Standards sind für Klassen <strong>7/8/9 gemeinsam</strong> und für Klasse 10 getrennt beschrieben. Die Jahrgangsauswahl unten ist deshalb ein Lernpfad-Vorschlag der Plattform, keine amtlich festgelegte Themenverteilung auf einzelne Schuljahre. G, M und E kennzeichnen unterschiedlich anspruchsvolle Standards; einzelne Kompetenzen gelten nur auf bestimmten Niveaus.</div>
       <div id="content" class="panel"></div>
       <noscript><p class="notice">Bitte aktiviere JavaScript. Die Themenauswahl und die Übungsauswertung benötigen JavaScript; die Datei braucht jedoch keine Internetverbindung.</p></noscript>
     </main>
@@ -82,10 +103,10 @@
     <p>Offline nutzbar · Keine Anmeldung · Keine externen Bibliotheken, Schriften oder Datenübertragungen. Fortschritt bleibt, soweit der Browser dies erlaubt, lokal auf diesem Gerät.</p>
     <details>
       <summary>Hinweise für Lernende, Eltern und Lehrkräfte</summary>
-      <p>Die Texte und Aufgaben sind eigenständig formuliert. Dieses Lernangebot ersetzt weder das Schulbuch noch den konkreten Landeslehrplan. Es umfasst 48 Themen mit je drei auswertbaren Basisübungen sowie einer Vertiefungsaufgabe mit Lösungsweg. Konstruktionen, Argumentationen und offene Aufgaben bearbeitest du zusätzlich auf Papier. Ein Häkchen bedeutet: alle drei Basisübungen wurden richtig gelöst, nicht: das gesamte Thema ist sicher beherrscht.</p>
+      <p>Die Texte und Aufgaben sind eigenständig formuliert. Dieses Lernangebot ersetzt weder das Schulbuch noch die schuleigene Jahresplanung. Die Übungsfilter G/M/E bilden die Niveaustufen lernfreundlich nach; sie sind kein Ersatz für die verbindliche Zuordnung jeder einzelnen Teilkompetenz im Bildungsplan. Themen mit Niveau- oder Schwerpunktvorbehalt sind eigens markiert. Konstruktionen, Begründungen und offene Aufgaben gehören ebenfalls zum Mathematiklernen und werden nicht allein durch Zahleneingaben geprüft.</p>
       <p>Arbeitsweise: Einführung lesen → Beispiel nachvollziehen → Übungen ohne Lösung bearbeiten → Vertiefung versuchen. Wiederhole bei Schwierigkeiten die genannten Voraussetzungen. Zeichne geometrische Figuren und notiere Einheiten. Bei gerundeten Aufgaben zählt die verlangte Genauigkeit.</p>
-      <p>Orientierung an den üblichen Inhaltsbereichen Zahlen und Operationen, Algebra und Funktionen, Raum und Form, Größen und Messen sowie Daten und Zufall. Verbindliche Zuordnungen findest du im <a href="https://www.lehrplanplus.bayern.de/schulart/realschule" target="_blank" rel="noopener noreferrer">LehrplanPLUS Bayern</a> bzw. im <a href="https://www.bildungsplaene-bw.de/" target="_blank" rel="noopener noreferrer">Bildungsplan Baden-Württemberg</a>. Diese externen Links benötigen Internet.</p>
-      <p>Die Druckfunktion druckt das aktuell gewählte Thema mit allen vier Lernabschnitten. Die automatische Auswertung prüft Zahlenwerte, nicht deinen Rechenweg. Lösungen und Hinweise bleiben jederzeit zugänglich.</p>
+      <p>Der Themenbezug folgt den fünf offiziellen Leitideen: Zahl – Variable – Operation; Messen; Raum und Form; Funktionaler Zusammenhang; Daten und Zufall. Die Plattform ordnet Themen diesen Bereichen zu, zitiert aber keine amtlichen Kompetenzformulierungen. Im offiziellen <a href="https://www.bildungsplaene-bw.de/,Lde/LS/BP2016BW/ALLG/SEK1/M.V2" target="_blank" rel="noopener noreferrer">Bildungsplan Mathematik (Fassung 2024)</a> kannst du die <a href="https://www.bildungsplaene-bw.de/,Lde/BP2016BW_ALLG_SEK1_M_IK_7-8-9" target="_blank" rel="noopener noreferrer">Standards Klasse 7/8/9</a> und die <a href="https://www.bildungsplaene-bw.de/,Lde/BP2016BW_ALLG_SEK1_M_IK_10" target="_blank" rel="noopener noreferrer">Standards Klasse 10</a> nach G/M/E und Leitidee nachschlagen. Diese Links benötigen Internet.</p>
+      <p>Die Druckfunktion druckt das aktuell gewählte Thema mit allen vier Lernabschnitten. Die automatische Auswertung prüft Zahlenergebnisse, nicht deinen Rechenweg. Zeichnungen, Erläuterungen und offene Aufgaben vergleichst du mit dem Lösungsweg und den Selbstcheck-Kriterien.</p>
     </details>
   </footer>
   <script>
@@ -336,14 +357,35 @@
        N("Eine Säule steigt von 50 auf 60. Wie groß ist die relative Zunahme in Prozent?",20,"%","Beziehe die Änderung auf den alten Wert.","(60 − 50)/50 · 100 = 20 %.")],
       {question:"Ein Balkendiagramm zeigt Werte 98 und 100, die senkrechte Achse beginnt bei 97. Warum wirkt der Unterschied besonders groß? Wie würdest du fair vergleichen?",solution:"Sichtbare Balkenhöhen sind 1 und 3; der zweite wirkt dreimal so groß. Die tatsächliche relative Änderung ist nur 2/98 ≈ 2,04 %. Bei Balken ist ein Nullstart meist sinnvoll; ein Achsenbruch muss deutlich gekennzeichnet werden. Zahlen und Bezugsgröße zusätzlich angeben."},
       "Prozentpunkte und relative Prozentänderung sind nicht dasselbe. Mittelwerte von Gruppen brauchen eine Gewichtung nach Gruppengröße."),
+    T("datenerhebung",8,"Daten selbst erheben und darstellen","Daten",
+      "Statistik beginnt nicht mit dem Diagramm, sondern mit einer klaren Frage. Du legst fest, wen du befragst, welches Merkmal du erhebst und welche Antwortmöglichkeiten sinnvoll sind. Erst danach sammelst, ordnest und prüfst du die Daten.",
+      "Absolute und relative Häufigkeit, Diagramme",
+      ["Grundgesamtheit: alle Personen oder Dinge, über die du etwas wissen möchtest. Stichprobe: der tatsächlich untersuchte Teil.","Ein Merkmal muss eindeutig sein. Bei „Wie kommst du zur Schule?“ sollten die Antwortmöglichkeiten verständlich und möglichst vollständig sein.","Häufigkeiten werden gezählt; passende Balken-, Säulen- oder Kreisdiagramme machen sie sichtbar. Beschrifte Achsen, Einheit und Stichprobengröße."],
+      {question:"Du möchtest herausfinden, wie Schülerinnen und Schüler zur Schule kommen. Wie planst du eine faire kleine Umfrage?",steps:["Frage festlegen: „Wie bist du heute zur Schule gekommen?“","Alle Befragten erhalten dieselben Antwortmöglichkeiten, zum Beispiel zu Fuß, Fahrrad, Bus/Bahn, Auto und anderes.","Die Anzahl jeder Antwort zählen. Gesamtzahl angeben und die Ergebnisse mit beschrifteten Balken darstellen.","Wichtig: Eine einzelne Klasse ist nicht automatisch repräsentativ für alle Schulen."],result:"Eine klare Fragestellung und eine transparente Stichprobe machen die Aussage überprüfbar."},
+      [N("In einer Umfrage antworten 12 von 30 Personen „Ja“. Wie groß ist der Anteil in Prozent?",40,"%","Teile 12 durch die Gesamtzahl 30.","12/30 · 100 = 40 %."),
+       N("Eine Umfrage zählt 8 Fahrrad-, 12 Bus- und 10 Fußwege. Wie viele Personen wurden befragt?",30,"Personen","Addiere die drei Häufigkeiten.","8 + 12 + 10 = 30."),
+       N("Von 40 Befragten fahren 18 mit dem Bus. Wie viele Grad entspricht dieser Anteil im Kreisdiagramm?",162,"°","Erst Anteil berechnen, dann mit 360° multiplizieren.","18/40 · 360° = 162°.")],
+      {question:"Zwei Klassen werden befragt: Klasse A mit 12 von 24 Fahrradfahrenden, Klasse B mit 15 von 30. Vergleiche absolute und relative Häufigkeiten. Welche Klasse fährt häufiger mit dem Rad?",solution:"Absolut hat Klasse B mehr Fahrradfahrende: 15 statt 12. Relativ sind beide Anteile gleich: 12/24 = 15/30 = 1/2 = 50 %. „Häufiger“ muss also präzisiert werden: mehr Personen insgesamt oder ein größerer Anteil?"},
+      "Eine Umfrage ohne Angabe der Befragtenzahl lässt keine sichere Aussage über Anteile zu."),
+    T("zufallssimulation",8,"Zufallsexperimente simulieren","Zufall",
+      "Bei wenigen Würfen kann ein Ergebnis zufällig stark vom Erwartungswert abweichen. Wenn du ein faires Experiment oft wiederholst, wird die relative Häufigkeit meist stabiler. Eine Simulation führt sehr viele Wiederholungen schnell aus.",
+      "Brüche, relative Häufigkeiten, Wahrscheinlichkeiten",
+      ["Theoretische Wahrscheinlichkeit: Was sagt ein Modell über einen einzelnen Versuch? Relative Häufigkeit: Was ist in einer beobachteten Versuchsreihe passiert?","Gesetz der großen Zahlen: Bei vielen unabhängigen Wiederholungen nähert sich die relative Häufigkeit typischerweise der theoretischen Wahrscheinlichkeit an. Das ist keine Garantie, dass jede Folge genau passt.","Digitale Simulationen wiederholen einen Zufallsversuch schnell. Prüfe, ob die angenommene Zufallsverteilung zum echten Versuch passt."],
+      {question:"Eine faire Münze wird zehnmal geworfen. Muss genau fünfmal Kopf kommen?",steps:["Die theoretische Kopf-Wahrscheinlichkeit pro Wurf beträgt 1/2.","Fünf Köpfe sind der durchschnittlich erwartete Anteil, aber nicht für jede Zehnerfolge vorgeschrieben.","Bei wenigen Würfen sind zum Beispiel 3, 5 oder 7 Köpfe gut möglich. Bei sehr vielen Würfen schwankt der Anteil häufig weniger."],result:"Nein. Die Wahrscheinlichkeit bleibt bei jedem Wurf 1/2; ein kurzer Versuch muss nicht genau ausgeglichen sein."},
+      [N("Eine faire Münze wird 20-mal geworfen; 12-mal fällt Kopf. Wie groß ist die relative Häufigkeit von Kopf in Prozent?",60,"%","12 günstige Ergebnisse von 20 Versuchen.","12/20 · 100 = 60 %."),
+       N("In 100 Simulationen tritt ein Ereignis 48-mal ein. Wie groß ist die beobachtete relative Häufigkeit?",48,"%","Anzahl der Treffer durch die Zahl der Versuche.","48/100 · 100 = 48 %."),
+       N("Bei 200 Würfen erscheint sechsmal eine Sechs. Wie groß ist die relative Häufigkeit auf eine Nachkommastelle?",3,"%","Berechne 6/200 · 100.","6/200 · 100 = 3,0 %.")],
+      {question:"Du simulierst 20, 200 und 2 000 Würfe mit einem fairen Würfel. Erkläre, warum die relative Häufigkeit einer Sechs zwischen den drei Versuchsreihen schwankt und weshalb eine längere Versuchsreihe trotzdem informativ ist.",solution:"Zufall lässt die Ergebnisse auch bei gleichen Regeln schwanken. Bei 20 Würfen verändert schon ein Treffer die Häufigkeit um 5 Prozentpunkte; bei 2 000 Würfen nur um 0,05 Prozentpunkte. Mehr Versuche machen die Häufigkeit nicht exakt 1/6, aber die Schwankungen werden relativ kleiner."},
+      "Eine Simulation liefert beobachtete Häufigkeiten, nicht die sichere Vorhersage des nächsten Wurfs."),
     T("potenzen",9,"Potenzen und wissenschaftliche Schreibweise","Zahlen",
       "Potenzen fassen wiederholte Multiplikation zusammen. Negative Exponenten beschreiben Kehrwerte. Wissenschaftliche Schreibweise macht sehr große und sehr kleine Zahlen übersichtlich, etwa Entfernungen im Weltall oder Zellgrößen.",
       "Multiplikation, Brüche, Vorzeichen",
-      ["aᵐ·aⁿ = aᵐ⁺ⁿ; aᵐ/aⁿ = aᵐ⁻ⁿ für a ≠ 0; (aᵐ)ⁿ = aᵐⁿ.","a⁰ = 1 und a⁻ⁿ = 1/aⁿ für a ≠ 0.","Wissenschaftliche Schreibweise: a · 10ⁿ mit 1 ≤ |a| < 10; zum Beispiel 0,00032 = 3,2 · 10⁻⁴."],
+      ["aᵐ·aⁿ = aᵐ⁺ⁿ; aᵐ/aⁿ = aᵐ⁻ⁿ für a ≠ 0; (aᵐ)ⁿ = aᵐⁿ.","a⁰ = 1 und a⁻ⁿ = 1/aⁿ für a ≠ 0.","Wissenschaftliche Schreibweise: a · 10ⁿ mit 1 ≤ |a| < 10; zum Beispiel 0,00032 = 3,2 · 10⁻⁴.","Für positive a gilt auf E-Niveau: aᵐ⁄ⁿ = ⁿ√(aᵐ). Zum Beispiel 16³⁄⁴ = (⁴√16)³ = 2³ = 8."],
       {question:"Berechne (2³ · 2⁴)/2².",steps:["Gleiche Basis: Exponenten bei Multiplikation addieren und bei Division subtrahieren.","2³⁺⁴⁻² = 2⁵.","2⁵ = 32."],result:"32"},
       [N("Berechne 3² · 3³.",243,"","2 + 3 = 5.","3⁵ = 243."),
        N("Berechne 2⁻³.",0.125,"","Negativer Exponent bedeutet Kehrwert.","1/2³ = 1/8 = 0,125."),
-       N("Schreibe 4,7 · 10³ als gewöhnliche Zahl.",4700,"","Verschiebe das Komma um 3 Stellen nach rechts.","4 700.")],
+       N("Schreibe 4,7 · 10³ als gewöhnliche Zahl.",4700,"","Verschiebe das Komma um 3 Stellen nach rechts.","4 700."),
+       N("Berechne 16³⁄⁴.",8,"","Schreibe den Exponenten als Wurzel und Potenz: erst die vierte Wurzel, dann hoch 3.","16³⁄⁴ = (⁴√16)³ = 2³ = 8.",0)],
       {question:"Vergleiche (−3)² und −3². Schreibe außerdem 0,0000081 in wissenschaftlicher Schreibweise.",solution:"(−3)² = 9, weil die negative Zahl quadriert wird. −3² = −(3²) = −9: Potenzrechnung geht vor dem äußeren Minus. 0,0000081 = 8,1 · 10⁻⁶."},
       "aᵐ + aⁿ ist nicht aᵐ⁺ⁿ. Potenzgesetze zur Multiplikation nicht auf Summen übertragen."),
     T("wurzeln",9,"Quadratwurzeln und reelle Zahlen","Zahlen",
@@ -495,7 +537,7 @@
        N("Berechne log₁₀(1 000).",3,"","10 hoch welche Zahl ergibt 1 000?","10³ = 1 000 → 3."),
        N("Löse 3·2ˣ = 48.",4,"","Teile zuerst durch 3.","2ˣ = 16 → x = 4.")],
       {question:"Ein Wert beträgt anfangs 800 und sinkt je Schritt um 15 %. Nach wie vielen ganzen Schritten ist er erstmals kleiner als 400?",solution:"800·0,85ⁿ < 400 → 0,85ⁿ < 0,5. ln(0,85) ist negativ; beim Teilen dreht sich das Zeichen um: n > ln(0,5)/ln(0,85) ≈ 4,27. Erstmals nach 5 Schritten; nach 4 etwa 417,61, nach 5 etwa 354,96."},
-      "Logarithmen haben in den reellen Zahlen nur positive Argumente. Dieses Thema ist eine lehrplanabhängige Ergänzung.",true),
+      "Logarithmen haben in den reellen Zahlen nur positive Argumente. Im Bildungsplan Klasse 10 ist der Logarithmus eine E-Niveau-Kompetenz.",false),
     T("wachstumsmodelle",10,"Wachstum, Zerfall und Halbwertszeit","Funktionen",
       "Die Halbwertszeit ist die Zeit, in der sich ein Wert halbiert. Die Verdopplungszeit ist die Zeit bis zum doppelten Wert. Bei einem idealen exponentiellen Modell sind diese Zeiten unabhängig vom Anfangswert.",
       "Exponentialfunktionen, Potenzen",
@@ -525,7 +567,7 @@
        N("P(A ∩ B) = 0,12 und P(B) = 0,3. Bestimme P(A|B).",0.4,"","Gemeinsame Wahrscheinlichkeit durch die Bedingung teilen.","0,12/0,3 = 0,4."),
        N("A und B sind unabhängig, P(A) = 0,4 und P(B) = 0,5. Bestimme P(A ∩ B).",0.2,"","Bei Unabhängigkeit multiplizieren.","0,4·0,5 = 0,2.")],
       {question:"In 200 Teilen sind 10 fehlerhaft. Ein Prüfgerät meldet 9 dieser 10 als auffällig, aber auch 19 der 190 fehlerfreien. Wie wahrscheinlich ist ein Fehler bei einem auffälligen Teil?",solution:"Auffällig sind insgesamt 9 + 19 = 28. Davon sind 9 tatsächlich fehlerhaft. P(Fehler|auffällig) = 9/28 ≈ 32,14 %. Die Erkennungsrate 9/10 = 90 % beantwortet die umgekehrte Frage und ist nicht diese Wahrscheinlichkeit."},
-      "Den Nenner immer aus der Bedingung bestimmen. Dieses Thema ist je nach Lehrplan eine Ergänzung.",true),
+      "Den Nenner immer aus der Bedingung bestimmen. Die bedingte Wahrscheinlichkeit und Vierfeldertafeln sind im Bildungsplan Klasse 10 als E-Niveau-Kompetenzen ausgewiesen.",false),
     T("statistik-vertiefung",10,"Statistik kritisch beurteilen","Daten",
       "Gute Datenauswertung betrachtet nicht nur Mittelwerte, sondern auch Streuung, Erhebung und Aussagegrenzen. Eine Stichprobe soll eine größere Gruppe möglichst sinnvoll abbilden. Ein Zusammenhang beweist noch keine Ursache.",
       "Median, Mittelwert, Diagramme",
@@ -578,6 +620,106 @@
       "Seitenkante und Seitenflächenhöhe sind nicht dieselbe Strecke. Immer den passenden rechten Winkel in der Skizze suchen.")
   ];
 
+  const planStrands = [
+    {title:"Zahl – Variable – Operation", ids:["rationale-zahlen","brueche","prozent","terme","gleichungen","ungleichungen","binomische-formeln","faktorisieren","bruchterme","gleichungen-mehrschritt","gleichungssysteme","potenzen","wurzeln","quadratische-gleichungen","zinsen","logarithmen","pruefung-algebra"]},
+    {title:"Messen", ids:["flaechen","vierecke-kreis","prisma-zylinder","pyramiden","kegel","kugel","zusammengesetzte-koerper"]},
+    {title:"Raum und Form", ids:["winkel","dreieck-konstruktion","abbildungen","pythagoras","hoehen-katheten","aehnlichkeit","trigonometrie","sinus-kosinussatz","koordinaten-vektoren","pruefung-geometrie"]},
+    {title:"Funktionaler Zusammenhang", ids:["proportional","antiproportional","lineare-funktionen","quadratische-funktionen","exponentialfunktionen","wachstumsmodelle","funktionen-vergleichen"]},
+    {title:"Daten und Zufall", ids:["daten-basis","diagramme","datenerhebung","wahrscheinlichkeit-basis","kombinatorik","baumdiagramme","zufallssimulation","bedingte-wahrscheinlichkeit","statistik-vertiefung"]}
+  ];
+  const levelOnly = new Map([
+    ["potenzen",["M","E"]],
+    ["logarithmen",["E"]],
+    ["bedingte-wahrscheinlichkeit",["E"]],
+    ["statistik-vertiefung",["M","E"]],
+    ["sinus-kosinussatz",["E"]],
+    ["koordinaten-vektoren",["E"]]
+  ]);
+  const taskLevels = new Map([
+    ["potenzen",["M","M","M","E"]],
+    ["logarithmen",["E","E","E"]],
+    ["bedingte-wahrscheinlichkeit",["E","E","E"]],
+    ["statistik-vertiefung",["M","M","E"]],
+    ["sinus-kosinussatz",["E","E","E"]],
+    ["koordinaten-vektoren",["E","E","E"]]
+  ]);
+  const additionalTopics = new Set(["kegel","sinus-kosinussatz","koordinaten-vektoren"]);
+  function levelForTask(topic,index) {
+    return (taskLevels.get(topic.id) || ["G","M","E"])[index];
+  }
+  function allowedLevels(topic) {
+    return levelOnly.get(topic.id) || ["G","M","E"];
+  }
+  function topicStrand(topic) {
+    return planStrands.find(strand => strand.ids.includes(topic.id))?.title || "Mehrere Leitideen / Vernetzung";
+  }
+  function curriculumReference(topic) {
+    return topic.grade === 10
+      ? "Bildungsplan 3.3 · Klasse 10"
+      : "Bildungsplan 3.2 · Klassen 7/8/9";
+  }
+  function levelGuidance(topic) {
+    if (topic.id === "logarithmen") return "E-Niveau: Der Bildungsplan nennt den Logarithmus in Klasse 10 ausdrücklich für die Lösung von Exponentialgleichungen.";
+    if (topic.id === "bedingte-wahrscheinlichkeit") return "E-Niveau: Bedingte Wahrscheinlichkeit, Vierfeldertafel und Unabhängigkeit sind im Standard Klasse 10 dem E-Niveau zugeordnet.";
+    if (topic.id === "statistik-vertiefung") return "M/E: Quartile und Boxplots sind in Klasse 7/8/9 für M und E ausgewiesen; die Grundlagen der Datenauswertung beginnen bereits auf G.";
+    if (topic.id === "potenzen") return "M/E: Potenzgesetze und Normdarstellung gehören zu den ausgewiesenen Standards; rationale Exponenten sind eine E-Kompetenz.";
+    if (topic.id === "sinus-kosinussatz" || topic.id === "koordinaten-vektoren") return "Zusatz/Vertiefung: Bitte vor dem Einsatz mit dem schulinternen Curriculum abgleichen; die Plattform weist diese Inhalte nicht als gemeinsamen Pflichtkern aller drei Niveaus aus.";
+    if (additionalTopics.has(topic.id)) return "Vertiefung: Das Thema ergänzt den gemeinsamen Pflichtkern und kann je nach Schulcurriculum unterschiedlich gewichtet werden.";
+    return "Die Übungsstufen vereinfachen die Niveaudifferenzierung. Maßgeblich für die verbindliche Kompetenz bleibt die jeweilige Tabelle G/M/E im Bildungsplan.";
+  }
+  const topicIntuitions = {
+    "rationale-zahlen":"Stell dir die Zahlengerade wie einen Weg mit der Null als Startpunkt vor. Plus geht nach rechts, minus nach links; beim Addieren bewegst du dich um die zweite Zahl weiter.",
+    "brueche":"Ein Bruch ist ein Anteil an gleich großen Teilen. Damit du zwei Anteile addieren kannst, müssen die Stücke dieselbe Größe haben – deshalb brauchen sie denselben Nenner.",
+    "prozent":"Prozent ist eine genormte Vergleichssprache: Jedes Ganze wird auf 100 gleich große Teile bezogen. Bei mehreren Änderungen hintereinander verändert sich auch das Ganze, auf das sich der nächste Prozentsatz bezieht.",
+    "proportional":"Bei einer proportionalen Zuordnung kostet jede zusätzliche Einheit gleich viel. Daher bleibt der Preis je Stück gleich und der Graph beginnt bei null.",
+    "antiproportional":"Hier wird ein fester Gesamtauftrag auf mehr oder weniger Helfende verteilt. Wenn doppelt so viele gleich schnell arbeiten, halbiert sich die Zeit – das Produkt bleibt gleich.",
+    "terme":"Ein Term ist wie ein Rechenrezept mit einem Platzhalter. Beim Vereinfachen sortierst du gleichartige Zutaten; Äpfel und Birnen bleiben verschiedene Sorten.",
+    "gleichungen":"Eine Gleichung ist wie eine Waage: Beide Seiten haben dasselbe Gewicht. Was du auf einer Seite machst, musst du auch auf der anderen tun, damit die Waage im Gleichgewicht bleibt.",
+    "ungleichungen":"Bei einer Ungleichung suchst du oft einen ganzen Bereich statt einer einzelnen Zahl. Durch eine negative Zahl zu teilen spiegelt die Ordnung auf der Zahlengeraden – deshalb dreht sich das Zeichen um.",
+    "winkel":"Ein Winkel beschreibt eine Drehung zwischen zwei Richtungen. Liegen zwei Winkel an einer geraden Linie, füllen sie zusammen genau eine halbe Drehung, also 180°.",
+    "dreieck-konstruktion":"Drei Seitenangaben legen die Abstände der Ecken fest: Die dritte Ecke liegt gleichzeitig auf zwei Kreisen. Wo sich die Kreise schneiden, kann das Dreieck entstehen.",
+    "flaechen":"Flächeninhalt zählt, wie viele Einheitsquadrate eine Figur bedeckt. Beim Dreieck erklärt das Halbieren die Formel: Zwei gleiche Dreiecke lassen sich zu einem Parallelogramm zusammensetzen.",
+    "daten-basis":"Eine Liste lässt sich durch einen einzelnen Mittelwert zusammenfassen, aber dieser kann täuschen. Der Median bleibt nahe an der Mitte der sortierten Daten, auch wenn ein einzelner Wert sehr groß ist.",
+    "binomische-formeln":"Ein Quadrat mit Seitenlänge a+b lässt sich in kleinere Flächen zerlegen. Dabei entstehen neben a² und b² noch zwei Rechtecke der Fläche ab – daher kommt der mittlere Term 2ab.",
+    "faktorisieren":"Ausmultiplizieren verteilt einen Faktor auf eine Klammer; Faktorisieren nimmt den gemeinsamen Faktor wieder heraus. Es ist dieselbe Beziehung, nur rückwärts gelesen.",
+    "bruchterme":"Ein Nenner beschreibt, in wie viele Teile etwas geteilt wird. Durch null kann man nicht teilen – daher bleiben verbotene Werte auch dann verboten, wenn ein Faktor beim Kürzen verschwindet.",
+    "gleichungen-mehrschritt":"Mehrschrittige Gleichungen löst man nicht mit einem Trick, sondern mit einer Folge fairer Waagen-Schritte. Der gemeinsame Nenner macht Bruchteile zunächst zu gleich großen ganzen Schritten.",
+    "lineare-funktionen":"Die Steigung sagt, wie stark sich y ändert, wenn x um eins wächst. Der Startwert b zeigt, wo die Gerade die y-Achse trifft, auch wenn x noch null ist.",
+    "gleichungssysteme":"Jede Gleichung beschreibt eine Bedingung; gesucht ist ein Punkt, an dem beide Bedingungen gleichzeitig stimmen. Im Bild ist das meist der Schnittpunkt der beiden Geraden.",
+    "abbildungen":"Bei einer Spiegelung liegt der Bildpunkt auf der anderen Seite der Achse und im gleichen senkrechten Abstand. Die Figur wird verschoben, aber nicht gestreckt oder zusammengedrückt.",
+    "vierecke-kreis":"Der Radius geht vom Mittelpunkt zum Kreisrand; der Durchmesser läuft durch den Mittelpunkt von Rand zu Rand. Der Durchmesser besteht deshalb aus zwei Radien.",
+    "prisma-zylinder":"Ein gerades Prisma kann man sich als gleichbleibenden Querschnitt vorstellen, der gerade nach oben geschoben wird. Darum ist Volumen gleich Grundflächeninhalt mal Höhe.",
+    "wahrscheinlichkeit-basis":"Bei einem fairen Würfel gibt es sechs gleich mögliche Ergebnisse. Wahrscheinlichkeit vergleicht günstige Möglichkeiten mit allen Möglichkeiten – sie sagt aber nicht sicher voraus, was beim nächsten Wurf passiert.",
+    "kombinatorik":"Bei jeder weiteren unabhängigen Wahl verzweigen sich die Möglichkeiten. Multiplizieren zählt alle Wege, die aus den aufeinanderfolgenden Entscheidungen entstehen.",
+    "diagramme":"Ein Diagramm zeigt dieselben Zahlen nur in einer anderen Form. Eine abgeschnittene Achse verändert nicht die Daten, aber stark den optischen Eindruck.",
+    "datenerhebung":"Eine Antwort kann nur die Frage beantworten, die tatsächlich gestellt wurde. Eine kleine oder einseitig ausgewählte Gruppe darf nicht ohne Prüfung für alle stehen.",
+    "zufallssimulation":"Eine Simulation wiederholt denselben Zufallsversuch sehr oft. Kurze Folgen schwanken stark; bei längeren Folgen wird der relative Einfluss eines einzelnen Treffers kleiner.",
+    "potenzen":"Der Exponent zählt bei ganzzahligen positiven Exponenten, wie oft dieselbe Basis miteinander multipliziert wird. Beim Multiplizieren gleicher Basen werden die Zählungen zusammengelegt; bei rationalen Exponenten kommen Brüche und Wurzeln hinzu.",
+    "wurzeln":"Die Quadratwurzel beantwortet die Frage: Welche nichtnegative Seitenlänge ergibt beim Quadrieren diese Fläche? Deshalb ist √49 die Hauptwurzel 7, während die Gleichung x²=49 zwei Lösungen hat.",
+    "quadratische-gleichungen":"Eine quadratische Gleichung fragt, an welchen Stellen ein Parabelgraph die x-Achse trifft. Zwei Schnittpunkte bedeuten zwei Lösungen, ein Berührpunkt eine und kein Schnittpunkt keine reelle Lösung.",
+    "quadratische-funktionen":"Die Scheitelform verschiebt und streckt eine Grundparabel. Die Klammer verrät die waagrechte Verschiebung, die Zahl außerhalb die senkrechte; der Faktor davor bestimmt Richtung und Breite.",
+    "pythagoras":"Die Quadrate über den Katheten haben zusammen denselben Flächeninhalt wie das Quadrat über der Hypotenuse. Entscheidend ist, dass das Dreieck wirklich einen rechten Winkel hat.",
+    "hoehen-katheten":"Die Höhe teilt das große rechtwinklige Dreieck in zwei kleinere Dreiecke mit derselben Form. Aus dieser Ähnlichkeit entstehen Beziehungen zwischen den Seiten und den Abschnitten der Hypotenuse.",
+    "aehnlichkeit":"Bei einer Vergrößerung bleiben Winkel gleich, aber alle entsprechenden Längen ändern sich mit demselben Faktor. Flächen ändern sich deshalb mit dem Quadrat dieses Faktors.",
+    "pyramiden":"Schneidet man eine Pyramide parallel zur Grundfläche, entstehen ähnliche Querschnitte. Für das Volumen braucht man die senkrechte Höhe, nicht die schräge Seitenhöhe.",
+    "kegel":"Ein Kegel ist wie eine Pyramide mit einer kreisförmigen Grundfläche. Für die Höhe und die schräge Mantellinie entsteht ein rechtwinkliges Dreieck mit Radius, Höhe und Mantellinie.",
+    "kugel":"Verdoppelt man den Kugelradius, vervierfacht sich die Oberfläche, aber das Volumen wird achtmal so groß. Darum wächst das Fassungsvermögen schneller als die Hautfläche.",
+    "baumdiagramme":"An jeder Verzweigung notierst du die Chance für den nächsten Schritt. Ein vollständiger Pfad beschreibt eine ganze Folge; erst werden seine Wahrscheinlichkeiten multipliziert, passende Pfade danach addiert.",
+    "zinsen":"Bei Zinseszins wird der Zuwachs jedes Jahr auf das neue Kapital berechnet. Das ist wie wiederholtes Multiplizieren mit demselben Wachstumsfaktor, nicht wie jedes Jahr derselbe Eurobetrag.",
+    "trigonometrie":"Bei ähnlichen rechtwinkligen Dreiecken bleiben die Seitenverhältnisse für denselben Winkel gleich. Sinus, Kosinus und Tangens sind Namen für genau diese drei festen Verhältnisse.",
+    "sinus-kosinussatz":"Der Sinussatz verbindet Seiten mit ihren gegenüberliegenden Winkeln; der Kosinussatz berücksichtigt den Winkel zwischen zwei bekannten Seiten. So kann man auch nicht rechtwinklige Dreiecke berechnen.",
+    "exponentialfunktionen":"Exponentielles Wachstum bedeutet: In jedem gleichen Zeitschritt kommt derselbe Faktor dazu. Die Zuwächse werden dadurch selbst größer; das ist anders als ein gleichbleibender linearer Zuwachs.",
+    "logarithmen":"Ein Logarithmus ist die Umkehrfrage zur Potenz: Welche Hochzahl brauche ich? Aus 2 hoch 5 gleich 32 wird deshalb log zur Basis 2 von 32 gleich 5.",
+    "wachstumsmodelle":"Die Halbwertszeit beschreibt eine wiederholte Halbierung, nicht eine gleich große Abnahme. Nach jeder Halbwertszeit wird nur noch die Hälfte des gerade vorhandenen Wertes halbiert.",
+    "zusammengesetzte-koerper":"Beim Zusammensetzen können Flächen im Inneren verschwinden, obwohl die Körperteile sie einzeln besitzen. Für die äußere Oberfläche zählen nur Flächen, die von außen sichtbar bleiben.",
+    "bedingte-wahrscheinlichkeit":"Bei „unter der Bedingung B“ schaust du nur noch auf die Fälle mit B. Der Nenner ist deshalb die Größe dieser ausgewählten Gruppe, nicht automatisch die Gesamtzahl.",
+    "statistik-vertiefung":"Der Median teilt die sortierten Daten in zwei Hälften; Quartile teilen diese Hälften weiter. Ein Boxplot zeigt Lage und Streuung gleichzeitig, ohne jeden einzelnen Datenwert zu zeichnen.",
+    "funktionen-vergleichen":"Unterscheide die Muster mit einer Wertetabelle: konstante Differenzen deuten auf lineare, konstante Quotienten auf exponentielle und konstante Produkte auf antiproportionale Zusammenhänge.",
+    "koordinaten-vektoren":"Der Vektor von A nach B ist die Änderung in x- und y-Richtung. Die Länge dieser Verschiebung ist die Hypotenuse eines rechtwinkligen Dreiecks aus genau diesen beiden Änderungen.",
+    "pruefung-algebra":"Eine Gleichung im Sachkontext enthält nicht nur Zahlen, sondern auch Annahmen. Nach dem Rechnen musst du deshalb prüfen, ob die Lösung zur Situation passt, etwa ob eine Personenanzahl ganzzahlig ist.",
+    "pruefung-geometrie":"Eine gute Skizze macht sichtbar, welche Strecken einen rechten Winkel bilden. Erst dann ist klar, ob du Pythagoras, Trigonometrie, Flächeninhalt oder Volumen verwenden darfst."
+  };
+
   const content = document.getElementById("content");
   const topicList = document.getElementById("topic-list");
   const search = document.getElementById("search");
@@ -587,6 +729,7 @@
   let grade = 7;
   let selected = null;
   let activeSection = "intro";
+  let practiceLevel = "alle";
   let progress = {};
   let storageAvailable = true;
   const escapeHTML = value => String(value).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -626,10 +769,10 @@
       ? `${topic.title} ${topic.area} ${topic.intro} ${topic.rules.join(" ")}`.toLocaleLowerCase("de").includes(term)
       : topic.grade === grade);
     topicList.innerHTML = found.map(topic => `<li><button type="button" class="topic-button" data-topic="${topic.id}" aria-current="${selected === topic.id}">
-      <span>${term ? `Kl. ${topic.grade} · ` : ""}${escapeHTML(topic.title)}${topic.extra ? " ◇" : ""}</span>
+      <span>${term ? `Kl. ${topic.grade} · ` : ""}${escapeHTML(topic.title)}${additionalTopics.has(topic.id) ? " ◇" : ""}</span>
       ${solvedCount(topic) === topic.tasks.length ? '<span class="done-mark" aria-label="Alle Basisübungen gelöst">✓</span>' : ""}
       </button></li>`).join("");
-    document.getElementById("list-count").textContent = `${found.length} ${found.length === 1 ? "Thema" : "Themen"}${term ? " in allen Klassen" : ` in Klasse ${grade}`} · ◇ = Ergänzung`;
+    document.getElementById("list-count").textContent = `${found.length} ${found.length === 1 ? "Thema" : "Themen"}${term ? " in allen Klassen" : ` im Lernpfad Klasse ${grade}`} · ◇ = Vertiefung/Zusatz`;
     if (!found.length) topicList.innerHTML = '<li class="muted">Kein Treffer. Versuche einen kürzeren Suchbegriff oder lösche die Suche.</li>';
     const currentTopics = topics.filter(t => t.grade === grade);
     const total = currentTopics.reduce((sum,t) => sum + t.tasks.length,0);
@@ -646,8 +789,8 @@
     content.innerHTML = `<div class="meta">DEIN LERNWEG · KLASSE ${grade}</div><h2>Was möchtest du heute verstehen?</h2>
       <p>Wähle links ein Thema oder starte hier mit einem Inhaltsbereich. Du kannst jederzeit zu einer anderen Klasse wechseln.</p>
       <div class="rule"><strong>Vier Schritte pro Thema</strong><p>Einführung: Bedeutung und Voraussetzungen. Erklärungen: Regeln und Beispiel. Übungen: selbst rechnen mit Rückmeldung. Vertiefung: übertragen, begründen und vernetzen.</p></div>
-      <div class="overview">${areas.map(area => `<article><h3>${escapeHTML(area)}</h3><ul>${gradeTopics.filter(t => t.area === area).map(t => `<li><a href="#${t.id}" data-open="${t.id}">${escapeHTML(t.title)}${t.extra ? " (Ergänzung)" : ""}</a></li>`).join("")}</ul></article>`).join("")}</div>
-      <p class="small muted">Die Reihenfolge links ist ein Vorschlag. Nutze bei Unsicherheit zuerst die Voraussetzungen des jeweiligen Themas.</p>`;
+      <div class="overview">${areas.map(area => `<article><h3>${escapeHTML(area)}</h3><ul>${gradeTopics.filter(t => t.area === area).map(t => `<li><a href="#${t.id}" data-open="${t.id}">${escapeHTML(t.title)}${additionalTopics.has(t.id) ? " (Vertiefung/Zusatz)" : ""}</a></li>`).join("")}</ul></article>`).join("")}</div>
+      <p class="small muted">Für Klasse 7–9 ist dies ein sortierter Lernpfad innerhalb des gemeinsamen offiziellen Standardzeitraums 7/8/9. Für die genaue Jahresreihenfolge gilt die schuleigene Planung.</p>`;
     renderNavigation();
     if (focus) main.focus();
   }
@@ -655,36 +798,54 @@
     selected = topic.id;
     grade = topic.grade;
     activeSection = section;
-    content.innerHTML = `<div class="meta">KLASSE ${topic.grade} · ${escapeHTML(topic.area.toLocaleUpperCase("de"))}${topic.extra ? " · ERGÄNZUNG" : ""}</div>
+    const allowed = allowedLevels(topic);
+    if (practiceLevel !== "alle" && !allowed.includes(practiceLevel)) practiceLevel = "alle";
+    const levelInfo = levelGuidance(topic);
+    content.innerHTML = `<div class="meta">LERNPFAD KLASSE ${topic.grade} · ${escapeHTML(topic.area.toLocaleUpperCase("de"))}${additionalTopics.has(topic.id) ? " · VERTIEFUNG/ZUSATZ" : ""}</div>
       <h2>${escapeHTML(topic.title)}</h2>
+      <div class="curriculum"><h3>Bildungsplanbezug Baden-Württemberg</h3>
+        <p><strong>${escapeHTML(curriculumReference(topic))} · Leitidee ${escapeHTML(topicStrand(topic))}</strong></p>
+        <p>${escapeHTML(levelInfo)}</p>
+        <p class="small">Die Jahrgänge 7–9 sind im Bildungsplan gemeinsam ausgewiesen. Die Tags beschreiben die fachliche Leitidee; sie ersetzen nicht die amtlichen Kompetenzformulierungen.</p>
+      </div>
       <div class="tabs" role="tablist" aria-label="Lernabschnitte">${sections.map(([id,label]) =>
         `<button type="button" class="tab" role="tab" id="tab-${id}" aria-controls="section-${id}" aria-selected="${id === section}" tabindex="${id === section ? 0 : -1}" data-section="${id}">${label}</button>`).join("")}</div>
       <section class="section" role="tabpanel" tabindex="0" id="section-intro" aria-labelledby="tab-intro" ${section !== "intro" ? "hidden" : ""}>
         <h3>Worum geht es?</h3><p>${escapeHTML(topic.intro)}</p>
         <div class="rule"><strong>Das solltest du schon können</strong><p>${escapeHTML(topic.prerequisites)}</p></div>
         <h3>Dein Lernziel</h3><p>Du kannst die folgenden Regeln erklären, das Beispiel nachvollziehen und sie in eigenen Aufgaben anwenden. In der Vertiefung begründest du deine Entscheidung oder überträgst das Verfahren auf eine neue Situation.</p>
-        ${topic.extra ? '<p class="warning">Dieses Thema ist eine Erweiterung. Prüfe mit deiner Lehrkraft, ob es zu deinem Lehrplan und Wahlpflichtzweig gehört.</p>' : ""}
+        ${additionalTopics.has(topic.id) ? '<p class="warning">Dieses Thema ist als Vertiefung/Zusatz gekennzeichnet. Prüfe mit deiner Lehrkraft, ob es zu eurem schulinternen Curriculum gehört.</p>' : ""}
+        ${topic.id === "logarithmen" || topic.id === "bedingte-wahrscheinlichkeit" ? '<p class="warning">Dieses Thema ist im Bildungsplan Klasse 10 ausdrücklich dem E-Niveau zugeordnet. Im G- und M-Pfad wird hier keine Pflichtaufgabe vorausgesetzt.</p>' : ""}
         <button class="primary" type="button" data-section="explain">Mit den Erklärungen starten →</button>
       </section>
       <section class="section" role="tabpanel" tabindex="0" id="section-explain" aria-labelledby="tab-explain" ${section !== "explain" ? "hidden" : ""}>
-        <h3>Die wichtigsten Regeln</h3><div class="rule">${paragraphs(topic.rules)}</div>
+        <div class="concept"><h3>Ein Bild im Kopf</h3><p>${escapeHTML(topicIntuitions[topic.id] || "Verbinde die Formel mit einer Zeichnung oder einer Alltagssituation. Erkläre zuerst, was jede Zahl und jedes Zeichen bedeutet.")}</p></div>
+        <h3>Die wichtigsten Regeln – mit Bedeutung</h3><div class="rule">${paragraphs(topic.rules)}</div>
         <div class="example"><h3>Schritt für Schritt</h3><p><strong>${escapeHTML(topic.example.question)}</strong></p>
           <ol>${topic.example.steps.map(step => `<li>${escapeHTML(step)}</li>`).join("")}</ol><p class="result">${escapeHTML(topic.example.result)}</p></div>
-        ${geometryMarkup(topic.id)}
         <p class="warning"><strong>Typischer Fehler:</strong> ${escapeHTML(topic.mistake)}</p>
-        ${["lineare-funktionen","quadratische-funktionen","exponentialfunktionen","funktionen-vergleichen"].includes(topic.id) ? graphMarkup(topic.id) : ""}
+        ${["lineare-funktionen","quadratische-funktionen","quadratische-gleichungen","exponentialfunktionen","funktionen-vergleichen","proportional","antiproportional"].includes(topic.id) ? graphMarkup(topic.id) : ""}
+        ${topicVisualMarkup(topic)}
         <div class="actions"><button type="button" class="primary" data-section="practice">Jetzt selbst üben →</button></div>
       </section>
       <section class="section" role="tabpanel" tabindex="0" id="section-practice" aria-labelledby="tab-practice" ${section !== "practice" ? "hidden" : ""}>
-        <h3>Drei Aufgaben zum Festigen</h3><p class="small muted">Erst selbst rechnen! Gib eine Zahl mit Komma oder Punkt, einen Bruch wie 2/3 oder wissenschaftliche Schreibweise wie 1e3 ein. Die angezeigte Einheit nicht mit eingeben. Falls nicht anders angegeben, zählt der genaue Wert; Brüche sind dafür besonders geeignet.</p>
-        ${topic.tasks.map((task,index) => `<form class="task" data-task="${index}" novalidate>
-          <h4>Aufgabe ${index + 1}</h4><p>${escapeHTML(task.question)}</p>
+        <h3>Üben auf deinem Niveau</h3><p class="level-note">Die Aufgaben sind in diesem Lernangebot abgestuft: G = Einstieg mit überschaubarem Rechenschritt, M = Standardanwendung, E = anspruchsvollere Verknüpfung oder Transfer. Das ist eine didaktische Auswahlhilfe und keine amtliche Einzelzuordnung der Aufgabe. Die Standards, die offiziell nur M/E oder E vorsehen, sind oben ausdrücklich markiert.</p>
+        <div class="level-picker" role="group" aria-label="Übungsniveau wählen">
+          <button type="button" class="level-button" data-practice-level="alle" aria-pressed="${practiceLevel === "alle"}">Alle passenden Aufgaben</button>
+          ${["G","M","E"].map(level => `<button type="button" class="level-button" data-practice-level="${level}" aria-pressed="${practiceLevel === level}" ${allowed.includes(level) ? "" : "disabled"}>${level}-Niveau</button>`).join("")}
+        </div>
+        <p class="small muted">${practiceLevel === "alle" ? `Dieses Thema enthält ${topic.tasks.length} numerische Aufgaben mit Hinweisen und Musterlösungen sowie eine offene Transferaufgabe.` : `Anzeige: ${practiceLevel}-Niveau. Die Aufgaben anderer Niveaus bleiben über „Alle passenden Aufgaben“ erreichbar.`} ${allowed.length < 3 ? `Laut Kompetenzraster ist dieses Teilthema hier für ${allowed.join(" und ")} vorgesehen.` : ""}</p>
+        ${topic.tasks.map((task,index) => ({task,index,level:levelForTask(topic,index)}))
+          .filter(item => practiceLevel === "alle" || item.level === practiceLevel)
+          .map(({task,index,level}) => `<form class="task" data-task="${index}" data-level="${level}" novalidate>
+          <h4>Aufgabe ${index + 1} <span class="task-level">· ${level}-Niveau</span></h4><p>${escapeHTML(task.question)}</p>
           <label for="answer-${index}">Dein Ergebnis${task.unit ? ` in ${escapeHTML(task.unit)}` : ""}</label>
           <div class="answer-row"><input id="answer-${index}" name="answer" type="text" inputmode="text" autocomplete="off" spellcheck="false" aria-describedby="feedback-${index}">
           <span aria-hidden="true">${escapeHTML(task.unit)}</span><button type="submit" class="primary check-button">Prüfen</button></div>
-          <p class="feedback${(progress[topic.id] || []).includes(index) ? " good" : ""}" id="feedback-${index}" aria-live="polite">${(progress[topic.id] || []).includes(index) ? "✓ Bereits einmal richtig gelöst. Du kannst die Aufgabe wiederholen." : ""}</p>
+          <p class="feedback${(progress[topic.id] || []).includes(index) ? " good" : ""}" id="feedback-${index}" aria-live="polite">${(progress[topic.id] || []).includes(index) ? "✓ Bereits einmal richtig gelöst. Vergleiche deinen Rechenweg mit der Lösung." : ""}</p>
           <details><summary>Tipp anzeigen</summary><p>${escapeHTML(task.hint)}</p></details>
-          <details><summary>Musterlösung anzeigen</summary><p class="formula">${escapeHTML(task.solution)}</p></details></form>`).join("")}
+          <details><summary>Musterlösung mit Rechenweg anzeigen</summary><p class="formula">${escapeHTML(task.solution)}</p></details></form>`).join("")}
+        ${topic.tasks.filter((task,index) => practiceLevel === "alle" || levelForTask(topic,index) === practiceLevel).length === 0 ? `<p class="notice">Für dieses Thema sind keine Aufgaben auf ${practiceLevel}-Niveau hinterlegt. Wechsle zu ${allowed.map(level => `${level}-Niveau`).join(" oder ")}.</p>` : ""}
         <button type="button" class="primary" data-section="depth">Zur Vertiefung →</button>
       </section>
       <section class="section" role="tabpanel" tabindex="0" id="section-depth" aria-labelledby="tab-depth" ${section !== "depth" ? "hidden" : ""}>
@@ -754,18 +915,19 @@
     }
   }
   function graphMarkup(id) {
-    const model = id === "quadratische-funktionen" ? "quadratic" : id === "exponentialfunktionen" ? "exponential" : "linear";
+    const model = ["quadratische-funktionen","quadratische-gleichungen"].includes(id) ? "quadratic" :
+      id === "exponentialfunktionen" ? "exponential" : id === "antiproportional" ? "inverse" : "linear";
     return `<h3>Graphen-Labor</h3><p class="small muted">Verändere die Parameter und beschreibe, was sich am Graphen ändert. Dargestelltes Fenster: −5 ≤ x ≤ 5 und −10 ≤ y ≤ 10. Außerhalb liegende Kurventeile sind abgeschnitten. Die waagrechte Achse ist x, die senkrechte y.</p>
       <div class="graph-controls"><div><label for="graph-model">Funktionstyp</label><select id="graph-model">
-      ${[["linear","Linear: y = ax + b"],["quadratic","Quadratisch: y = ax² + b"],["exponential","Exponentiell: y = a · qˣ"]].map(([value,text]) => `<option value="${value}" ${value === model ? "selected" : ""}>${text}</option>`).join("")}</select></div>
+      ${[["linear","Linear: y = ax + b"],["quadratic","Quadratisch: y = ax² + b"],["exponential","Exponentiell: y = a · qˣ"],["inverse","Antiproportional: y = a/x"]].map(([value,text]) => `<option value="${value}" ${value === model ? "selected" : ""}>${text}</option>`).join("")}</select></div>
       <div><label for="graph-a">Parameter a</label><input id="graph-a" type="range" min="-3" max="3" step="0.5" value="1"></div>
-      <div><label id="graph-b-label" for="graph-b">Parameter b</label><input id="graph-b" type="range" min="-5" max="5" step="0.5" value="0"></div></div>
+      <div id="graph-b-control"><label id="graph-b-label" for="graph-b">Parameter b</label><input id="graph-b" type="range" min="-5" max="5" step="0.5" value="0"></div></div>
       <p id="graph-description" class="formula" aria-live="polite"></p>
       <div class="graph-wrap"><svg id="graph-svg" viewBox="0 0 560 400" role="img" aria-labelledby="graph-svg-title graph-svg-desc"><title id="graph-svg-title">Funktionsgraph im Koordinatensystem</title><desc id="graph-svg-desc"></desc></svg></div>
       <p id="graph-values" class="small muted"></p>`;
   }
   function geometryMarkup(id) {
-    if (["pythagoras","trigonometrie"].includes(id)) return `<h3>So liest du die Skizze</h3>
+    if (["pythagoras","trigonometrie"].includes(id)) return `<div class="visual"><h3>So liest du die Skizze</h3>
       <div class="graph-wrap"><svg viewBox="0 0 500 340" role="img" aria-labelledby="geometry-title geometry-desc">
       <title id="geometry-title">Rechtwinkliges Dreieck mit den Seiten 3, 4 und 5</title>
       <desc id="geometry-desc">Rechter Winkel unten links. Senkrechte Kathete 3, waagrechte Kathete 4, schräge Hypotenuse 5. Der Winkel Alpha liegt unten rechts. Zu Alpha ist 3 die Gegenkathete und 4 die Ankathete.</desc>
@@ -773,23 +935,89 @@
       <path d="M70 263 H92 V285" fill="none" stroke="var(--ink)" stroke-width="2"/>
       <path d="M350 285 A40 40 0 0 1 358 261" fill="none" stroke="var(--ink)" stroke-width="2"/>
       <g fill="var(--ink)" font-size="19"><text x="40" y="168">3</text><text x="225" y="315">4</text><text x="242" y="143">5</text><text x="335" y="271">α</text></g></svg></div>
-      <p class="small muted">Zur markierten Ecke α: Gegenkathete 3, Ankathete 4, Hypotenuse 5. Pythagoras: 3² + 4² = 5². Trigonometrie: sin α = 3/5, cos α = 4/5, tan α = 3/4; α ≈ 36,87°.</p>`;
-    if (id === "vierecke-kreis") return `<h3>Radius und Durchmesser unterscheiden</h3>
+      <p class="small muted">Zur markierten Ecke α: Gegenkathete 3, Ankathete 4, Hypotenuse 5. Pythagoras: 3² + 4² = 5². Trigonometrie: sin α = 3/5, cos α = 4/5, tan α = 3/4; α ≈ 36,87°.</p></div>`;
+    if (id === "vierecke-kreis") return `<div class="visual"><h3>Radius und Durchmesser unterscheiden</h3>
       <div class="graph-wrap"><svg viewBox="0 0 500 320" role="img" aria-labelledby="geometry-title geometry-desc">
       <title id="geometry-title">Kreis mit Radius und Durchmesser</title><desc id="geometry-desc">Ein Kreis mit Mittelpunkt M. Der Radius r führt vom Mittelpunkt zum Rand. Der Durchmesser d führt durch M von Rand zu Rand und ist zweimal so lang wie r.</desc>
       <circle cx="250" cy="160" r="115" fill="var(--soft)" stroke="var(--brand)" stroke-width="3"/>
       <path d="M135 160 H365 M250 160 V45" fill="none" stroke="var(--ink)" stroke-width="2"/>
       <circle cx="250" cy="160" r="4" fill="var(--ink)"/>
-      <g fill="var(--ink)" font-size="19"><text x="260" y="111">r</text><text x="177" y="184">d = 2r</text><text x="258" y="155">M</text></g></svg></div>`;
-    if (id === "prisma-zylinder") return `<h3>Grundfläche und Höhe unterscheiden</h3>
+      <g fill="var(--ink)" font-size="19"><text x="260" y="111">r</text><text x="177" y="184">d = 2r</text><text x="258" y="155">M</text></g></svg></div></div>`;
+    if (id === "prisma-zylinder") return `<div class="visual"><h3>Grundfläche und Höhe unterscheiden</h3>
       <div class="graph-wrap"><svg viewBox="0 0 500 330" role="img" aria-labelledby="geometry-title geometry-desc">
       <title id="geometry-title">Skizze eines geraden Zylinders</title><desc id="geometry-desc">Zwei gleich große Kreisflächen liegen übereinander. Sie erscheinen in der räumlichen Skizze als Ellipsen. Die senkrechte Strecke zwischen ihnen ist die Körperhöhe h. Der Radius r liegt in der Grundfläche.</desc>
       <path d="M130 80 V260 A120 40 0 0 0 370 260 V80" fill="var(--soft)" stroke="var(--brand)" stroke-width="3"/>
       <ellipse cx="250" cy="80" rx="120" ry="40" fill="var(--soft)" stroke="var(--brand)" stroke-width="3"/>
       <path d="M130 260 A120 40 0 0 1 370 260" fill="none" stroke="var(--brand)" stroke-dasharray="6 6"/>
       <path d="M250 80 H370 M397 80 V260 M387 80 H407 M387 260 H407" fill="none" stroke="var(--ink)" stroke-width="2"/>
-      <g fill="var(--ink)" font-size="19"><text x="306" y="71">r</text><text x="411" y="178">h</text></g></svg></div>`;
+      <g fill="var(--ink)" font-size="19"><text x="306" y="71">r</text><text x="411" y="178">h</text></g></svg></div></div>`;
     return "";
+  }
+  function topicVisualMarkup(topic) {
+    const id = topic.id;
+    if (id === "brueche") return `<div class="visual"><h3>Brüche im gleichen Maßstab</h3><p>Beide Streifen zeigen dasselbe Ganze. Zwölftel-Stücke lassen sich direkt vergleichen.</p>
+      <svg viewBox="0 0 560 150" role="img" aria-labelledby="fractions-title fractions-desc"><title id="fractions-title">Bruchstreifen für drei Viertel und ein Sechstel</title><desc id="fractions-desc">Der erste Streifen ist in zwölf gleiche Felder geteilt, davon sind neun blau. Der zweite hat zwölf Felder, davon sind zwei blau. Drei Viertel sind also neun Zwölftel, ein Sechstel zwei Zwölftel.</desc>
+      <g font-size="18" fill="var(--ink)"><text x="12" y="48">3/4</text><text x="12" y="112">1/6</text></g>
+      ${Array.from({length:12},(_,i)=>`<rect x="${80+i*32}" y="23" width="29" height="42" rx="3" fill="${i<9?"var(--brand)":"var(--surface)"}" stroke="var(--line)"/><rect x="${80+i*32}" y="86" width="29" height="42" rx="3" fill="${i<2?"var(--brand)":"var(--surface)"}" stroke="var(--line)"/>`).join("")}
+      <text x="472" y="48" font-size="16" fill="var(--ink)">= 9/12</text><text x="472" y="112" font-size="16" fill="var(--ink)">= 2/12</text></svg>
+      <p class="small muted">Der gemeinsame Nenner 12 bedeutet hier: Das Ganze wurde in zwölf gleich große Stücke geteilt.</p></div>`;
+    if (id === "prozent") return `<div class="visual"><h3>Prozent als Anteil von 100</h3><p>Ziehe den Regler. Der blaue Teil zeigt den gewählten Anteil eines Ganzen.</p>
+      <div class="visual-controls"><label for="percent-visual">Anteil: <output id="percent-output">35&nbsp;%</output></label><input id="percent-visual" type="range" min="0" max="100" value="35" aria-label="Prozentanteil auswählen"></div>
+      <div style="height:30px;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--bg)" role="img" aria-label="Balken: 35 Prozent des Ganzen"><div id="percent-fill" style="height:100%;width:35%;background:var(--brand)"></div></div>
+      <p class="small muted">35&nbsp;% = 35/100 = 0,35. Bei einem Grundwert von 80&nbsp;€ wären das 0,35 · 80&nbsp;€ = 28&nbsp;€.</p></div>`;
+    if (["terme","binomische-formeln","faktorisieren"].includes(id)) return `<div class="visual"><h3>Terme als Flächen zerlegen</h3><p>Das große Quadrat hat die Seitenlänge x + 3. Seine Fläche setzt sich aus einem x²-Quadrat, zwei x-Rechtecken und einem 3×3-Quadrat zusammen.</p>
+      <svg viewBox="0 0 360 280" role="img" aria-labelledby="area-title area-desc"><title id="area-title">Flächenmodell für (x + 3)²</title><desc id="area-desc">Ein Quadrat ist durch eine waagrechte und senkrechte Teilung in x², zwei Rechtecke der Fläche 3x und ein kleines Quadrat mit Fläche 9 zerlegt.</desc>
+      <rect x="65" y="35" width="200" height="200" fill="none" stroke="var(--ink)" stroke-width="3"/><path d="M205 35 V235 M65 175 H265" stroke="var(--ink)" stroke-width="2"/>
+      <rect x="67" y="37" width="136" height="136" fill="var(--brand)" opacity=".55"/><rect x="207" y="37" width="56" height="136" fill="var(--good)" opacity=".55"/><rect x="67" y="177" width="136" height="56" fill="var(--good)" opacity=".55"/><rect x="207" y="177" width="56" height="56" fill="var(--brand)" opacity=".55"/>
+      <g fill="var(--ink)" font-size="18"><text x="120" y="110">x²</text><text x="218" y="110">3x</text><text x="120" y="212">3x</text><text x="227" y="212">9</text><text x="123" y="260">x + 3</text></g></svg>
+      <p class="formula">x² + 3x + 3x + 9 = x² + 6x + 9 = (x + 3)²</p></div>`;
+    if (["gleichungen","gleichungen-mehrschritt","ungleichungen","gleichungssysteme"].includes(id)) return `<div class="visual"><h3>Gleichungen als Waage</h3><p>Eine erlaubte Umformung verändert beide Seiten gleich. So bleibt das Gleichgewicht erhalten.</p>
+      <svg viewBox="0 0 440 190" role="img" aria-labelledby="balance-title balance-desc"><title id="balance-title">Waage für die Gleichung 3x + 2 = 11</title><desc id="balance-desc">Auf der linken Waagschale liegen drei gleich große x-Kästchen und zwei einzelne Kugeln. Auf der rechten liegen elf einzelne Kugeln. Beide Seiten haben gleiches Gewicht.</desc>
+      <path d="M220 45 V145 M100 68 H340 M100 68 L65 133 H150 Z M340 68 L295 133 H385 Z M180 148 H260 L220 45 Z" fill="var(--soft)" stroke="var(--ink)" stroke-width="3"/>
+      <g font-size="17" text-anchor="middle" fill="var(--ink)"><text x="90" y="112">x + x + x</text><text x="140" y="127">+ 2</text><text x="340" y="114">11</text></g></svg>
+      <p class="formula">3x + 2 = 11 → 3x = 9 → x = 3</p>
+      <p class="small muted">Zuerst auf beiden Seiten 2 abziehen; dann beide Seiten durch 3 teilen.</p></div>`;
+    if (["winkel","dreieck-konstruktion","abbildungen","aehnlichkeit","hoehen-katheten","trigonometrie","sinus-kosinussatz","pythagoras"].includes(id)) return geometryMarkup(id) || `<div class="visual"><h3>Skizze vor Rechnung</h3><p>Markiere zuerst bekannte Strecken, Winkel und parallele Linien. Die Zeichnung ist ein Denkwerkzeug, keine maßstabsgetreue Messung.</p>
+      <svg viewBox="0 0 440 240" role="img" aria-labelledby="triangle-title triangle-desc"><title id="triangle-title">Dreieck mit beschrifteten Ecken</title><desc id="triangle-desc">Ein Dreieck ABC mit der Grundseite AB und der Höhe h senkrecht zu AB.</desc>
+      <path d="M65 200 L365 200 L265 40 Z" fill="var(--soft)" stroke="var(--brand)" stroke-width="3"/><path d="M265 40 V200 M265 185 H280 V200" fill="none" stroke="var(--ink)" stroke-width="2"/>
+      <g fill="var(--ink)" font-size="18"><text x="45" y="220">A</text><text x="367" y="220">B</text><text x="268" y="34">C</text><text x="274" y="130">h</text><text x="172" y="224">Grundseite</text></g></svg></div>`;
+    if (["daten-basis","diagramme","datenerhebung"].includes(id)) return `<div class="visual"><h3>Eine Häufigkeitstabelle als Bild</h3><p>Beispieldaten: So wurden 12 Personen befragt. Die Höhe jedes Balkens entspricht der Anzahl.</p>
+      <svg viewBox="0 0 440 250" role="img" aria-labelledby="chart-title chart-desc"><title id="chart-title">Balkendiagramm zu Schulwegen</title><desc id="chart-desc">Fußweg 3 Personen, Fahrrad 5, Bus 4. Die Balken beginnen bei null und haben dieselbe Breite.</desc>
+      <path d="M55 25 V195 H420" fill="none" stroke="var(--ink)" stroke-width="2"/>
+      ${[0,1,2,3,4,5].map(n=>`<path d="M51 ${195-n*28} H420" stroke="var(--line)"/><text x="35" y="${200-n*28}" text-anchor="end" fill="var(--muted)" font-size="12">${n}</text>`).join("")}
+      <rect x="105" y="111" width="60" height="84" fill="var(--brand)"/><rect x="220" y="55" width="60" height="140" fill="var(--brand)"/><rect x="335" y="83" width="60" height="112" fill="var(--brand)"/>
+      <g fill="var(--ink)" font-size="15" text-anchor="middle"><text x="135" y="218">zu Fuß</text><text x="250" y="218">Fahrrad</text><text x="365" y="218">Bus</text></g></svg>
+      <p class="small muted">Kontrolle: 3 + 5 + 4 = 12 Antworten. Für echte Aussagen muss die Stichprobe zur Frage passen.</p></div>`;
+    if (id === "bedingte-wahrscheinlichkeit") return `<div class="visual"><h3>Vierfeldertafel: erst die Bedingungsgruppe auswählen</h3><p>Beispiel: 40 Personen treiben Sport, davon tragen 30 eine Brille. Insgesamt tragen 50 eine Brille. Gesucht ist der Anteil mit Brille <em>unter den Sporttreibenden</em>.</p>
+      <div class="table-scroll"><table><caption>40 treiben Sport; 60 treiben keinen Sport</caption><thead><tr><th scope="col">Gruppe</th><th scope="col">Brille</th><th scope="col">Keine Brille</th><th scope="col">Gesamt</th></tr></thead><tbody><tr><th scope="row">Sport</th><td>30</td><td>10</td><td>40</td></tr><tr><th scope="row">Kein Sport</th><td>20</td><td>40</td><td>60</td></tr><tr><th scope="row">Gesamt</th><td>50</td><td>50</td><td>100</td></tr></tbody></table></div>
+      <p class="formula">P(Brille | Sport) = 30/40 = 0,75 = 75 %</p><p class="small muted">Wegen der Bedingung „Sport“ ist 40 der Nenner, nicht 100.</p></div>`;
+    if (["zufallssimulation","wahrscheinlichkeit-basis","baumdiagramme","kombinatorik"].includes(id)) return `<div class="visual" id="simulation">
+      <h3>Simulation: faire Münze</h3><p>Starte viele Münzwürfe. Beobachte, wie sich die relative Häufigkeit von Kopf mit mehr Versuchen verändert. Es gibt keine Garantie für genau 50&nbsp;%.</p>
+      <div class="visual-controls"><label for="simulation-trials">Würfe:</label><select id="simulation-trials"><option value="20">20</option><option value="100" selected>100</option><option value="1000">1 000</option><option value="5000">5 000</option></select><button type="button" class="primary" id="run-simulation">Würfe simulieren</button></div>
+      <p id="simulation-result" class="simulation-result" aria-live="polite">Noch keine Simulation durchgeführt.</p>
+      <div id="simulation-bar" role="img" aria-label="Nach der Simulation wird hier der beobachtete Kopfanteil dargestellt."></div>
+      <p class="small muted">Theorie: P(Kopf) = 1/2 = 50&nbsp;%. Die Simulation zeigt ein mögliches Ergebnis, nicht die Wahrscheinlichkeit selbst.</p></div>`;
+    if (["pythagoras","trigonometrie","vierecke-kreis","prisma-zylinder"].includes(id)) return geometryMarkup(id);
+    if (id === "pyramiden") return `<div class="visual"><h3>Pyramide: Grundfläche und Spitze</h3><p>Die Körperhöhe steht senkrecht auf der Grundfläche. Die Seitenhöhe verläuft dagegen in einer Seitenfläche – beide Höhen sind nicht dasselbe.</p><svg viewBox="0 0 420 260" role="img" aria-label="Pyramide mit Grundfläche, Spitze und senkrechter Körperhöhe">
+      <path d="M65 190 L205 235 L350 180 L210 138 Z M210 35 L65 190 M210 35 L205 235 M210 35 L350 180" fill="var(--soft)" stroke="var(--brand)" stroke-width="3"/><path d="M210 35 V160 M197 160 H210 V173" fill="none" stroke="var(--ink)" stroke-width="2" stroke-dasharray="6 5"/><text x="219" y="100" fill="var(--ink)">Körperhöhe</text></svg></div>`;
+    if (id === "kegel") return `<div class="visual"><h3>Kegel: Kreisfläche und Mantellinie</h3><p>Die Mantellinie s verläuft außen vom Rand zur Spitze; die senkrechte Höhe h verläuft im Inneren.</p><svg viewBox="0 0 420 250" role="img" aria-label="Kegel mit Radius, senkrechter Höhe und Mantellinie">
+      <path d="M210 32 L80 190 A130 35 0 0 0 340 190 Z" fill="var(--soft)" stroke="var(--brand)" stroke-width="3"/><path d="M210 32 V190 H340 M210 32 L340 190" fill="none" stroke="var(--ink)" stroke-width="2"/><path d="M210 177 H223 V190" fill="none" stroke="var(--ink)" stroke-width="2"/><g fill="var(--ink)" font-size="17"><text x="216" y="118">h</text><text x="274" y="112">s</text><text x="270" y="212">r</text></g></svg><p class="formula">V = ⅓ · πr²h</p></div>`;
+    if (id === "kugel") return `<div class="visual"><h3>Kugel: Radius im Schnittkreis</h3><p>In einem Schnitt durch den Mittelpunkt entsteht ein Kreis. Sein Radius ist zugleich der Kugelradius.</p><svg viewBox="0 0 420 230" role="img" aria-label="Kugel mit großem Schnittkreis und Radius">
+      <circle cx="205" cy="112" r="82" fill="var(--soft)" stroke="var(--brand)" stroke-width="3"/><ellipse cx="205" cy="112" rx="82" ry="31" fill="none" stroke="var(--ink)" stroke-width="2" stroke-dasharray="7 5"/><path d="M205 112 H287" stroke="var(--ink)" stroke-width="3"/><circle cx="205" cy="112" r="4" fill="var(--ink)"/><text x="242" y="104" fill="var(--ink)">r</text></svg><p class="formula">V = ⁴⁄₃ · πr³ &nbsp; · &nbsp; O = 4πr²</p></div>`;
+    if (id === "flaechen") return `<div class="visual"><h3>Parallelogramm zum Rechteck umlegen</h3><p>Schneide das linke Dreieck ab und lege es rechts an. Die Fläche bleibt gleich; aus Grundseite g und senkrechter Höhe h entsteht ein Rechteck.</p><svg viewBox="0 0 430 220" role="img" aria-label="Parallelogramm und flächengleiches Rechteck mit gleicher Grundseite und Höhe">
+      <path d="M35 170 L105 50 L255 50 L185 170 Z" fill="var(--soft)" stroke="var(--brand)" stroke-width="3"/><path d="M105 50 V170 M90 155 H105 V170" fill="none" stroke="var(--ink)" stroke-width="2"/><path d="M280 170 L350 50 L350 170 Z" fill="var(--brand)" opacity=".75" stroke="var(--brand)" stroke-width="2"/><path d="M350 50 H405 V170 H350" fill="var(--soft)" stroke="var(--brand)" stroke-width="3"/><text x="112" y="112" fill="var(--ink)">h</text><text x="100" y="195" fill="var(--ink)">g</text><text x="310" y="205" fill="var(--ink)">A = g · h</text></svg></div>`;
+    if (id === "statistik-vertiefung") return `<div class="visual"><h3>Boxplot: fünf Kennwerte auf einer Zahlengeraden</h3><p>Beispielwerte: Minimum 1, unteres Quartil 3, Median 5, oberes Quartil 7, Maximum 9.</p>
+      <svg viewBox="0 0 480 150" role="img" aria-labelledby="box-title box-desc"><title id="box-title">Boxplot von 1 bis 9</title><desc id="box-desc">Eine waagrechte Strecke reicht von 1 bis 9. Der Kasten reicht vom unteren Quartil 3 bis zum oberen Quartil 7. Die Medianlinie liegt bei 5.</desc>
+      <path d="M55 76 H425 M55 61 V91 M425 61 V91" stroke="var(--ink)" stroke-width="3"/><rect x="155" y="45" width="200" height="62" fill="var(--soft)" stroke="var(--brand)" stroke-width="3"/><path d="M255 45 V107" stroke="var(--brand)" stroke-width="4"/>
+      <g fill="var(--ink)" font-size="16" text-anchor="middle"><text x="55" y="132">1 · Min</text><text x="155" y="132">3 · Q₁</text><text x="255" y="132">5 · Median</text><text x="355" y="132">7 · Q₃</text><text x="425" y="132">9 · Max</text></g></svg>
+      <p class="small muted">Die Box umfasst die mittleren 50&nbsp;% der sortierten Daten; ihre Breite zeigt den Interquartilsabstand.</p></div>`;
+    if (topic.area === "Geometrie") return `<div class="visual"><h3>Erst die Figur, dann die Formel</h3><p>Markiere in einer eigenen Skizze die gegebenen Größen, die gesuchte Strecke und alle rechten Winkel. Körperzeichnungen zeigen Form und Lage; sie sind nicht maßstabsgerecht.</p>
+      <svg viewBox="0 0 420 220" role="img" aria-label="Schematische geometrische Zeichnung: Grundfläche, Höhe und Seitenlinie">
+      <path d="M80 160 L210 205 L350 155 L220 110 Z M220 35 L80 160 M220 35 L350 155 M220 35 L210 205" fill="var(--soft)" stroke="var(--brand)" stroke-width="3"/>
+      <path d="M220 35 V110" stroke="var(--ink)" stroke-width="2" stroke-dasharray="6 5"/>
+      <g fill="var(--ink)" font-size="17"><text x="228" y="79">h</text><text x="184" y="218">Grundfläche</text></g></svg></div>`;
+    return `<div class="visual"><h3>Von der Situation zur Mathematik</h3><p>Zeichne die gegebenen Größen zuerst als Zahlengerade, Tabelle oder Skizze. Schreibe danach daneben, welche Beziehung zwischen den Größen gilt und welche Frage du beantworten willst.</p>
+      <svg viewBox="0 0 440 125" role="img" aria-label="Lernweg: Situation, mathematische Darstellung, Ergebnis"><rect x="8" y="25" width="125" height="62" rx="10" fill="var(--soft)" stroke="var(--line)"/><rect x="157" y="25" width="125" height="62" rx="10" fill="var(--soft)" stroke="var(--line)"/><rect x="306" y="25" width="125" height="62" rx="10" fill="var(--soft)" stroke="var(--line)"/><path d="M133 56 H157 M282 56 H306" stroke="var(--brand)" stroke-width="3"/><g fill="var(--ink)" font-size="15" text-anchor="middle"><text x="70" y="53">Situation</text><text x="70" y="74">Was weiß ich?</text><text x="220" y="53">Skizze / Term</text><text x="220" y="74">Wie hängt es zusammen?</text><text x="368" y="53">Ergebnis</text><text x="368" y="74">Passt es zur Frage?</text></g></svg></div>`;
   }
   let previousGraphModel = null;
   function drawGraph() {
@@ -807,12 +1035,14 @@
     }
     const a = Number(aInput.value), b = Number(bInput.value);
     const format = value => Number(value.toFixed(3)).toLocaleString("de");
+    document.getElementById("graph-b-control").hidden = model === "inverse";
     document.getElementById("graph-b-label").textContent = model === "exponential" ? "Faktor q" : "Parameter b";
     aInput.setAttribute("aria-valuetext",format(a));
     bInput.setAttribute("aria-valuetext",format(b));
-    const fn = x => model === "linear" ? a*x+b : model === "quadratic" ? a*x*x+b : a*Math.pow(b,x);
+    const fn = x => model === "linear" ? a*x+b : model === "quadratic" ? a*x*x+b : model === "inverse" ? (x === 0 ? null : a/x) : a*Math.pow(b,x);
     const formula = model === "linear" ? `y = ${format(a)} · x ${b < 0 ? "−" : "+"} ${format(Math.abs(b))}` :
-      model === "quadratic" ? `y = ${format(a)} · x² ${b < 0 ? "−" : "+"} ${format(Math.abs(b))}` : `y = ${format(a)} · ${format(b)}ˣ`;
+      model === "quadratic" ? `y = ${format(a)} · x² ${b < 0 ? "−" : "+"} ${format(Math.abs(b))}` :
+      model === "inverse" ? `y = ${format(a)} / x (bei x = 0 nicht definiert)` : `y = ${format(a)} · ${format(b)}ˣ`;
     document.getElementById("graph-description").textContent = formula + (model === "quadratic" && a === 0 ? " (a = 0: keine Parabel, sondern konstante Funktion)" : "");
     const px = x => 40 + (x+5)*48;
     const py = y => 360 - (y+10)*16;
@@ -820,14 +1050,17 @@
     for (let x=-5;x<=5;x++) svg += `<line x1="${px(x)}" y1="40" x2="${px(x)}" y2="360" stroke="var(--line)"/><text x="${px(x)}" y="383" text-anchor="middle" font-size="12" fill="var(--muted)">${x}</text>`;
     for (let y=-10;y<=10;y+=2) svg += `<line x1="40" y1="${py(y)}" x2="520" y2="${py(y)}" stroke="var(--line)"/><text x="30" y="${py(y)+4}" text-anchor="end" font-size="12" fill="var(--muted)">${y}</text>`;
     svg += `<line x1="40" y1="${py(0)}" x2="520" y2="${py(0)}" stroke="var(--ink)" stroke-width="2"/><line x1="${px(0)}" y1="40" x2="${px(0)}" y2="360" stroke="var(--ink)" stroke-width="2"/><text x="535" y="205" fill="var(--ink)">x</text><text x="289" y="26" fill="var(--ink)">y</text>`;
-    let path = "";
+    let path = "", drawing = false;
     for (let i=0;i<=400;i++) {
       const x = -5 + i/40;
-      path += `${i === 0 ? "M" : "L"}${px(x).toFixed(2)},${py(fn(x)).toFixed(2)} `;
+      const y = fn(x);
+      if (y === null || !Number.isFinite(y) || Math.abs(y) > 100) { drawing = false; continue; }
+      path += `${drawing ? "L" : "M"}${px(x).toFixed(2)},${py(y).toFixed(2)} `;
+      drawing = true;
     }
     svg += `<path d="${path}" fill="none" stroke="var(--brand)" stroke-width="3" clip-path="url(#graph-clip)"/>`;
     document.getElementById("graph-svg").innerHTML = svg;
-    document.getElementById("graph-values").textContent = `Wertetabelle: f(−2) = ${format(fn(-2))}; f(−1) = ${format(fn(-1))}; f(0) = ${format(fn(0))}; f(1) = ${format(fn(1))}; f(2) = ${format(fn(2))}.`;
+    document.getElementById("graph-values").textContent = `Wertetabelle: ${[-2,-1,0,1,2].map(x => `f(${x}) = ${fn(x) === null ? "nicht definiert" : format(fn(x))}`).join("; ")}.`;
   }
   function setHash() {
     const hash = selected ? `#${selected}/${activeSection}` : `#klasse-${grade}`;
@@ -884,6 +1117,23 @@
     if (open) { event.preventDefault(); openTopic(open.dataset.open); return; }
     const tab = event.target.closest("[data-section]");
     if (tab) { switchSection(tab.dataset.section, tab.getAttribute("role") === "tab"); return; }
+    const level = event.target.closest("[data-practice-level]");
+    if (level && !level.disabled) {
+      practiceLevel = level.dataset.practiceLevel;
+      renderTopic(topics.find(topic => topic.id === selected),"practice",false);
+      return;
+    }
+    if (event.target.closest("#run-simulation")) {
+      const trials = Number(document.getElementById("simulation-trials").value);
+      let heads = 0;
+      for (let i=0;i<trials;i++) if (Math.random() < 0.5) heads++;
+      const frequency = heads / trials;
+      document.getElementById("simulation-result").textContent = `${heads} von ${trials} Würfen zeigen Kopf. Relative Häufigkeit: ${(frequency*100).toLocaleString("de",{maximumFractionDigits:1})} % (Theorie: 50 %).`;
+      const bar = document.getElementById("simulation-bar");
+      bar.setAttribute("aria-label",`Beobachteter Kopfanteil: ${(frequency*100).toLocaleString("de",{maximumFractionDigits:1})} Prozent; erwarteter Anteil 50 Prozent.`);
+      bar.innerHTML = `<div style="height:26px;border-radius:7px;overflow:hidden;background:var(--bg);border:1px solid var(--line)"><div style="height:100%;width:${frequency*100}%;background:var(--brand)"></div></div><p class="small muted">Beobachtet: ${(frequency*100).toLocaleString("de",{maximumFractionDigits:1})} % · Erwartungswert: 50 %</p>`;
+      return;
+    }
     if (event.target.closest("#print-topic")) window.print();
     if (event.target.closest("#next-topic")) {
       const sameGrade = topics.filter(t => t.grade === grade);
@@ -908,6 +1158,12 @@
   });
   content.addEventListener("input", event => {
     if (["graph-a","graph-b"].includes(event.target.id)) drawGraph();
+    if (event.target.id === "percent-visual") {
+      const percent = Number(event.target.value);
+      document.getElementById("percent-output").textContent = `${percent} %`;
+      document.getElementById("percent-fill").style.width = `${percent}%`;
+      event.target.closest(".visual").querySelector('[role="img"]').setAttribute("aria-label",`Balken: ${percent} Prozent des Ganzen`);
+    }
   });
   content.addEventListener("change", event => {
     if (event.target.id === "graph-model") drawGraph();
