@@ -6,7 +6,7 @@
   <meta name="color-scheme" content="light dark">
   <title>MatheKompass · Realschule Klasse 7–10</title>
   <style>
-    :root{--bg:#f4f6fb;--surface:#fff;--ink:#17243b;--muted:#526078;--brand:#235bc5;--soft:#eaf0ff;--line:#d5deec;--good:#17633f;--bad:#ad2828;--radius:18px}
+    :root{--bg:#f4f6fb;--surface:#fff;--ink:#17243b;--muted:#526078;--brand:#235bc5;--soft:#eaf0ff;--line:#d5deec;--good:#17633f;--bad:#ad2828;--accent:#c25e00;--accent2:#7b3fb5;--radius:18px}
     *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
     button,input,select{font:inherit}button,a,input,select{touch-action:manipulation}button{cursor:pointer}button:disabled{cursor:default;opacity:.6}
     a{color:var(--brand)}:focus-visible{outline:3px solid #dc7900;outline-offset:4px}
@@ -46,6 +46,20 @@
     .curriculum{background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:16px 0}
     .curriculum h3,.concept h3,.visual h3{margin:0 0 8px}.curriculum p:last-child,.concept p:last-child,.visual p:last-child{margin-bottom:0}
     .tag{display:inline-block;border-radius:999px;background:var(--soft);border:1px solid var(--line);padding:2px 9px;margin:3px;font-size:.78rem;font-weight:700}
+    .lab{border:2px solid var(--brand);border-radius:16px;padding:18px;margin:22px 0;background:var(--soft)}
+    .lab-head h3{margin:6px 0 4px}.lab-head p{margin:0 0 10px}.lab-badge{display:inline-block;background:var(--brand);color:var(--surface);font-size:.78rem;font-weight:750;letter-spacing:.06em;text-transform:uppercase;padding:3px 10px;border-radius:99px}
+    .lab-views{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:8px 0 12px}.lab-views button{border:2px solid var(--brand);background:var(--surface);color:var(--brand);border-radius:99px;padding:6px 14px;font-weight:650;min-height:44px}
+    .lab-views button[aria-pressed=true]{background:var(--brand);color:var(--surface)}
+    .lab-grid{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(220px,1fr);gap:16px;align-items:start}
+    .lab figure{margin:0;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:6px}.lab figure svg{display:block;width:100%;height:auto}
+    .lab-panel{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px}.lab-panel>p:first-child{margin-top:0}
+    .lab-slider{display:block;margin:0 0 14px}.lab-slider[hidden]{display:none}.lab-slider span{display:block;font-weight:600}.lab-slider output{color:var(--brand);font-weight:800}
+    .lab-slider input[type=range]{width:100%;height:36px;accent-color:var(--brand);cursor:pointer}
+    .lab-buttons{display:flex;flex-wrap:wrap;gap:8px}.lab-buttons button,.lab-step-control button{min-height:44px}
+    .lab-summary{margin:12px 0 0;padding:10px 12px;border-left:5px solid var(--accent);background:var(--bg);border-radius:8px}
+    .lab-steps{margin-top:14px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px}.lab-step-control{display:flex;gap:14px;align-items:end;flex-wrap:wrap}.lab-step-control .lab-slider{flex:1 1 240px;margin:0}
+    .lab-steps ol{margin:10px 0 0;padding-left:24px}.lab-steps li{margin:6px 0}.lab-steps li.current{font-weight:650;background:var(--soft);border-radius:6px;padding:2px 6px}
+    .lab-jump{margin-top:8px}
     .visual{border:1px solid var(--line);border-radius:14px;padding:18px;margin:18px 0;background:var(--surface)}
     .visual svg{display:block;width:100%;height:auto;max-width:560px;margin:12px auto}
     .visual-controls{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
@@ -65,8 +79,9 @@
     .self-check label{display:flex;gap:8px;align-items:flex-start;font-weight:450;margin:6px 0}
     .simulation-result{font-variant-numeric:tabular-nums;font-weight:700}
     .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
-    @media(max-width:860px){.layout{grid-template-columns:1fr;padding:14px;gap:14px}aside{position:static;max-height:none}.topic-list{max-height:260px;overflow:auto}header{padding:24px}.panel{padding:20px}}
-    @media(prefers-color-scheme:dark){:root{--bg:#111a29;--surface:#19263b;--ink:#eef2fc;--muted:#b6c3d8;--brand:#82b0ff;--soft:#243857;--line:#40516b;--good:#8bddb1;--bad:#ffacac}.primary,.grade[aria-pressed=true],.tab[aria-selected=true]{color:#10203a}header{background:#0d203e}}
+    @media(max-width:860px){.lab-grid{grid-template-columns:1fr}.lab{padding:12px}.layout{grid-template-columns:1fr;padding:14px;gap:14px}aside{position:static;max-height:none}.topic-list{max-height:260px;overflow:auto}header{padding:24px}.panel{padding:20px}}
+    @media(prefers-color-scheme:dark){:root{--bg:#111a29;--surface:#19263b;--ink:#eef2fc;--muted:#b6c3d8;--brand:#82b0ff;--soft:#243857;--line:#40516b;--good:#8bddb1;--bad:#ffacac;--accent:#ffb066;--accent2:#d0a6ff}.primary,.grade[aria-pressed=true],.tab[aria-selected=true]{color:#10203a}header{background:#0d203e}}
+    @media print{.lab-panel,.lab-views,.lab-step-control,.lab-jump{display:none!important}.lab-steps li[hidden]{display:list-item!important}.lab{break-inside:avoid;background:none}}
     @media print{body{background:#fff;color:#000;font-size:11pt}header{background:none;color:#000;padding:0}header p{color:#333}.layout{display:block;padding:0}aside,.tabs,.actions,.nav-end,.graph-controls,.check-button,.skip,#overview-button{display:none!important}.panel{border:0;padding:0}.section[hidden]{display:block}.section{break-before:auto;margin:25px 0}.task,.example,.deep,.rule{break-inside:avoid;background:#fff;color:#000}details>*{display:block}footer{padding:0}.notice{background:none}.muted{color:#333}}
   </style>
 </head>
@@ -824,7 +839,7 @@
         <div class="example"><h3>Schritt für Schritt</h3><p><strong>${escapeHTML(topic.example.question)}</strong></p>
           <ol>${topic.example.steps.map(step => `<li>${escapeHTML(step)}</li>`).join("")}</ol><p class="result">${escapeHTML(topic.example.result)}</p></div>
         <p class="warning"><strong>Typischer Fehler:</strong> ${escapeHTML(topic.mistake)}</p>
-        ${["lineare-funktionen","quadratische-funktionen","quadratische-gleichungen","exponentialfunktionen","funktionen-vergleichen","proportional","antiproportional"].includes(topic.id) ? graphMarkup(topic.id) : ""}
+        ${labMarkup(topic,"explain")}
         ${topicVisualMarkup(topic)}
         <div class="actions"><button type="button" class="primary" data-section="practice">Jetzt selbst üben →</button></div>
       </section>
@@ -835,6 +850,7 @@
           ${["G","M","E"].map(level => `<button type="button" class="level-button" data-practice-level="${level}" aria-pressed="${practiceLevel === level}" ${allowed.includes(level) ? "" : "disabled"}>${level}-Niveau</button>`).join("")}
         </div>
         <p class="small muted">${practiceLevel === "alle" ? `Dieses Thema enthält ${topic.tasks.length} numerische Aufgaben mit Hinweisen und Musterlösungen sowie eine offene Transferaufgabe.` : `Anzeige: ${practiceLevel}-Niveau. Die Aufgaben anderer Niveaus bleiben über „Alle passenden Aufgaben“ erreichbar.`} ${allowed.length < 3 ? `Laut Kompetenzraster ist dieses Teilthema hier für ${allowed.join(" und ")} vorgesehen.` : ""}</p>
+        ${labMarkup(topic,"practice")}
         ${topic.tasks.map((task,index) => ({task,index,level:levelForTask(topic,index)}))
           .filter(item => practiceLevel === "alle" || item.level === practiceLevel)
           .map(({task,index,level}) => `<form class="task" data-task="${index}" data-level="${level}" novalidate>
@@ -844,6 +860,7 @@
           <span aria-hidden="true">${escapeHTML(task.unit)}</span><button type="submit" class="primary check-button">Prüfen</button></div>
           <p class="feedback${(progress[topic.id] || []).includes(index) ? " good" : ""}" id="feedback-${index}" aria-live="polite">${(progress[topic.id] || []).includes(index) ? "✓ Bereits einmal richtig gelöst. Vergleiche deinen Rechenweg mit der Lösung." : ""}</p>
           <details><summary>Tipp anzeigen</summary><p>${escapeHTML(task.hint)}</p></details>
+          ${labConfig[topic.id] ? '<button type="button" class="secondary lab-jump" data-lab-jump>🔍 Im Modell ausprobieren</button>' : ""}
           <details><summary>Musterlösung mit Rechenweg anzeigen</summary><p class="formula">${escapeHTML(task.solution)}</p></details></form>`).join("")}
         ${topic.tasks.filter((task,index) => practiceLevel === "alle" || levelForTask(topic,index) === practiceLevel).length === 0 ? `<p class="notice">Für dieses Thema sind keine Aufgaben auf ${practiceLevel}-Niveau hinterlegt. Wechsle zu ${allowed.map(level => `${level}-Niveau`).join(" oder ")}.</p>` : ""}
         <button type="button" class="primary" data-section="depth">Zur Vertiefung →</button>
@@ -857,7 +874,7 @@
       </section>
       <div class="nav-end"><button type="button" class="secondary" id="print-topic">Thema drucken</button><button type="button" class="secondary" id="next-topic">Nächstes Thema →</button></div>`;
     renderNavigation();
-    if (content.querySelector("#graph-svg")) drawGraph();
+    content.querySelectorAll(".lab").forEach(updateLab);
     if (focus) main.focus();
   }
   function switchSection(section, focusTab = false) {
@@ -914,18 +931,6 @@
       renderNavigation();
     }
   }
-  function graphMarkup(id) {
-    const model = ["quadratische-funktionen","quadratische-gleichungen"].includes(id) ? "quadratic" :
-      id === "exponentialfunktionen" ? "exponential" : id === "antiproportional" ? "inverse" : "linear";
-    return `<h3>Graphen-Labor</h3><p class="small muted">Verändere die Parameter und beschreibe, was sich am Graphen ändert. Dargestelltes Fenster: −5 ≤ x ≤ 5 und −10 ≤ y ≤ 10. Außerhalb liegende Kurventeile sind abgeschnitten. Die waagrechte Achse ist x, die senkrechte y.</p>
-      <div class="graph-controls"><div><label for="graph-model">Funktionstyp</label><select id="graph-model">
-      ${[["linear","Linear: y = ax + b"],["quadratic","Quadratisch: y = ax² + b"],["exponential","Exponentiell: y = a · qˣ"],["inverse","Antiproportional: y = a/x"]].map(([value,text]) => `<option value="${value}" ${value === model ? "selected" : ""}>${text}</option>`).join("")}</select></div>
-      <div><label for="graph-a">Parameter a</label><input id="graph-a" type="range" min="-3" max="3" step="0.5" value="1"></div>
-      <div id="graph-b-control"><label id="graph-b-label" for="graph-b">Parameter b</label><input id="graph-b" type="range" min="-5" max="5" step="0.5" value="0"></div></div>
-      <p id="graph-description" class="formula" aria-live="polite"></p>
-      <div class="graph-wrap"><svg id="graph-svg" viewBox="0 0 560 400" role="img" aria-labelledby="graph-svg-title graph-svg-desc"><title id="graph-svg-title">Funktionsgraph im Koordinatensystem</title><desc id="graph-svg-desc"></desc></svg></div>
-      <p id="graph-values" class="small muted"></p>`;
-  }
   function geometryMarkup(id) {
     if (["pythagoras","trigonometrie"].includes(id)) return `<div class="visual"><h3>So liest du die Skizze</h3>
       <div class="graph-wrap"><svg viewBox="0 0 500 340" role="img" aria-labelledby="geometry-title geometry-desc">
@@ -961,10 +966,6 @@
       ${Array.from({length:12},(_,i)=>`<rect x="${80+i*32}" y="23" width="29" height="42" rx="3" fill="${i<9?"var(--brand)":"var(--surface)"}" stroke="var(--line)"/><rect x="${80+i*32}" y="86" width="29" height="42" rx="3" fill="${i<2?"var(--brand)":"var(--surface)"}" stroke="var(--line)"/>`).join("")}
       <text x="472" y="48" font-size="16" fill="var(--ink)">= 9/12</text><text x="472" y="112" font-size="16" fill="var(--ink)">= 2/12</text></svg>
       <p class="small muted">Der gemeinsame Nenner 12 bedeutet hier: Das Ganze wurde in zwölf gleich große Stücke geteilt.</p></div>`;
-    if (id === "prozent") return `<div class="visual"><h3>Prozent als Anteil von 100</h3><p>Ziehe den Regler. Der blaue Teil zeigt den gewählten Anteil eines Ganzen.</p>
-      <div class="visual-controls"><label for="percent-visual">Anteil: <output id="percent-output">35&nbsp;%</output></label><input id="percent-visual" type="range" min="0" max="100" value="35" aria-label="Prozentanteil auswählen"></div>
-      <div style="height:30px;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--bg)" role="img" aria-label="Balken: 35 Prozent des Ganzen"><div id="percent-fill" style="height:100%;width:35%;background:var(--brand)"></div></div>
-      <p class="small muted">35&nbsp;% = 35/100 = 0,35. Bei einem Grundwert von 80&nbsp;€ wären das 0,35 · 80&nbsp;€ = 28&nbsp;€.</p></div>`;
     if (["terme","binomische-formeln","faktorisieren"].includes(id)) return `<div class="visual"><h3>Terme als Flächen zerlegen</h3><p>Das große Quadrat hat die Seitenlänge x + 3. Seine Fläche setzt sich aus einem x²-Quadrat, zwei x-Rechtecken und einem 3×3-Quadrat zusammen.</p>
       <svg viewBox="0 0 360 280" role="img" aria-labelledby="area-title area-desc"><title id="area-title">Flächenmodell für (x + 3)²</title><desc id="area-desc">Ein Quadrat ist durch eine waagrechte und senkrechte Teilung in x², zwei Rechtecke der Fläche 3x und ein kleines Quadrat mit Fläche 9 zerlegt.</desc>
       <rect x="65" y="35" width="200" height="200" fill="none" stroke="var(--ink)" stroke-width="3"/><path d="M205 35 V235 M65 175 H265" stroke="var(--ink)" stroke-width="2"/>
@@ -1019,48 +1020,1047 @@
     return `<div class="visual"><h3>Von der Situation zur Mathematik</h3><p>Zeichne die gegebenen Größen zuerst als Zahlengerade, Tabelle oder Skizze. Schreibe danach daneben, welche Beziehung zwischen den Größen gilt und welche Frage du beantworten willst.</p>
       <svg viewBox="0 0 440 125" role="img" aria-label="Lernweg: Situation, mathematische Darstellung, Ergebnis"><rect x="8" y="25" width="125" height="62" rx="10" fill="var(--soft)" stroke="var(--line)"/><rect x="157" y="25" width="125" height="62" rx="10" fill="var(--soft)" stroke="var(--line)"/><rect x="306" y="25" width="125" height="62" rx="10" fill="var(--soft)" stroke="var(--line)"/><path d="M133 56 H157 M282 56 H306" stroke="var(--brand)" stroke-width="3"/><g fill="var(--ink)" font-size="15" text-anchor="middle"><text x="70" y="53">Situation</text><text x="70" y="74">Was weiß ich?</text><text x="220" y="53">Skizze / Term</text><text x="220" y="74">Wie hängt es zusammen?</text><text x="368" y="53">Ergebnis</text><text x="368" y="74">Passt es zur Frage?</text></g></svg></div>`;
   }
-  let previousGraphModel = null;
-  function drawGraph() {
-    const model = document.getElementById("graph-model").value;
-    const aInput = document.getElementById("graph-a");
-    const bInput = document.getElementById("graph-b");
-    if (previousGraphModel !== model) {
-      bInput.min = model === "exponential" ? "0.25" : "-5";
-      bInput.max = model === "exponential" ? "3" : "5";
-      bInput.step = model === "exponential" ? "0.25" : "0.5";
-      bInput.value = model === "exponential" ? "1.5" : "0";
-      aInput.min = model === "exponential" ? "0.5" : "-3";
-      if (Number(aInput.value) < Number(aInput.min)) aInput.value = "1";
-      previousGraphModel = model;
+  /* ===== Mathe-Labore: interaktive Visualisierungen mit Schiebereglern ===== */
+  let labUid = 0;
+  const r1 = value => Math.round(value * 10) / 10;
+  const fmt = (value, digits = 2) => {
+    const rounded = Number(Number(value).toFixed(digits));
+    return (Object.is(rounded, -0) ? 0 : rounded).toLocaleString("de", {maximumFractionDigits: digits}).replace("-", "−");
+  };
+  const par = (value, digits = 2) => value < 0 ? `(${fmt(value, digits)})` : fmt(value, digits);
+  const signed = (value, digits = 2) => value === 0 ? "" : ` ${value < 0 ? "−" : "+"} ${fmt(Math.abs(value), digits)}`;
+  const gcd = (a, b) => { a = Math.abs(a); b = Math.abs(b); while (b) [a, b] = [b, a % b]; return a || 1; };
+  const P = (key, label, min, max, step, def, unit = "", views = null) => ({key, label, min, max, step, def, unit, views});
+  const tx = (x, y, text, {fill = "var(--ink)", size = 15, anchor = "start", weight = 400} = {}) =>
+    `<text x="${r1(x)}" y="${r1(y)}" fill="${fill}" font-size="${size}" text-anchor="${anchor}" font-weight="${weight}">${text}</text>`;
+  const line = (x1, y1, x2, y2, stroke = "var(--ink)", width = 2, dash = "") =>
+    `<line x1="${r1(x1)}" y1="${r1(y1)}" x2="${r1(x2)}" y2="${r1(y2)}" stroke="${stroke}" stroke-width="${width}"${dash ? ` stroke-dasharray="${dash}"` : ""}/>`;
+  const dot = (x, y, color = "var(--brand)", radius = 6) => `<circle cx="${r1(x)}" cy="${r1(y)}" r="${radius}" fill="${color}" stroke="var(--surface)" stroke-width="2"/>`;
+  const rect = (x, y, w, h, fill, stroke = "var(--ink)", extra = "") =>
+    `<rect x="${r1(x)}" y="${r1(y)}" width="${r1(Math.max(0, w))}" height="${r1(Math.max(0, h))}" fill="${fill}" stroke="${stroke}" stroke-width="1.5" ${extra}/>`;
+  const poly = (points, fill, stroke = "var(--ink)", extra = "") =>
+    `<polygon points="${points.map(([x, y]) => `${r1(x)},${r1(y)}`).join(" ")}" fill="${fill}" stroke="${stroke}" stroke-width="2" ${extra}/>`;
+  const polar = (cx, cy, radius, deg) => [cx + radius * Math.cos(deg * Math.PI / 180), cy - radius * Math.sin(deg * Math.PI / 180)];
+  function arrow(x1, y1, x2, y2, color = "var(--brand)", width = 3) {
+    const length = Math.hypot(x2 - x1, y2 - y1);
+    if (length < 1) return "";
+    const angle = Math.atan2(y2 - y1, x2 - x1), head = Math.min(13, length * 0.6);
+    const bx = x2 - head * Math.cos(angle), by = y2 - head * Math.sin(angle);
+    const ox = Math.sin(angle) * head * 0.5, oy = -Math.cos(angle) * head * 0.5;
+    return line(x1, y1, bx, by, color, width) + `<polygon points="${r1(x2)},${r1(y2)} ${r1(bx + ox)},${r1(by + oy)} ${r1(bx - ox)},${r1(by - oy)}" fill="${color}"/>`;
+  }
+  function arc(cx, cy, radius, a0, a1, color = "var(--brand)", fill = "none") {
+    const span = a1 - a0;
+    if (span >= 359.9) return `<circle cx="${r1(cx)}" cy="${r1(cy)}" r="${radius}" fill="${fill}" stroke="${color}" stroke-width="${fill === "none" ? 3 : 2}"/>`;
+    const [x0, y0] = polar(cx, cy, radius, a0), [x1, y1] = polar(cx, cy, radius, a1);
+    const large = span > 180 ? 1 : 0;
+    return fill === "none"
+      ? `<path d="M${r1(x0)} ${r1(y0)} A${radius} ${radius} 0 ${large} 0 ${r1(x1)} ${r1(y1)}" fill="none" stroke="${color}" stroke-width="3"/>`
+      : `<path d="M${r1(cx)} ${r1(cy)} L${r1(x0)} ${r1(y0)} A${radius} ${radius} 0 ${large} 0 ${r1(x1)} ${r1(y1)} Z" fill="${fill}" stroke="${color}" stroke-width="2"/>`;
+  }
+  function angleMark(cx, cy, a0, a1, label, color, radius = 34) {
+    const [lx, ly] = polar(cx, cy, radius + 18, (a0 + a1) / 2);
+    return `<g fill-opacity=".3">${arc(cx, cy, radius, a0, a1, color, color)}</g>` + tx(lx, ly + 5, label, {anchor: "middle", fill: color, weight: 700});
+  }
+  function niceStep(range, target = 10) {
+    const raw = range / target, mag = 10 ** Math.floor(Math.log10(raw)), n = raw / mag;
+    return (n <= 1 ? 1 : n <= 2 ? 2 : n <= 5 ? 5 : 10) * mag;
+  }
+  function fitBox(points, W = 560, H = 380, pad = 40) {
+    const xs = points.map(p => p[0]), ys = points.map(p => p[1]);
+    const minX = Math.min(...xs), maxX = Math.max(...xs), minY = Math.min(...ys), maxY = Math.max(...ys);
+    const scale = Math.min((W - 2 * pad) / Math.max(maxX - minX, 1e-6), (H - 2 * pad) / Math.max(maxY - minY, 1e-6));
+    const ox = (W - (maxX - minX) * scale) / 2, oy = (H - (maxY - minY) * scale) / 2;
+    const map = ([x, y]) => [ox + (x - minX) * scale, H - oy - (y - minY) * scale];
+    map.scale = scale;
+    return map;
+  }
+  function svgTable(rows, {x = 10, y = 20, w = 540, rowH = 40, highlightCol = -1, firstColW = null, size = 14} = {}) {
+    const cols = rows[0].length, fw = firstColW ?? w / cols, cw = (w - fw) / Math.max(cols - 1, 1);
+    let s = "";
+    rows.forEach((row, ri) => row.forEach((cell, ci) => {
+      const cx = ci === 0 ? x : x + fw + (ci - 1) * cw, width = ci === 0 ? fw : cw;
+      const head = ri === 0 || ci === 0, hl = ci === highlightCol && ci > 0;
+      s += `<rect x="${r1(cx)}" y="${y + ri * rowH}" width="${r1(width)}" height="${rowH}" fill="${hl ? "var(--soft)" : head ? "var(--bg)" : "var(--surface)"}" stroke="var(--line)"/>`
+        + tx(cx + width / 2, y + ri * rowH + rowH / 2 + 5, cell, {anchor: "middle", size, weight: head || hl ? 700 : 400});
+    }));
+    if (highlightCol > 0) s += `<rect x="${r1(x + fw + (highlightCol - 1) * cw)}" y="${y}" width="${r1(cw)}" height="${rows.length * rowH}" fill="none" stroke="var(--brand)" stroke-width="3" rx="4"/>`;
+    return s;
+  }
+  function labPlot({xmin, xmax, ymin, ymax, fns = [], W = 560, H = 380, xstep, ystep, xlabel = "x", ylabel = "y", extra}) {
+    const L = 50, R = W - 18, Tp = 14, B = H - 30;
+    const px = x => L + (x - xmin) / (xmax - xmin) * (R - L), py = y => B - (y - ymin) / (ymax - ymin) * (B - Tp);
+    xstep = xstep || niceStep(xmax - xmin); ystep = ystep || niceStep(ymax - ymin);
+    const clip = `lab-clip-${++labUid}`;
+    let s = `<defs><clipPath id="${clip}"><rect x="${L}" y="${Tp}" width="${R - L}" height="${B - Tp}"/></clipPath></defs><rect x="${L}" y="${Tp}" width="${R - L}" height="${B - Tp}" fill="var(--surface)"/>`;
+    for (let i = Math.ceil(xmin / xstep - 1e-9); i * xstep <= xmax + 1e-9; i++) s += line(px(i * xstep), Tp, px(i * xstep), B, "var(--line)", 1) + tx(px(i * xstep), B + 18, fmt(i * xstep), {anchor: "middle", size: 12, fill: "var(--muted)"});
+    for (let i = Math.ceil(ymin / ystep - 1e-9); i * ystep <= ymax + 1e-9; i++) s += line(L, py(i * ystep), R, py(i * ystep), "var(--line)", 1) + tx(L - 6, py(i * ystep) + 4, fmt(i * ystep), {anchor: "end", size: 12, fill: "var(--muted)"});
+    const axisY = Math.min(Math.max(0, ymin), ymax), axisX = Math.min(Math.max(0, xmin), xmax);
+    s += line(L, py(axisY), R, py(axisY), "var(--ink)", 2) + line(px(axisX), Tp, px(axisX), B, "var(--ink)", 2)
+      + tx(R - 4, py(axisY) - 8, xlabel, {anchor: "end", weight: 700}) + tx(px(axisX) + 8, Tp + 16, ylabel, {weight: 700});
+    for (const fn of fns) {
+      let d = "", on = false, prevX = null;
+      for (let i = 0; i <= 480; i++) {
+        const x = xmin + (xmax - xmin) * i / 480, y = fn.f(x);
+        if (fn.gap !== undefined && prevX !== null && (prevX - fn.gap) * (x - fn.gap) <= 0) on = false;
+        prevX = x;
+        if (!Number.isFinite(y) || Math.abs(y - (ymin + ymax) / 2) > (ymax - ymin) * 3) { on = false; continue; }
+        d += `${on ? "L" : "M"}${r1(px(x))} ${r1(py(y))} `; on = true;
+      }
+      s += `<path d="${d}" fill="none" stroke="${fn.color || "var(--brand)"}" stroke-width="${fn.width || 3}"${fn.dash ? ` stroke-dasharray="${fn.dash}"` : ""} clip-path="url(#${clip})"/>`;
     }
-    const a = Number(aInput.value), b = Number(bInput.value);
-    const format = value => Number(value.toFixed(3)).toLocaleString("de");
-    document.getElementById("graph-b-control").hidden = model === "inverse";
-    document.getElementById("graph-b-label").textContent = model === "exponential" ? "Faktor q" : "Parameter b";
-    aInput.setAttribute("aria-valuetext",format(a));
-    bInput.setAttribute("aria-valuetext",format(b));
-    const fn = x => model === "linear" ? a*x+b : model === "quadratic" ? a*x*x+b : model === "inverse" ? (x === 0 ? null : a/x) : a*Math.pow(b,x);
-    const formula = model === "linear" ? `y = ${format(a)} · x ${b < 0 ? "−" : "+"} ${format(Math.abs(b))}` :
-      model === "quadratic" ? `y = ${format(a)} · x² ${b < 0 ? "−" : "+"} ${format(Math.abs(b))}` :
-      model === "inverse" ? `y = ${format(a)} / x (bei x = 0 nicht definiert)` : `y = ${format(a)} · ${format(b)}ˣ`;
-    document.getElementById("graph-description").textContent = formula + (model === "quadratic" && a === 0 ? " (a = 0: keine Parabel, sondern konstante Funktion)" : "");
-    const px = x => 40 + (x+5)*48;
-    const py = y => 360 - (y+10)*16;
-    let svg = `<title id="graph-svg-title">Funktionsgraph</title><desc id="graph-svg-desc">${escapeHTML(formula)}. x von −5 bis 5, y von −10 bis 10.</desc><defs><clipPath id="graph-clip"><rect x="40" y="40" width="480" height="320"/></clipPath></defs>`;
-    for (let x=-5;x<=5;x++) svg += `<line x1="${px(x)}" y1="40" x2="${px(x)}" y2="360" stroke="var(--line)"/><text x="${px(x)}" y="383" text-anchor="middle" font-size="12" fill="var(--muted)">${x}</text>`;
-    for (let y=-10;y<=10;y+=2) svg += `<line x1="40" y1="${py(y)}" x2="520" y2="${py(y)}" stroke="var(--line)"/><text x="30" y="${py(y)+4}" text-anchor="end" font-size="12" fill="var(--muted)">${y}</text>`;
-    svg += `<line x1="40" y1="${py(0)}" x2="520" y2="${py(0)}" stroke="var(--ink)" stroke-width="2"/><line x1="${px(0)}" y1="40" x2="${px(0)}" y2="360" stroke="var(--ink)" stroke-width="2"/><text x="535" y="205" fill="var(--ink)">x</text><text x="289" y="26" fill="var(--ink)">y</text>`;
-    let path = "", drawing = false;
-    for (let i=0;i<=400;i++) {
-      const x = -5 + i/40;
-      const y = fn(x);
-      if (y === null || !Number.isFinite(y) || Math.abs(y) > 100) { drawing = false; continue; }
-      path += `${drawing ? "L" : "M"}${px(x).toFixed(2)},${py(y).toFixed(2)} `;
-      drawing = true;
+    if (extra) s += extra(px, py);
+    return {svg: s, px, py};
+  }
+  function seededRandom(seed) {
+    let t = seed >>> 0;
+    return () => { t += 0x6D2B79F5; let r = Math.imul(t ^ t >>> 15, 1 | t); r ^= r + Math.imul(r ^ r >>> 7, 61 | r); return ((r ^ r >>> 14) >>> 0) / 4294967296; };
+  }
+  const labs = {};
+  labs.numberline = {
+    title: "Zahlengerade und Thermometer",
+    tip: "Stelle Startzahl und Änderung ein. Ein Pfeil nach rechts bedeutet „größer“, ein Pfeil nach links „kleiner“.",
+    params: [P("a", "Startzahl a", -10, 10, 1, -3), P("b", "Zahl b", -10, 10, 1, 5)],
+    views: [["add", "a + b"], ["sub", "a − b"], ["thermo", "Thermometer"]],
+    render(p, view) {
+      const move = view === "sub" ? -p.b : p.b, result = p.a + move;
+      const opText = view === "sub" ? `${par(p.a)} − ${par(p.b)}` : `${par(p.a)} + ${par(p.b)}`;
+      const dir = move > 0 ? "nach rechts (es wird größer)" : move < 0 ? "nach links (es wird kleiner)" : "gar nicht";
+      const steps = [`Starte bei a = ${fmt(p.a)}.`,
+        view === "sub" ? `„Minus b“ heißt: die Gegenzahl addieren. ${opText} = ${par(p.a)} + ${par(-p.b)}.` : `b = ${fmt(p.b)} ist ${p.b < 0 ? "negativ – du gehst nach links" : "nicht negativ – du gehst nach rechts"}.`,
+        `Gehe ${fmt(Math.abs(move))} Schritte ${dir}.`, `Ergebnis: ${opText} = ${fmt(result)}.`];
+      if (view === "thermo") {
+        const py = t => 350 - (t + 20) * 8;
+        let s = `<rect x="250" y="${py(20) - 12}" width="40" height="${py(-20) - py(20) + 24}" rx="20" fill="var(--surface)" stroke="var(--ink)" stroke-width="2"/>`
+          + rect(258, py(result), 24, py(-20) - py(result) + 6, "var(--bad)", "none", 'opacity=".7"');
+        for (let t = -20; t <= 20; t++) s += line(290, py(t), t % 5 ? 297 : 305, py(t), t % 5 ? "var(--muted)" : "var(--ink)", t % 5 ? 1 : 2) + (t % 5 ? "" : tx(312, py(t) + 5, `${fmt(t)} °C`, {size: 13}));
+        s += line(150, py(0), 250, py(0), "var(--muted)", 1, "4 4") + dot(230, py(p.a)) + tx(218, py(p.a) + 5, `Start ${fmt(p.a)} °C`, {anchor: "end", fill: "var(--brand)", weight: 700})
+          + arrow(390, py(p.a), 390, py(result), "var(--accent)", 4) + tx(402, (py(p.a) + py(result)) / 2 + 5, `${move >= 0 ? "+" : "−"} ${fmt(Math.abs(move))} K`, {fill: "var(--accent)", weight: 700})
+          + tx(552, py(result) + 5, `Ende: ${fmt(result)} °C`, {anchor: "end", weight: 700});
+        return {svg: s, alt: `Thermometer: Start bei ${fmt(p.a)} Grad, Änderung um ${fmt(move)}, Ende bei ${fmt(result)} Grad.`,
+          summary: `<strong>${opText} = ${fmt(result)}</strong> · Die Temperatur ${move >= 0 ? "steigt" : "fällt"} um ${fmt(Math.abs(move))} Kelvin.`, steps};
+      }
+      const px = x => 40 + (x + 20) * 12;
+      let s = line(28, 210, 532, 210, "var(--ink)", 2) + tx(280, 30, opText + " = " + fmt(result), {anchor: "middle", size: 22, weight: 700});
+      for (let x = -20; x <= 20; x++) s += line(px(x), x % 5 ? 204 : 198, px(x), x % 5 ? 216 : 222, "var(--ink)", x % 5 ? 1 : 2) + (x % 5 ? "" : tx(px(x), 244, fmt(x), {anchor: "middle", size: 14, weight: x === 0 ? 700 : 400}));
+      s += tx(px(-15), 280, "← negativ: kleiner", {anchor: "middle", fill: "var(--muted)", size: 13}) + tx(px(15), 280, "positiv: größer →", {anchor: "middle", fill: "var(--muted)", size: 13});
+      s += arrow(px(0), 160, px(p.a), 160, "var(--brand)", 4) + tx((px(0) + px(p.a)) / 2, 150, `a = ${fmt(p.a)}`, {anchor: "middle", fill: "var(--brand)", weight: 700})
+        + arrow(px(p.a), 110, px(result), 110, "var(--accent)", 4) + tx((px(p.a) + px(result)) / 2, 98, `${move >= 0 ? "+" : "−"} ${fmt(Math.abs(move))}`, {anchor: "middle", fill: "var(--accent)", weight: 700})
+        + line(px(p.a), 110, px(p.a), 210, "var(--muted)", 1, "3 4") + line(px(result), 110, px(result), 210, "var(--accent)", 2, "3 4") + dot(px(result), 210, "var(--accent)", 8);
+      return {svg: s, h: 300, alt: `Zahlengerade: Pfeil von 0 nach ${fmt(p.a)}, dann ${fmt(Math.abs(move))} Schritte ${dir} bis ${fmt(result)}.`,
+        summary: `<strong>${opText} = ${fmt(result)}</strong> · Abstand zur 0 (Betrag): |${fmt(result)}| = ${fmt(Math.abs(result))}`, steps};
     }
-    svg += `<path d="${path}" fill="none" stroke="var(--brand)" stroke-width="3" clip-path="url(#graph-clip)"/>`;
-    document.getElementById("graph-svg").innerHTML = svg;
-    document.getElementById("graph-values").textContent = `Wertetabelle: ${[-2,-1,0,1,2].map(x => `f(${x}) = ${fn(x) === null ? "nicht definiert" : format(fn(x))}`).join("; ")}.`;
+  };
+  labs.fraction = {
+    title: "Brüche sehen, erweitern und kürzen",
+    tip: "Zähler und Nenner verändern das Bild. Mit „Erweitern“ werden nur die Stücke kleiner – die gefärbte Menge bleibt gleich.",
+    params: [P("z", "Zähler z", 0, 12, 1, 3), P("n", "Nenner n", 1, 12, 1, 4), P("k", "Erweitern mit k", 1, 4, 1, 1)],
+    views: [["strip", "Streifen"], ["circle", "Kreis"], ["line", "Zahlengerade"]],
+    constrain(p) { if (p.z > 2 * p.n) p.z = 2 * p.n; },
+    render(p, view) {
+      const {z, n, k} = p, parts = n * k, g = gcd(z, n), value = z / n;
+      const wholes = Math.max(1, Math.ceil(z / n));
+      let s = "";
+      if (view === "strip") {
+        for (let w = 0; w < wholes; w++) {
+          const y = 40 + w * 110;
+          for (let i = 0; i < parts; i++) s += rect(70 + i * 440 / parts, y, 440 / parts, 60, w * parts + i < z * k ? "var(--brand)" : "var(--surface)", "var(--line)");
+          for (let i = 0; i <= n; i++) s += line(70 + i * 440 / n, y - 6, 70 + i * 440 / n, y + 66, "var(--ink)", 3);
+          s += tx(60, y + 36, `${w + 1}. Ganzes`, {anchor: "end", size: 13}) + tx(290, y + 90, `je Stück: 1/${parts}`, {anchor: "middle", size: 13, fill: "var(--muted)"});
+        }
+      } else if (view === "circle") {
+        for (let w = 0; w < wholes; w++) {
+          const cx = wholes === 1 ? 280 : 150 + w * 260, cy = 190;
+          for (let i = 0; i < parts; i++) s += arc(cx, cy, 120, 90 - (i + 1) * 360 / parts, 90 - i * 360 / parts, "var(--line)", w * parts + i < z * k ? "var(--brand)" : "var(--surface)");
+          for (let i = 0; i < n && n > 1; i++) { const [x, y] = polar(cx, cy, 120, 90 - i * 360 / n); s += line(cx, cy, x, y, "var(--ink)", 3); }
+          s += arc(cx, cy, 120, 0, 360, "var(--ink)");
+        }
+      } else {
+        const px = t => 50 + t * 230;
+        s += line(40, 200, 520, 200, "var(--ink)", 2);
+        for (let i = 0; i <= 2 * parts; i++) s += line(px(i / parts), i % k ? 192 : 184, px(i / parts), i % k ? 208 : 216, "var(--ink)", i % k ? 1 : 2);
+        for (let w = 0; w <= 2; w++) s += tx(px(w), 245, String(w), {anchor: "middle", size: 18, weight: 700});
+        s += rect(px(0), 170, px(value) - px(0), 10, "var(--brand)", "none") + dot(px(value), 200, "var(--accent)", 9)
+          + tx(px(value), 150, `${z * k}/${parts}`, {anchor: "middle", weight: 700, size: 18, fill: "var(--accent)"});
+      }
+      const steps = [`Der Nenner ${n} sagt: Das Ganze wird in ${n} gleich große Teile geteilt.`,
+        `Der Zähler ${z} sagt: ${z} dieser Teile werden genommen (gefärbt).`,
+        k > 1 ? `Erweitern mit ${k}: Jedes Teil wird in ${k} kleinere Stücke zerlegt. ${z}/${n} = ${z}·${k} / ${n}·${k} = ${z * k}/${parts}. Die gefärbte Fläche bleibt gleich groß.` : `Erweitern: Stelle „Erweitern mit k“ auf 2 oder 3. Die Stücke werden kleiner, die Menge bleibt gleich.`,
+        g > 1 ? `Kürzen durch ${g} (größter gemeinsamer Teiler): ${z}/${n} = ${z / g}/${n / g}.` : `${z}/${n} ist vollständig gekürzt (ggT = 1).`,
+        `Dezimalzahl: ${z} : ${n} = ${fmt(value, 4)} · Prozent: ${fmt(value * 100, 2)} %.`];
+      return {svg: s, h: view === "strip" ? 40 + wholes * 110 : view === "line" ? 280 : 380,
+        alt: `${z} von ${n} Teilen gefärbt${k > 1 ? `, erweitert auf ${z * k} von ${parts} Teilen` : ""}. Wert ${fmt(value, 4)}.`,
+        summary: `<strong>${z}/${n}${k > 1 ? ` = ${z * k}/${parts}` : ""}${g > 1 ? ` = ${z / g}/${n / g}` : ""} = ${fmt(value, 4)} = ${fmt(value * 100, 2)} %</strong>${z > n ? ` · gemischt: ${Math.floor(z / n)} ${z % n ? `${z % n}/${n}` : ""}` : ""}`, steps};
+    }
+  };
+  labs.percent = {
+    title: "Prozente als Streifen und Hunderterfeld",
+    tip: "Der Grundwert G ist immer 100 %. Ziehe am Prozentsatz und beobachte, wie der Prozentwert W mitwächst.",
+    params: [P("G", "Grundwert G", 10, 500, 10, 80), P("p", "Prozentsatz p", 0, 200, 1, 35, "%")],
+    views: [["bar", "Prozentstreifen"], ["grid", "Hunderterfeld"], ["up", "Erhöhung"], ["down", "Senkung"]],
+    constrain(p, view) { if (view === "down" && p.p > 100) p.p = 100; },
+    render(p, view) {
+      const W = p.G * p.p / 100, q = view === "down" ? 1 - p.p / 100 : 1 + p.p / 100, newValue = p.G * q;
+      let s = "";
+      if (view === "bar") {
+        const maxP = Math.max(100, p.p), unit = 440 / maxP, x0 = 70;
+        s += rect(x0, 110, 100 * unit, 60, "var(--surface)", "var(--ink)") + rect(x0, 110, p.p * unit, 60, "var(--brand)", "none", 'opacity=".85"');
+        for (const t of [0, 25, 50, 75, 100, ...(p.p > 100 ? [p.p] : [])]) s += line(x0 + t * unit, 100, x0 + t * unit, 180, "var(--ink)", 1) + tx(x0 + t * unit, 92, `${fmt(t)} %`, {anchor: "middle", size: 13}) + tx(x0 + t * unit, 200, fmt(p.G * t / 100), {anchor: "middle", size: 13});
+        s += tx(x0 - 22, 92, "%", {anchor: "end", weight: 700}) + tx(x0 - 22, 200, "Wert", {anchor: "end", weight: 700})
+          + arrow(x0, 240, x0 + p.p * unit, 240, "var(--accent)", 3) + tx(x0 + p.p * unit / 2, 265, `W = ${fmt(W)}`, {anchor: "middle", fill: "var(--accent)", weight: 700})
+          + tx(x0 + 50 * unit, 40, `G = ${fmt(p.G)} ≙ 100 %`, {anchor: "middle", weight: 700, size: 17});
+        return {svg: s, h: 290, alt: `Prozentstreifen: ${fmt(p.p)} Prozent von ${fmt(p.G)} sind ${fmt(W)}.`, summary: `<strong>${fmt(p.p)} % von ${fmt(p.G)} = ${fmt(W)}</strong> · ${fmt(p.p)} % = ${fmt(p.p / 100, 4)}`,
+          steps: [`p % bedeutet „p von Hundert“: ${fmt(p.p)} % = ${fmt(p.p)}/100 = ${fmt(p.p / 100, 4)}.`, `1 % von G: ${fmt(p.G)} : 100 = ${fmt(p.G / 100, 4)}.`, `${fmt(p.p)} % von G: ${fmt(p.p)} · ${fmt(p.G / 100, 4)} = ${fmt(W)}.`, `Kurz: W = G · p/100 = ${fmt(p.G)} · ${fmt(p.p / 100, 4)} = ${fmt(W)}.`]};
+      }
+      if (view === "grid") {
+        for (let g = 0; g < (p.p > 100 ? 2 : 1); g++) {
+          const x0 = p.p > 100 ? 20 + g * 280 : 150, filled = g === 0 ? Math.min(100, p.p) : p.p - 100;
+          for (let i = 0; i < 100; i++) s += rect(x0 + (i % 10) * 26, 30 + Math.floor(i / 10) * 26, 24, 24, i < filled ? "var(--brand)" : "var(--surface)", "var(--line)");
+        }
+        return {svg: s, h: 300, alt: `Hunderterfeld: ${fmt(p.p)} von 100 Kästchen sind gefärbt.`, summary: `<strong>${fmt(p.p)} von 100 Kästchen ≙ ${fmt(p.p)} %</strong> · Jedes Kästchen ist 1 % = ${fmt(p.G / 100, 4)} vom Grundwert ${fmt(p.G)} · W = ${fmt(W)}`,
+          steps: [`Das ganze Feld (100 Kästchen) ist der Grundwert G = ${fmt(p.G)}.`, `Ein Kästchen ist 1 %: ${fmt(p.G)} : 100 = ${fmt(p.G / 100, 4)}.`, `${fmt(p.p)} Kästchen: ${fmt(p.p)} · ${fmt(p.G / 100, 4)} = ${fmt(W)}.`, p.p > 100 ? "Mehr als 100 %: Es wird mehr als ein ganzes Feld gebraucht." : "Weniger als 100 %: ein Teil des Ganzen."]};
+      }
+      const max = Math.max(p.G, newValue), unit = 300 / max;
+      s += rect(130, 340 - p.G * unit, 110, p.G * unit, "var(--brand)", "none", 'opacity=".8"') + rect(320, 340 - newValue * unit, 110, newValue * unit, "var(--accent)", "none", 'opacity=".8"')
+        + line(100, 340, 470, 340) + line(110, 340 - p.G * unit, 450, 340 - p.G * unit, "var(--ink)", 1, "5 5")
+        + tx(185, 330 - p.G * unit, `vorher ${fmt(p.G)}`, {anchor: "middle", weight: 700}) + tx(375, 330 - newValue * unit, `nachher ${fmt(newValue)}`, {anchor: "middle", weight: 700})
+        + tx(185, 365, "100 %", {anchor: "middle"}) + tx(375, 365, `${fmt(q * 100)} %`, {anchor: "middle"});
+      return {svg: s, h: 380, alt: `Säulen: vorher ${fmt(p.G)}, nach ${view === "up" ? "Erhöhung" : "Senkung"} um ${fmt(p.p)} Prozent ${fmt(newValue)}.`,
+        summary: `<strong>${fmt(p.G)} · ${fmt(q, 4)} = ${fmt(newValue)}</strong> · Wachstumsfaktor q = ${fmt(q, 4)}`,
+        steps: [`${view === "up" ? "Erhöhung" : "Senkung"} um ${fmt(p.p)} %: Der neue Wert ist ${fmt(q * 100)} % des alten Werts.`, `Faktor q = 1 ${view === "up" ? "+" : "−"} ${fmt(p.p / 100, 4)} = ${fmt(q, 4)}.`, `Neuer Wert = G · q = ${fmt(p.G)} · ${fmt(q, 4)} = ${fmt(newValue)}.`, `Änderung: ${fmt(Math.abs(newValue - p.G))}. Typischer Fehler: Erst + ${fmt(p.p)} % und dann − ${fmt(p.p)} % ergibt NICHT wieder den Startwert, weil sich der Grundwert ändert.`]};
+    }
+  };
+  labs.area = {
+    title: "Terme als Flächen",
+    tip: "Jedes Rechteck ist ein Produkt. Ändere die Längen: Die Gleichung zwischen Produkt und Summe stimmt immer.",
+    params: [P("a", "Länge a", 1, 8, 1, 4), P("b", "Länge b", 1, 6, 1, 3), P("c", "Länge c", 1, 6, 1, 2, "", ["dist"])],
+    views: [["dist", "a·(b + c)"], ["sq", "(a + b)²"], ["diff", "(a − b)²"], ["conj", "(a + b)(a − b)"]],
+    constrain(p, view) { if (["diff", "conj"].includes(view)) { if (p.a < 2) p.a = 2; if (p.b >= p.a) p.b = p.a - 1; } },
+    render(p, view) {
+      const {a, b, c} = p, A = "var(--brand)", B = "var(--accent)", C = "var(--good)";
+      let s = "", steps, summary, alt;
+      const box = (x, y, w, h, fill, label) => rect(x, y, w, h, fill, "var(--ink)", 'fill-opacity=".45"') + (w > 26 && h > 20 ? tx(x + w / 2, y + h / 2 + 5, label, {anchor: "middle", weight: 700}) : "");
+      if (view === "dist") {
+        const u = Math.min(40, 440 / (b + c), 300 / a), x0 = 70, y0 = 40;
+        s += box(x0, y0, b * u, a * u, A, `${a}·${b}`) + box(x0 + b * u, y0, c * u, a * u, B, `${a}·${c}`)
+          + tx(x0 + b * u / 2, y0 - 10, `b = ${b}`, {anchor: "middle"}) + tx(x0 + b * u + c * u / 2, y0 - 10, `c = ${c}`, {anchor: "middle"}) + tx(x0 - 10, y0 + a * u / 2 + 5, `a = ${a}`, {anchor: "end"});
+        summary = `<strong>${a} · (${b} + ${c}) = ${a}·${b} + ${a}·${c} = ${a * b} + ${a * c} = ${a * (b + c)}</strong>`;
+        alt = `Rechteck mit Höhe ${a} und Breite ${b} plus ${c}, zerlegt in zwei Teilrechtecke.`;
+        steps = ["Das große Rechteck hat die Höhe a und die Breite b + c. Fläche: a · (b + c).", `Es zerfällt in zwei Teile: a · b = ${a * b} und a · c = ${a * c}.`, "Distributivgesetz: a · (b + c) = a·b + a·c. Jeder Summand in der Klammer wird mit a multipliziert.", `Probe: ${a} · ${b + c} = ${a * (b + c)} und ${a * b} + ${a * c} = ${a * b + a * c}. ✓`, "Rückwärts gelesen ist das Ausklammern (Faktorisieren): a·b + a·c = a · (b + c)."];
+      } else if (view === "sq") {
+        const u = Math.min(40, 300 / (a + b)), x0 = 150, y0 = 40;
+        s += box(x0, y0, a * u, a * u, A, "a²") + box(x0 + a * u, y0, b * u, a * u, B, "ab") + box(x0, y0 + a * u, a * u, b * u, B, "ab") + box(x0 + a * u, y0 + a * u, b * u, b * u, C, "b²")
+          + tx(x0 + a * u / 2, y0 - 10, `a = ${a}`, {anchor: "middle"}) + tx(x0 + a * u + b * u / 2, y0 - 10, `b = ${b}`, {anchor: "middle"}) + tx(x0 - 10, y0 + a * u / 2, `a`, {anchor: "end"}) + tx(x0 - 10, y0 + a * u + b * u / 2 + 5, `b`, {anchor: "end"});
+        summary = `<strong>(${a} + ${b})² = ${a}² + 2·${a}·${b} + ${b}² = ${a * a} + ${2 * a * b} + ${b * b} = ${(a + b) ** 2}</strong>`;
+        alt = `Quadrat mit Seite ${a} plus ${b}, zerlegt in a², zweimal ab und b².`;
+        steps = ["(a + b)² ist ein Quadrat mit der Seitenlänge a + b.", "Es besteht aus einem großen Quadrat a², einem kleinen Quadrat b² und ZWEI gleichen Rechtecken a·b.", "1. binomische Formel: (a + b)² = a² + 2ab + b².", `Probe: ${a + b}² = ${(a + b) ** 2} und ${a * a} + ${2 * a * b} + ${b * b} = ${a * a + 2 * a * b + b * b}. ✓`, `Typischer Fehler: (a + b)² ≠ a² + b². Es fehlen die zwei Rechtecke (${2 * a * b}).`];
+      } else if (view === "diff") {
+        const u = Math.min(40, 280 / a), x0 = 70, y0 = 30, d = a - b;
+        s += rect(x0, y0, a * u, a * u, "var(--surface)") + box(x0, y0, d * u, d * u, A, "(a−b)²")
+          + rect(x0 + d * u, y0, b * u, a * u, B, "var(--ink)", 'fill-opacity=".35"') + rect(x0, y0 + d * u, a * u, b * u, B, "var(--ink)", 'fill-opacity=".35"')
+          + rect(x0 + d * u, y0 + d * u, b * u, b * u, C, "var(--ink)", 'fill-opacity=".7"') + tx(x0 + a * u + 12, y0 + a * u / 2, "− ab", {fill: "var(--accent)", weight: 700}) + tx(x0 + a * u / 2, y0 + a * u + 22, "− ab", {anchor: "middle", fill: "var(--accent)", weight: 700})
+          + tx(x0 + a * u + 12, y0 + a * u - 8, "+ b² (doppelt abgezogen)", {fill: "var(--good)", weight: 700, size: 13}) + tx(x0 + a * u / 2, y0 - 8, `a = ${a}`, {anchor: "middle"});
+        summary = `<strong>(${a} − ${b})² = ${a * a} − ${2 * a * b} + ${b * b} = ${d * d}</strong>`;
+        alt = `Quadrat a² mit zwei abgezogenen Streifen a mal b; das Eckquadrat b² wurde doppelt abgezogen.`;
+        steps = ["Starte mit dem großen Quadrat a².", "Ziehe zwei Streifen der Größe a·b ab (orange).", "Das kleine Eckquadrat b² (grün) wurde dabei zweimal abgezogen – also einmal wieder addieren.", "2. binomische Formel: (a − b)² = a² − 2ab + b².", `Probe: ${d}² = ${d * d} und ${a * a} − ${2 * a * b} + ${b * b} = ${a * a - 2 * a * b + b * b}. ✓`];
+      } else {
+        const u = Math.min(36, 230 / (a + b), 300 / a), x0 = 30, y0 = 40, d = a - b;
+        s += rect(x0, y0, a * u, a * u, "none", "var(--ink)", 'stroke-dasharray="4 4"') + box(x0, y0, d * u, a * u, A, "") + box(x0 + d * u, y0, b * u, d * u, B, "")
+          + rect(x0 + d * u, y0 + d * u, b * u, b * u, "var(--muted)", "var(--ink)", 'fill-opacity=".2"') + tx(x0 + d * u + b * u / 2, y0 + d * u + b * u / 2 + 5, "b²", {anchor: "middle"})
+          + tx(x0 + a * u / 2, y0 - 10, `a² − b² (a = ${a}, b = ${b})`, {anchor: "middle", size: 14});
+        const x1 = 300;
+        s += box(x1, y0, d * u, a * u, A, "") + box(x1, y0 + a * u, d * u, b * u, B, "") + arrow(x0 + a * u + 10, y0 + d * u / 2, x1 - 10, y0 + a * u + b * u / 2, "var(--accent)", 2)
+          + tx(x1 + d * u + 10, y0 + (a + b) * u / 2, `a + b = ${a + b}`, {}) + tx(x1 + d * u / 2, y0 + (a + b) * u + 20, `a − b = ${d}`, {anchor: "middle"});
+        summary = `<strong>(${a} + ${b}) · (${a} − ${b}) = ${a * a} − ${b * b} = ${a * a - b * b}</strong>`;
+        alt = "Links ein Quadrat a² ohne Eckquadrat b². Das orange Stück wird umgelegt und ergibt rechts ein Rechteck (a+b) mal (a−b).";
+        steps = ["Nimm vom Quadrat a² das Eckquadrat b² weg. Übrig bleibt eine L-Form mit der Fläche a² − b².", "Schneide den orangen Streifen ab und lege ihn unten an.", "Es entsteht ein Rechteck mit den Seiten (a + b) und (a − b).", "3. binomische Formel: (a + b)(a − b) = a² − b².", `Probe: ${a + b} · ${d} = ${(a + b) * d} und ${a * a} − ${b * b} = ${a * a - b * b}. ✓`];
+      }
+      return {svg: s, alt, summary, steps};
+    }
+  };
+  labs.balance = {
+    title: "Gleichungswaage",
+    tip: "Die Waage bleibt im Gleichgewicht, wenn du auf BEIDEN Seiten dasselbe tust. Ziehe am Rechenweg-Regler, um Schritt für Schritt umzuformen.",
+    params: [P("a", "x-Dosen links", 1, 5, 1, 3), P("b", "Einzelgewichte links", 0, 9, 1, 4), P("c", "x-Dosen rechts", 1, 4, 1, 1, "", ["both"]), P("x", "Gewicht einer Dose (Lösung)", 1, 6, 1, 2)],
+    views: [["one", "a·x + b = r"], ["both", "x auf beiden Seiten"]],
+    constrain(p, view) { if (view === "both" && p.c >= p.a) { p.a = Math.max(p.a, 2); p.c = p.a - 1; } },
+    render(p, view, {step}) {
+      const both = view === "both", c = both ? p.c : 0, R = both ? (p.a - c) * p.x + p.b : p.a * p.x + p.b;
+      const states = both
+        ? [[p.a, p.b, c, R, "Ausgangslage"], [p.a - c, p.b, 0, R, `− ${c === 1 ? "" : c}x`], [p.a - c, 0, 0, R - p.b, `− ${p.b}`], [1, 0, 0, p.x, `: ${p.a - c}`]]
+        : [[p.a, p.b, 0, R, "Ausgangslage"], [p.a, 0, 0, R - p.b, `− ${p.b}`], [1, 0, 0, p.x, `: ${p.a}`]];
+      const idx = Math.min(step, states.length) - 1, [lx, l1, rx, r1v] = states[idx];
+      const eq = (X, one, Y, two) => `${X ? `${X === 1 ? "" : X}x` : ""}${X && one ? " + " : ""}${one || !X ? one : ""} = ${Y ? `${Y === 1 ? "" : Y}x` : ""}${Y && two ? " + " : ""}${two || !Y ? two : ""}`;
+      const pan = (cx, xs, ones) => {
+        let s = line(cx - 110, 230, cx + 110, 230, "var(--ink)", 4) + line(cx, 150, cx, 230, "var(--muted)", 1);
+        const items = [...Array(xs).fill("x"), ...Array(ones).fill(1)];
+        items.forEach((it, i) => {
+          const row = Math.floor(i / 8), col = i % 8, x = cx - 100 + col * 25, y = 202 - row * 28;
+          s += it === "x" ? rect(x, y, 24, 26, "var(--brand)", "var(--ink)") + tx(x + 12, y + 18, "x", {anchor: "middle", fill: "#fff", weight: 700}) : `<circle cx="${x + 12}" cy="${y + 15}" r="11" fill="var(--accent)" stroke="var(--ink)"/>` + tx(x + 12, y + 20, "1", {anchor: "middle", size: 12, weight: 700});
+        });
+        return s;
+      };
+      let s = poly([[280, 238], [255, 330], [305, 330]], "var(--muted)") + line(110, 238, 450, 238, "var(--ink)", 5) + pan(140, lx, l1) + pan(420, rx, r1v)
+        + tx(280, 30, eq(lx, l1, rx, r1v), {anchor: "middle", size: 24, weight: 700}) + (idx ? tx(280, 60, `Umformung: ${states[idx][4]} auf beiden Seiten`, {anchor: "middle", fill: "var(--accent)", weight: 700}) : "");
+      const steps = both
+        ? [`Ausgangsgleichung: ${eq(p.a, p.b, c, R)}. Die Waage ist im Gleichgewicht.`, `Auf beiden Seiten ${c} x-Dose${c > 1 ? "n" : ""} wegnehmen (− ${c}x): ${eq(p.a - c, p.b, 0, R)}.`, `Auf beiden Seiten ${p.b} Gewichte wegnehmen (− ${p.b}): ${eq(p.a - c, 0, 0, R - p.b)}.`, `Beide Seiten durch ${p.a - c} teilen: x = ${p.x}.`, `Probe: ${p.a}·${p.x} + ${p.b} = ${p.a * p.x + p.b} und ${c}·${p.x} + ${R} = ${c * p.x + R}. ✓`]
+        : [`Ausgangsgleichung: ${eq(p.a, p.b, 0, R)}. Die Waage ist im Gleichgewicht.`, `Auf beiden Seiten ${p.b} Gewichte wegnehmen (− ${p.b}): ${eq(p.a, 0, 0, R - p.b)}.`, `Beide Seiten durch ${p.a} teilen (: ${p.a}): x = ${p.x}.`, `Probe: ${p.a} · ${p.x} + ${p.b} = ${R}. ✓`];
+      return {svg: s, alt: `Waage im Gleichgewicht: ${eq(lx, l1, rx, r1v)}.`, summary: `<strong>Aktuell: ${eq(lx, l1, rx, r1v)}</strong> · Lösung: x = ${p.x}`, steps};
+    }
+  };
+  labs.inequality = {
+    title: "Ungleichungen am Zahlenstrahl",
+    tip: "Teste einzelne Zahlen mit dem Testwert-Regler. Achtung: Beim Teilen durch eine negative Zahl dreht sich das Zeichen um!",
+    params: [P("a", "Faktor a", -5, 5, 1, 2), P("b", "Zahl b", -8, 8, 1, 3), P("c", "rechte Seite c", -10, 10, 1, 9), P("t", "Testwert x", -12, 12, 1, 0)],
+    views: [["le", "a·x + b ≤ c"], ["lt", "a·x + b < c"]],
+    constrain(p) { if (p.a === 0) p.a = 1; },
+    render(p, view) {
+      const sign = view === "le" ? "≤" : "<", flip = p.a < 0, bound = (p.c - p.b) / p.a;
+      const finalSign = flip ? (view === "le" ? "≥" : ">") : sign;
+      const ok = view === "le" ? p.a * p.t + p.b <= p.c : p.a * p.t + p.b < p.c;
+      const px = x => 40 + (x + 12) * 20, bx = px(Math.max(-12.5, Math.min(12.5, bound)));
+      let s = line(28, 180, 532, 180, "var(--ink)", 2);
+      for (let x = -12; x <= 12; x++) s += line(px(x), 172, px(x), 188, "var(--ink)", x % 4 ? 1 : 2) + (x % 2 ? "" : tx(px(x), 210, fmt(x), {anchor: "middle", size: 13}));
+      s += rect(flip ? bx : 28, 168, flip ? 532 - bx : bx - 28, 24, "var(--brand)", "none", 'fill-opacity=".3"')
+        + `<circle cx="${r1(bx)}" cy="180" r="9" fill="${view === "le" ? "var(--brand)" : "var(--surface)"}" stroke="var(--brand)" stroke-width="3"/>`
+        + tx(bx, 150, `x ${finalSign} ${fmt(bound)}`, {anchor: "middle", weight: 700, fill: "var(--brand)", size: 18})
+        + `<path d="M${px(p.t)} 250 l-9 16 h18 z" fill="${ok ? "var(--good)" : "var(--bad)"}"/>` + tx(Math.min(Math.max(px(p.t), 80), 480), 290, `${fmt(p.t)}: ${ok ? "✓ erfüllt" : "✗ nicht erfüllt"}`, {anchor: "middle", fill: ok ? "var(--good)" : "var(--bad)", weight: 700})
+        + tx(280, 40, `${fmt(p.a)}x${signed(p.b)} ${sign} ${fmt(p.c)}`, {anchor: "middle", size: 24, weight: 700})
+        + tx(280, 75, `Test: ${par(p.a)}·${par(p.t)}${signed(p.b)} = ${fmt(p.a * p.t + p.b)} ${ok ? sign : "ist nicht " + sign} ${fmt(p.c)}`, {anchor: "middle", size: 15});
+      return {svg: s, h: 310, alt: `Zahlenstrahl: Lösungsmenge x ${finalSign} ${fmt(bound)}. Testwert ${fmt(p.t)} ${ok ? "erfüllt" : "erfüllt nicht"} die Ungleichung.`,
+        summary: `<strong>L = { x | x ${finalSign} ${fmt(bound)} }</strong> · ${view === "le" ? "● Grenze gehört dazu" : "○ Grenze gehört nicht dazu"}`,
+        steps: [`Ausgangsungleichung: ${fmt(p.a)}x${signed(p.b)} ${sign} ${fmt(p.c)}.`, `${p.b >= 0 ? "−" : "+"} ${fmt(Math.abs(p.b))} auf beiden Seiten: ${fmt(p.a)}x ${sign} ${fmt(p.c - p.b)}.`,
+          flip ? `Teilen durch die NEGATIVE Zahl ${fmt(p.a)}: Das Zeichen dreht sich um! x ${finalSign} ${fmt(bound)}.` : `Teilen durch ${fmt(p.a)} (positiv): Das Zeichen bleibt. x ${finalSign} ${fmt(bound)}.`,
+          `Am Zahlenstrahl: ${view === "le" ? "ausgefüllter Punkt ●" : "leerer Kreis ○"} bei ${fmt(bound)}, Pfeil nach ${flip ? "rechts" : "links"}.`, "Probe mit einem Testwert aus dem markierten Bereich und einem außerhalb."]};
+    }
+  };
+  labs.bruchterm = {
+    title: "Bruchterme und Definitionslücke",
+    tip: "Ein Bruchterm ist für die Zahl nicht definiert, bei der der Nenner 0 wird. Ziehe x an diese Stelle!",
+    params: [P("a", "Zahl a im Zähler (x + a)", -5, 5, 1, 2), P("b", "Zahl b im Nenner (x − b)", -4, 4, 1, 1), P("x", "Einsetzwert x", -6, 6, 0.5, 3)],
+    views: [["table", "Wertetabelle"], ["graph", "Graph"]],
+    render(p, view) {
+      const f = x => (x + p.a) / (x - p.b), term = `(x${signed(p.a, 0)}) / (x${signed(-p.b, 0)})`, defined = p.x !== p.b;
+      let s;
+      if (view === "graph") {
+        s = labPlot({xmin: -6, xmax: 6, ymin: -8, ymax: 8, fns: [{f, gap: p.b}], extra: (px, py) => line(px(p.b), py(8), px(p.b), py(-8), "var(--bad)", 2, "6 5") + tx(px(p.b) + 6, py(7), `x = ${fmt(p.b)} verboten`, {fill: "var(--bad)", size: 13, weight: 700}) + (defined && Math.abs(f(p.x)) < 8 ? dot(px(p.x), py(f(p.x)), "var(--accent)") : "")}).svg;
+      } else {
+        const xs = [...new Set([p.b - 2, p.b - 1, p.b, p.b + 1, p.b + 2, p.x])].sort((m, n) => m - n);
+        s = svgTable([["x", ...xs.map(x => fmt(x))], ["Zähler x" + signed(p.a, 0), ...xs.map(x => fmt(x + p.a))], ["Nenner x" + signed(-p.b, 0), ...xs.map(x => fmt(x - p.b))], ["Termwert", ...xs.map(x => x === p.b ? "n. d." : fmt(f(x)))]], {highlightCol: xs.indexOf(p.x) + 1, firstColW: 150, y: 60});
+        s += tx(280, 36, `T(x) = ${term}`, {anchor: "middle", size: 20, weight: 700}) + tx(280, 250, "n. d. = nicht definiert (Division durch 0)", {anchor: "middle", fill: "var(--bad)"});
+      }
+      return {svg: s, h: view === "graph" ? 380 : 270, alt: `Bruchterm ${term}; bei x = ${fmt(p.b)} nicht definiert.`,
+        summary: `<strong>D = ℚ \\ {${fmt(p.b)}}</strong> · T(${fmt(p.x)}) = ${defined ? fmt(f(p.x), 3) : "nicht definiert"}`,
+        steps: [`Definitionsmenge: Der Nenner darf nicht 0 sein. x${signed(-p.b, 0)} ≠ 0 → x ≠ ${fmt(p.b)}.`, `Einsetzen x = ${fmt(p.x)}: Zähler ${fmt(p.x + p.a)}, Nenner ${fmt(p.x - p.b)}.`, defined ? `T(${fmt(p.x)}) = ${fmt(p.x + p.a)} : ${par(p.x - p.b)} = ${fmt(f(p.x), 3)}.` : "Nenner 0: Der Term ist hier nicht definiert. Am Graphen siehst du eine Lücke (senkrechte Asymptote).", -p.a !== p.b ? `Der Term wird 0, wenn der Zähler 0 ist: x = ${fmt(-p.a)}.` : "Zähler und Nenner werden gleichzeitig 0 – auch dort ist der Term nicht definiert."]};
+    }
+  };
+  labs.powers = {
+    title: "Potenzen, Zehnerpotenzen und Logarithmen",
+    tip: "Der Exponent zählt, wie oft die Basis mit sich selbst multipliziert wird. Ein negativer Exponent bedeutet: teilen.",
+    params: [P("a", "Basis a", 2, 10, 1, 2, "", ["factors", "stairs", "log"]), P("n", "Exponent n", -3, 8, 1, 3, "", ["factors", "stairs"]),
+      P("m", "Mantisse m", 1, 9.9, 0.1, 3.5, "", ["sci"]), P("k", "Zehnerexponent k", -6, 9, 1, 4, "", ["sci"]), P("y", "Ergebnis y", 1, 1000, 1, 8, "", ["log"])],
+    views: [["factors", "Faktoren"], ["stairs", "Exponenten-Treppe"], ["sci", "Wissenschaftliche Schreibweise"], ["log", "Logarithmus"]],
+    render(p, view) {
+      const {a, n} = p;
+      if (view === "factors") {
+        const val = a ** n, cnt = Math.abs(n);
+        let s = tx(280, 40, `${a}^${n} = ${fmt(val, 6)}`, {anchor: "middle", size: 24, weight: 700});
+        const w = Math.min(60, 500 / Math.max(cnt, 1));
+        for (let i = 0; i < cnt; i++) s += rect(30 + i * w, 110, w - 8, 60, "var(--brand)", "var(--ink)", 'fill-opacity=".25" rx="8"') + tx(30 + i * w + (w - 8) / 2, 147, String(a), {anchor: "middle", size: 20, weight: 700}) + (i < cnt - 1 ? tx(30 + i * w + w - 4, 147, "·", {anchor: "middle", size: 20}) : "");
+        s += tx(280, 220, n === 0 ? `Exponent 0: Jede Zahl (außer 0) hoch 0 ergibt 1.` : n < 0 ? `Negativer Exponent: 1 geteilt durch ${cnt} Faktoren ${a}` : `${cnt} gleiche Faktoren ${a}`, {anchor: "middle", size: 16, fill: "var(--accent)", weight: 700});
+        if (n < 0) s += tx(280, 260, `${a}^${n} = 1 / ${a}^${cnt} = 1 / ${a ** cnt} = ${fmt(val, 6)}`, {anchor: "middle", size: 18});
+        return {svg: s, h: 290, alt: `${a} hoch ${n} als ${cnt} Faktoren dargestellt.`, summary: `<strong>${a}<sup>${n}</sup> = ${fmt(val, 6)}</strong>`,
+          steps: ["Basis = die Zahl, die multipliziert wird. Exponent = wie oft.", n >= 0 ? `${a}^${n} = ${n ? Array(n).fill(a).join(" · ") : "1"} = ${val}.` : `${a}^${n} = 1 / ${a}^${cnt}.`, `Typischer Fehler: ${a}^${Math.max(n, 2)} ist NICHT ${a} · ${Math.max(n, 2)} = ${a * Math.max(n, 2)}.`, "Potenzgesetz: a^m · a^n = a^(m+n) – Exponenten addieren, wenn die Basis gleich ist."]};
+      }
+      if (view === "stairs") {
+        const ks = [-3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8].filter(k => k >= Math.min(n, 0) - 1 && k <= Math.max(n, 3) + 1).slice(0, 9);
+        let s = "";
+        ks.forEach((k, i) => {
+          const x = 20 + i * 60, hl = k === n;
+          s += rect(x, 70, 54, 60, hl ? "var(--accent)" : "var(--surface)", "var(--ink)", `fill-opacity="${hl ? .35 : 1}"`) + tx(x + 27, 95, `${a}^${k}`, {anchor: "middle", weight: 700}) + tx(x + 27, 120, fmt(a ** k, 4), {anchor: "middle", size: 12});
+          if (i < ks.length - 1) s += arrow(x + 30, 160, x + 84, 160, "var(--good)", 2) + tx(x + 57, 185, `·${a}`, {anchor: "middle", size: 13, fill: "var(--good)"}) + arrow(x + 84, 205, x + 30, 205, "var(--bad)", 2) + tx(x + 57, 230, `:${a}`, {anchor: "middle", size: 13, fill: "var(--bad)"});
+        });
+        s += tx(280, 40, "Eine Stufe nach rechts: · a   |   eine Stufe nach links: : a", {anchor: "middle"});
+        return {svg: s, h: 260, alt: "Treppe der Potenzen von a mit Pfeilen mal a und geteilt durch a.", summary: `<strong>${a}^${n} = ${fmt(a ** n, 6)}</strong> · Darum gilt a⁰ = 1 und a⁻¹ = 1/a.`,
+          steps: [`Gehe von ${a}^1 = ${a} eine Stufe nach links: ${a} : ${a} = 1. Also ist ${a}^0 = 1.`, `Noch eine Stufe: 1 : ${a} = ${fmt(1 / a, 4)}. Also ${a}^−1 = 1/${a}.`, "Das Muster setzt sich logisch fort – das ist der Grund für die Regeln, nicht Zauberei."]};
+      }
+      if (view === "sci") {
+        const {m, k} = p, val = m * 10 ** k, str = k >= 0 ? (m * 10 ** k).toLocaleString("de-DE", {maximumFractionDigits: 0}) : fmt(val, 8);
+        let s = tx(280, 50, `${fmt(m, 1)} · 10^${k}`, {anchor: "middle", size: 28, weight: 700}) + tx(280, 100, `= ${str}`, {anchor: "middle", size: 22, fill: "var(--brand)"});
+        const shown = Math.min(Math.abs(k), 9);
+        for (let i = 0; i < shown; i++) s += arrow(280 + (k > 0 ? i : -i) * 26, 160, 280 + (k > 0 ? i + 1 : -i - 1) * 24, 160, "var(--accent)", 2);
+        s += tx(280, 200, k === 0 ? "Komma bleibt stehen" : `Komma ${Math.abs(k)} Stellen nach ${k > 0 ? "rechts (große Zahl)" : "links (kleine Zahl)"}`, {anchor: "middle", fill: "var(--accent)", weight: 700})
+          + tx(280, 245, k >= 6 ? "Beispiel: Entfernungen im Weltall" : k <= -3 ? "Beispiel: Größe von Bakterien oder Atomen" : "Alltagsgröße", {anchor: "middle", fill: "var(--muted)"});
+        return {svg: s, h: 270, alt: `${m} mal 10 hoch ${k} ist ${str}.`, summary: `<strong>${fmt(m, 1)} · 10<sup>${k}</sup> = ${str}</strong>`,
+          steps: ["Die Mantisse liegt immer zwischen 1 und 10 (z. B. 3,5).", `10^${k} gibt an, um wie viele Stellen das Komma verschoben wird.`, `Positiver Exponent → nach rechts, negativer → nach links. Hier: ${Math.abs(k)} Stellen.`, "Typischer Fehler: 35 · 10³ ist nicht korrekt normiert – richtig wäre 3,5 · 10⁴."]};
+      }
+      const y = p.y, L = Math.log(y) / Math.log(a);
+      const plot = labPlot({xmin: -1, xmax: 10, ymin: 0, ymax: 1000, ystep: 100, fns: [{f: x => a ** x}], extra: (px, py) => y <= 1000 ? line(px(-1), py(y), px(L), py(y), "var(--accent)", 2, "5 4") + line(px(L), py(y), px(L), py(0), "var(--accent)", 2, "5 4") + dot(px(L), py(y), "var(--accent)") + tx(px(L) + 6, py(0) - 8, `x ≈ ${fmt(L, 2)}`, {fill: "var(--accent)", weight: 700}) : ""});
+      return {svg: plot.svg, alt: `Graph von ${a} hoch x; bei y = ${y} ist x ungefähr ${fmt(L, 2)}.`, summary: `<strong>log<sub>${a}</sub>(${y}) ≈ ${fmt(L, 3)}</strong>, denn ${a}<sup>${fmt(L, 3)}</sup> ≈ ${y}`,
+        steps: [`Frage: ${a} hoch WIE VIEL ergibt ${y}?`, "Lies am Graphen ab: Gehe bei y waagrecht zur Kurve und dann senkrecht nach unten.", `x = log_${a}(${y}) ≈ ${fmt(L, 3)}.`, `Mit dem Taschenrechner: log(${y}) : log(${a}) = ${fmt(L, 3)}.`, `Probe: ${a}^${fmt(L, 3)} ≈ ${fmt(a ** L, 1)}.`]};
+    }
+  };
+  labs.roots = {
+    title: "Quadratwurzeln verstehen",
+    tip: "Die Wurzel aus A ist die Seitenlänge eines Quadrats mit der Fläche A.",
+    params: [P("A", "Flächeninhalt A", 0, 200, 1, 50)],
+    views: [["square", "Quadrat"], ["nest", "Intervallschachtelung"]],
+    render(p, view) {
+      const A = p.A, r = Math.sqrt(A), lo = Math.floor(r), hi = Math.ceil(r);
+      if (view === "square") {
+        const u = 300 / Math.sqrt(200), side = r * u;
+        let s = rect(60, 340 - side, side, side, "var(--brand)", "var(--ink)", 'fill-opacity=".3"');
+        for (let i = 1; i < 15; i++) if (i * u < 300) s += line(60 + i * u, 40, 60 + i * u, 340, "var(--muted)", .5) + line(60, 340 - i * u, 360, 340 - i * u, "var(--muted)", .5);
+        s += tx(60 + side / 2, 330 - side, `√${A} ≈ ${fmt(r, 3)}`, {anchor: "middle", weight: 700, fill: "var(--brand)"}) + tx(390, 120, `Fläche: ${A} Kästchen`, {}) + tx(390, 150, `Seite: √${A} ≈ ${fmt(r, 3)}`, {}) + tx(390, 190, Number.isInteger(r) ? "Quadratzahl! ✓" : `zwischen ${lo}² = ${lo * lo}`, {fill: "var(--accent)", weight: 700}) + (Number.isInteger(r) ? "" : tx(390, 215, `und ${hi}² = ${hi * hi}`, {fill: "var(--accent)", weight: 700}));
+        return {svg: s, alt: `Quadrat mit Fläche ${A} und Seitenlänge ${fmt(r, 3)}.`, summary: `<strong>√${A} ≈ ${fmt(r, 4)}</strong>`, steps: ["Wurzelziehen ist die Umkehrung des Quadrierens.", `Suche die Seitenlänge s mit s · s = ${A}.`, Number.isInteger(r) ? `${r} · ${r} = ${A}, also √${A} = ${r}.` : `${lo}² = ${lo * lo} < ${A} < ${hi * hi} = ${hi}², also liegt √${A} zwischen ${lo} und ${hi}.`, "Wurzeln aus negativen Zahlen gibt es in der Realschule nicht: Kein Quadrat hat negative Fläche."]};
+      }
+      let a = lo, b = hi === lo ? lo + 1 : hi; const rows = [["Schritt", "untere Grenze", "obere Grenze", "Quadrate"]];
+      const steps = [`Start: ${a}² = ${a * a} ≤ ${A} ≤ ${b * b} = ${b}².`];
+      for (let i = 1, d = 0.1; i <= 3; i++, d /= 10) {
+        let c = a; while ((c + d) ** 2 <= A + 1e-9) c += d; a = c; b = c + d;
+        rows.push([String(i), fmt(a, i), fmt(b, i), `${fmt(a * a, 4)} … ${fmt(b * b, 4)}`]); steps.push(`Stelle ${i} nach dem Komma: ${fmt(a, i)}² ≤ ${A} < ${fmt(b, i)}².`);
+      }
+      steps.push(`Also √${A} ≈ ${fmt(r, 3)}. Die Intervalle werden immer schmaler.`);
+      return {svg: svgTable(rows, {y: 30, firstColW: 90}) + tx(280, 240, `√${A} ≈ ${fmt(r, 4)}`, {anchor: "middle", size: 22, weight: 700}), h: 270, alt: "Tabelle der Intervallschachtelung.", summary: `<strong>√${A} ≈ ${fmt(r, 4)}</strong>`, steps};
+    }
+  };
+  labs.prop = {
+    title: "Proportionale Zuordnung",
+    tip: "Doppelt so viel → doppelt so teuer. Der Graph ist eine Gerade durch den Ursprung.",
+    params: [P("m", "Preis pro Stück m", 0.5, 5, 0.5, 2, " €"), P("x", "Anzahl x", 0, 10, 1, 3)],
+    views: [["graph", "Graph"], ["table", "Tabelle"], ["rule", "Dreisatz"]],
+    render(p, view) {
+      const {m, x} = p, y = m * x;
+      let s;
+      if (view === "graph") s = labPlot({xmin: 0, xmax: 10, ymin: 0, ymax: 50, ystep: 5, xlabel: "Anzahl", ylabel: "Preis €", fns: [{f: t => m * t}], extra: (px, py) => line(px(x), py(0), px(x), py(y), "var(--accent)", 2, "4 4") + line(px(0), py(y), px(x), py(y), "var(--accent)", 2, "4 4") + dot(px(x), py(y), "var(--accent)") + line(px(0), py(0), px(1), py(0), "var(--good)", 3) + line(px(1), py(0), px(1), py(m), "var(--good)", 3) + tx(px(1) + 5, py(m / 2), `${fmt(m)} €`, {fill: "var(--good)", size: 13})}).svg;
+      else if (view === "table") s = svgTable([["Anzahl", ...[1, 2, 3, 4, 5, x].map(String)], ["Preis (€)", ...[1, 2, 3, 4, 5, x].map(t => fmt(m * t))], ["Preis : Anzahl", ...[1, 2, 3, 4, 5, x].map(t => t ? fmt(m) : "–")]], {y: 40, firstColW: 130, highlightCol: 6}) + tx(280, 220, "Quotient immer gleich = Proportionalitätsfaktor", {anchor: "middle", fill: "var(--accent)", weight: 700});
+      else s = svgTable([["Anzahl", "Preis"], ["2", fmt(2 * m) + " €"], ["1", fmt(m) + " €"], [String(x), fmt(y) + " €"]], {x: 140, w: 280, y: 40, rowH: 50}) + tx(440, 125, ": 2", {fill: "var(--bad)", weight: 700}) + tx(440, 175, `· ${x}`, {fill: "var(--good)", weight: 700}) + tx(100, 125, ": 2", {anchor: "end", fill: "var(--bad)", weight: 700}) + tx(100, 175, `· ${x}`, {anchor: "end", fill: "var(--good)", weight: 700});
+      return {svg: s, h: view === "graph" ? 380 : 260, alt: `Proportionale Zuordnung y = ${fmt(m)} · x; bei x = ${x} ist y = ${fmt(y)}.`, summary: `<strong>y = ${fmt(m)} · x</strong> → ${x} Stück kosten ${fmt(y)} €`,
+        steps: ["Proportional: Verdoppelt sich x, verdoppelt sich auch y.", `Der Quotient y : x ist immer ${fmt(m)} (Preis für 1 Stück).`, `Dreisatz: erst auf 1 Stück schließen (${fmt(m)} €), dann mal ${x}.`, `${x} · ${fmt(m)} € = ${fmt(y)} €.`, "Der Graph ist eine Ursprungsgerade. Grünes Dreieck: 1 nach rechts → m nach oben."]};
+    }
+  };
+  labs.antiprop = {
+    title: "Antiproportionale Zuordnung",
+    tip: "Doppelt so viele Personen → halb so lange Arbeitszeit. Die Rechteckfläche (das Produkt) bleibt gleich.",
+    params: [P("k", "Produkt k (Gesamtarbeit)", 12, 60, 6, 24), P("x", "Anzahl Personen x", 1, 12, 1, 3)],
+    views: [["rect", "Rechteck"], ["graph", "Graph"], ["table", "Tabelle"]],
+    render(p, view) {
+      const {k, x} = p, y = k / x;
+      let s;
+      if (view === "rect") {
+        const w = Math.min(x * 36, 480), h = Math.min(y * 300 / 60, 300);
+        s = rect(50, 340 - h, w, h, "var(--brand)", "var(--ink)", 'fill-opacity=".3"') + tx(50 + w / 2, 360, `x = ${x} Personen`, {anchor: "middle"}) + tx(45, 340 - h / 2, `y = ${fmt(y)} h`, {anchor: "end", size: 13}) + tx(50 + w / 2, 340 - h / 2 + 5, `Fläche = ${k}`, {anchor: "middle", weight: 700}) + tx(300, 40, `${x} · ${fmt(y)} = ${k}`, {anchor: "middle", size: 22, weight: 700});
+      } else if (view === "graph") s = labPlot({xmin: 0, xmax: 12, ymin: 0, ymax: 60, ystep: 10, xlabel: "Personen", ylabel: "Stunden", fns: [{f: t => t > 0.2 ? k / t : NaN}], extra: (px, py) => rect(px(0), py(y), px(x) - px(0), py(0) - py(y), "var(--accent)", "none", 'fill-opacity=".2"') + dot(px(x), py(y), "var(--accent)")}).svg;
+      else s = svgTable([["Personen x", ...[1, 2, 3, 4, 6, x].map(String)], ["Stunden y", ...[1, 2, 3, 4, 6, x].map(t => fmt(k / t))], ["x · y", ...[1, 2, 3, 4, 6, x].map(() => String(k))]], {y: 40, firstColW: 130, highlightCol: 6});
+      return {svg: s, h: view === "table" ? 200 : 380, alt: `Antiproportional: x mal y gleich ${k}; bei ${x} Personen ${fmt(y)} Stunden.`, summary: `<strong>y = ${k} : x</strong> → ${x} Personen brauchen ${fmt(y)} h`,
+        steps: ["Antiproportional: Verdoppelt sich x, halbiert sich y.", `Das Produkt x · y ist immer gleich: ${k}.`, `Dreisatz: erst auf 1 Person schließen (${k} h), dann durch ${x} teilen.`, `${k} : ${x} = ${fmt(y)} h.`, "Der Graph ist eine Hyperbel – er berührt die Achsen nie. Typischer Fehler: hier mit „mal“ statt „geteilt“ rechnen."]};
+    }
+  };
+  labs.linear = {
+    title: "Lineare Funktionen y = m·x + b",
+    tip: "b verschiebt die Gerade nach oben oder unten. m bestimmt, wie steil sie ist: 1 nach rechts → m nach oben.",
+    params: [P("m", "Steigung m", -3, 3, 0.5, 1), P("b", "y-Achsenabschnitt b", -5, 5, 0.5, 2), P("x", "Punkt bei x", -5, 5, 0.5, 2)],
+    views: [["graph", "Graph mit Steigungsdreieck"], ["table", "Wertetabelle"]],
+    render(p, view) {
+      const {m, b, x} = p, f = t => m * t + b, term = `y = ${fmt(m)}x${signed(b)}`, zero = m ? -b / m : null;
+      let s;
+      if (view === "graph") s = labPlot({xmin: -6, xmax: 6, ymin: -8, ymax: 8, fns: [{f}], extra: (px, py) => dot(px(0), py(b), "var(--good)") + tx(px(0) + 8, py(b) - 8, `b = ${fmt(b)}`, {fill: "var(--good)", weight: 700, size: 13})
+        + line(px(0), py(b), px(1), py(b), "var(--accent)", 3) + line(px(1), py(b), px(1), py(b + m), "var(--accent)", 3) + tx(px(1) + 6, py(b + m / 2) + 4, `m = ${fmt(m)}`, {fill: "var(--accent)", weight: 700, size: 13})
+        + (Math.abs(f(x)) <= 8 ? dot(px(x), py(f(x)), "var(--accent2)") + tx(px(x) + 8, py(f(x)) + 18, `P(${fmt(x)} | ${fmt(f(x))})`, {fill: "var(--accent2)", size: 13}) : "")}).svg;
+      else { const xs = [-2, -1, 0, 1, 2, x]; s = svgTable([["x", ...xs.map(t => fmt(t))], ["y", ...xs.map(t => fmt(f(t)))]], {y: 50, highlightCol: 6}) + tx(280, 30, term, {anchor: "middle", size: 20, weight: 700}) + tx(280, 170, `Pro Schritt x + 1 ändert sich y immer um ${fmt(m)}.`, {anchor: "middle", fill: "var(--accent)", weight: 700}); }
+      return {svg: s, h: view === "graph" ? 380 : 200, alt: `Gerade ${term}.`, summary: `<strong>${term}</strong> · ${m > 0 ? "steigend" : m < 0 ? "fallend" : "waagrecht"}${zero !== null ? ` · Nullstelle x = ${fmt(zero)}` : ""}`,
+        steps: [`Start auf der y-Achse bei b = ${fmt(b)}: Punkt (0 | ${fmt(b)}).`, `Steigungsdreieck: 1 nach rechts, ${fmt(Math.abs(m))} nach ${m >= 0 ? "oben" : "unten"}.`, `Punkt berechnen: y = ${fmt(m)} · ${par(x)}${signed(b)} = ${fmt(f(x))}.`, zero !== null ? `Nullstelle: 0 = ${fmt(m)}x${signed(b)} → x = ${fmt(zero)}.` : "m = 0: Die Gerade ist waagrecht und hat (außer bei b = 0) keine Nullstelle.", "Typischer Fehler: m und b vertauschen. b steht allein, m steht beim x."]};
+    }
+  };
+  labs.system = {
+    title: "Lineare Gleichungssysteme grafisch",
+    tip: "Die Lösung ist der Schnittpunkt beider Geraden. Parallele Geraden haben keinen Schnittpunkt.",
+    params: [P("m1", "Steigung m₁", -3, 3, 0.5, 1), P("b1", "Abschnitt b₁", -5, 5, 0.5, 1), P("m2", "Steigung m₂", -3, 3, 0.5, -1), P("b2", "Abschnitt b₂", -5, 5, 0.5, 5)],
+    views: [["graph", "Graph"], ["table", "Tabelle"]],
+    render(p, view) {
+      const {m1, b1, m2, b2} = p, f1 = x => m1 * x + b1, f2 = x => m2 * x + b2;
+      const par0 = m1 === m2, same = par0 && b1 === b2, sx = par0 ? null : (b2 - b1) / (m1 - m2), sy = sx === null ? null : f1(sx);
+      let s;
+      if (view === "graph") s = labPlot({xmin: -8, xmax: 8, ymin: -8, ymax: 8, fns: [{f: f1}, {f: f2, color: "var(--accent)", dash: same ? "8 6" : ""}], extra: (px, py) => sx !== null && Math.abs(sx) <= 8 && Math.abs(sy) <= 8 ? dot(px(sx), py(sy), "var(--bad)", 8) + tx(px(sx) + 10, py(sy) - 10, `S(${fmt(sx)} | ${fmt(sy)})`, {fill: "var(--bad)", weight: 700}) : ""}).svg;
+      else { const xs = [-2, -1, 0, 1, 2, 3, 4]; s = svgTable([["x", ...xs.map(String)], ["y₁", ...xs.map(t => fmt(f1(t)))], ["y₂", ...xs.map(t => fmt(f2(t)))], ["y₁ − y₂", ...xs.map(t => fmt(f1(t) - f2(t)))]], {y: 30, highlightCol: sx !== null ? xs.indexOf(sx) + 1 : -1}) + tx(280, 220, "Wo y₁ − y₂ = 0 ist, schneiden sich die Geraden.", {anchor: "middle", fill: "var(--accent)", weight: 700}); }
+      const result = same ? "unendlich viele Lösungen (identische Geraden)" : par0 ? "keine Lösung (parallele Geraden)" : `genau eine Lösung: x = ${fmt(sx)}, y = ${fmt(sy)}`;
+      return {svg: s, h: view === "graph" ? 380 : 250, alt: `Zwei Geraden; ${result}.`, summary: `<strong>I: y = ${fmt(m1)}x${signed(b1)} · II: y = ${fmt(m2)}x${signed(b2)}</strong><br>${result}`,
+        steps: ["Beide Gleichungen nach y auflösen (hier schon erledigt).", `Gleichsetzungsverfahren: ${fmt(m1)}x${signed(b1)} = ${fmt(m2)}x${signed(b2)}.`, par0 ? (same ? "Beide Seiten sind gleich – jede Zahl ist Lösung." : `Es bleibt ${fmt(b1)} = ${fmt(b2)} – ein Widerspruch.`) : `${fmt(m1 - m2)}x = ${fmt(b2 - b1)} → x = ${fmt(sx)}.`, par0 ? "Gleiche Steigung → Geraden parallel oder identisch." : `x einsetzen: y = ${fmt(m1)} · ${par(sx)}${signed(b1)} = ${fmt(sy)}.`, par0 ? "Prüfe am Graphen!" : `Probe in II: ${fmt(m2)} · ${par(sx)}${signed(b2)} = ${fmt(f2(sx))}. ✓`]};
+    }
+  };
+  labs.parabola = {
+    title: "Quadratische Funktionen in Scheitelform",
+    tip: "y = a·(x − d)² + e. d schiebt nach links/rechts, e nach oben/unten, a streckt, staucht oder spiegelt.",
+    params: [P("a", "Streckfaktor a", -3, 3, 0.25, 1), P("d", "Verschiebung d (x-Richtung)", -4, 4, 0.5, 1), P("e", "Verschiebung e (y-Richtung)", -6, 6, 0.5, -4)],
+    views: [["graph", "Graph"], ["zeros", "Nullstellen"], ["table", "Wertetabelle"]],
+    constrain(p) { if (p.a === 0) p.a = 0.25; },
+    render(p, view) {
+      const {a, d, e} = p, f = x => a * (x - d) ** 2 + e, q = -e / a, z = q >= 0 ? [d - Math.sqrt(q), d + Math.sqrt(q)] : [];
+      const term = `y = ${fmt(a)}(x${signed(-d)})²${signed(e)}`, zs = z.length ? (q === 0 ? `x = ${fmt(d)}` : `x₁ = ${fmt(z[0])}, x₂ = ${fmt(z[1])}`) : "keine";
+      let s;
+      if (view === "table") { const xs = [d - 3, d - 2, d - 1, d, d + 1, d + 2, d + 3]; s = svgTable([["x", ...xs.map(t => fmt(t))], ["y", ...xs.map(t => fmt(f(t)))]], {y: 50, highlightCol: 4}) + tx(280, 30, term, {anchor: "middle", size: 20, weight: 700}) + tx(280, 170, "Symmetrisch zur Scheitelstelle: gleiche y-Werte links und rechts.", {anchor: "middle", fill: "var(--accent)", weight: 700}); }
+      else s = labPlot({xmin: -8, xmax: 8, ymin: -8, ymax: 8, fns: [{f: x => x * x, color: "var(--muted)", dash: "5 5", width: 1.5}, {f}], extra: (px, py) => dot(px(d), py(e), "var(--accent)", 8) + tx(px(d) + 10, py(e) + (a > 0 ? 22 : -12), `S(${fmt(d)} | ${fmt(e)})`, {fill: "var(--accent)", weight: 700}) + line(px(d), py(-8), px(d), py(8), "var(--accent)", 1, "3 5") + (view === "zeros" ? z.map(t => dot(px(t), py(0), "var(--bad)", 7)).join("") : "")}).svg;
+      return {svg: s, h: view === "table" ? 200 : 380, alt: `Parabel ${term} mit Scheitel (${fmt(d)}|${fmt(e)}).`, summary: `<strong>${term}</strong> · Scheitel S(${fmt(d)} | ${fmt(e)}) · Nullstellen: ${zs}`,
+        steps: [`Scheitelpunkt ablesen: S(${fmt(d)} | ${fmt(e)}). Achtung: In der Klammer steht „x − d“, also Vorzeichen umdrehen!`, `a = ${fmt(a)}: ${a > 0 ? "nach oben geöffnet" : "nach unten geöffnet"}, ${Math.abs(a) > 1 ? "schmaler (gestreckt)" : Math.abs(a) < 1 ? "breiter (gestaucht)" : "so breit wie die Normalparabel"}.`, `Nullstellen: 0 = ${fmt(a)}(x${signed(-d)})²${signed(e)} → (x${signed(-d)})² = ${fmt(q)}.`, q < 0 ? "Ein Quadrat kann nicht negativ sein → keine Nullstelle." : `x${signed(-d)} = ±${fmt(Math.sqrt(q))} → ${zs}.`, "Die gestrichelte graue Kurve ist die Normalparabel y = x² zum Vergleich."]};
+    }
+  };
+  labs.growth = {
+    title: "Exponentielles Wachstum und Abnahme",
+    tip: "Bei exponentiellem Wachstum wird pro Schritt mit demselben Faktor multipliziert – nicht derselbe Betrag addiert.",
+    params: [P("K", "Startwert K₀", 100, 1000, 50, 500), P("p", "Prozent pro Jahr", -50, 50, 1, 10, " %"), P("n", "Jahre n", 0, 20, 1, 5)],
+    views: [["graph", "Graph"], ["table", "Tabelle"], ["bars", "Balken"]],
+    constrain(p) { if (p.p === 0) p.p = 1; },
+    render(p, view) {
+      const {K, n} = p, q = 1 + p.p / 100, f = t => K * q ** t, lin = t => K + K * p.p / 100 * t, Kn = f(n);
+      const T = Math.log(p.p > 0 ? 2 : 0.5) / Math.log(q), ymax = Math.max(K * 2, Math.min(f(20), K * 8));
+      let s;
+      if (view === "graph") s = labPlot({xmin: 0, xmax: 20, ymin: 0, ymax, xlabel: "Jahre", ylabel: "Wert", fns: [{f}, {f: lin, color: "var(--muted)", dash: "6 5", width: 1.5}], extra: (px, py) => Kn <= ymax ? dot(px(n), py(Kn), "var(--accent)") + tx(px(n) + 8, py(Kn) - 8, fmt(Kn, 0), {fill: "var(--accent)", weight: 700}) : ""}).svg;
+      else if (view === "table") { const ts = [0, 1, 2, 3, 4, n]; s = svgTable([["Jahr", ...ts.map(String)], ["Wert", ...ts.map(t => fmt(f(t), 1))], ["Faktor", "–", ...ts.slice(1).map(() => "· " + fmt(q, 2))]], {y: 40, highlightCol: 6}); }
+      else { const N = Math.min(n, 10), bw = 480 / (N + 1), mx = Math.max(...Array.from({length: N + 1}, (_, i) => f(i))); s = Array.from({length: N + 1}, (_, i) => { const h = f(i) / mx * 280; return rect(50 + i * bw, 330 - h, bw - 6, h, i === N ? "var(--accent)" : "var(--brand)", "none", 'fill-opacity=".7"') + tx(50 + i * bw + bw / 2 - 3, 350, String(i), {anchor: "middle", size: 12}); }).join("") + tx(280, 30, "Jede Säule = vorherige Säule · " + fmt(q, 2), {anchor: "middle", weight: 700}); }
+      return {svg: s, h: view === "table" ? 200 : 380, alt: `Exponentielle Entwicklung mit Faktor ${fmt(q, 2)}; nach ${n} Jahren ${fmt(Kn, 1)}.`,
+        summary: `<strong>K(n) = ${K} · ${fmt(q, 2)}<sup>n</sup></strong> → K(${n}) ≈ ${fmt(Kn, 1)} · ${p.p > 0 ? "Verdopplungszeit" : "Halbwertszeit"} ≈ ${fmt(T, 1)} Jahre`,
+        steps: [`Wachstumsfaktor: q = 1 ${p.p >= 0 ? "+" : "−"} ${Math.abs(p.p)} % = ${fmt(q, 2)}.`, `Jedes Jahr wird mit ${fmt(q, 2)} multipliziert.`, `K(${n}) = ${K} · ${fmt(q, 2)}^${n} ≈ ${fmt(Kn, 1)}.`, "Grau gestrichelt: lineares Wachstum mit gleichem Betrag pro Jahr – exponentiell wird es später viel schneller.", `${p.p > 0 ? "Verdopplung" : "Halbierung"} nach etwa ${fmt(T, 1)} Jahren – egal, wo man startet.`]};
+    }
+  };
+  labs.compare = {
+    title: "Linear oder exponentiell?",
+    tip: "Linear: immer gleich viel dazu (Differenz konstant). Exponentiell: immer mit gleichem Faktor (Quotient konstant).",
+    params: [P("d", "Lineare Zunahme pro Schritt", 1, 20, 1, 10), P("p", "Exponentielle Zunahme in %", 1, 50, 1, 10, " %"), P("x", "Schritt x", 0, 30, 1, 10)],
+    views: [["graph", "Graph"], ["table", "Differenzen & Quotienten"]],
+    render(p, view) {
+      const K = 100, q = 1 + p.p / 100, L = t => K + p.d * t, E = t => K * q ** t;
+      let cross = null; for (let t = 1; t <= 60; t++) if (E(t) > L(t)) { cross = t; break; }
+      let s;
+      if (view === "graph") { const ym = Math.max(L(30), Math.min(E(30), 1500)); s = labPlot({xmin: 0, xmax: 30, ymin: 0, ymax: ym, fns: [{f: L, color: "var(--accent)"}, {f: E}], extra: (px, py) => line(px(p.x), py(0), px(p.x), py(ym), "var(--muted)", 1, "4 4") + tx(px(2), py(ym * .92), "— linear", {fill: "var(--accent)", weight: 700}) + tx(px(2), py(ym * .84), "— exponentiell", {fill: "var(--brand)", weight: 700})}).svg; }
+      else { const ts = [0, 1, 2, 3, 4]; s = svgTable([["x", ...ts.map(String)], ["linear", ...ts.map(t => fmt(L(t), 1))], ["Differenz", "–", ...ts.slice(1).map(t => "+" + fmt(L(t) - L(t - 1), 1))], ["exponentiell", ...ts.map(t => fmt(E(t), 1))], ["Quotient", "–", ...ts.slice(1).map(t => "· " + fmt(E(t) / E(t - 1), 2))]], {y: 20, firstColW: 130}); }
+      return {svg: s, h: view === "graph" ? 380 : 240, alt: "Vergleich linearer und exponentieller Zunahme.", summary: `<strong>Bei x = ${p.x}: linear ${fmt(L(p.x), 1)}, exponentiell ${fmt(E(p.x), 1)}</strong>${cross ? ` · Exponentiell überholt ab x = ${cross}` : ""}`,
+        steps: ["Beide starten bei 100.", `Linear: y = 100 + ${p.d}·x (Differenzen konstant +${p.d}).`, `Exponentiell: y = 100 · ${fmt(q, 2)}^x (Quotienten konstant ·${fmt(q, 2)}).`, cross ? `Ab Schritt ${cross} liegt das exponentielle Modell vorne – und der Abstand wächst immer schneller.` : "Im betrachteten Bereich wird es noch nicht überholt.", "Prüfe bei Tabellen immer zuerst Differenzen und Quotienten!"]};
+    }
+  };
+  labs.angles = {
+    title: "Winkel an Geraden",
+    tip: "Drehe den Winkel α. Beobachte, welche Winkel immer gleich groß sind und welche sich zu 180° ergänzen.",
+    params: [P("alpha", "Winkel α", 10, 170, 1, 60, "°")],
+    views: [["neighbor", "Nebenwinkel"], ["vertical", "Scheitelwinkel"], ["parallel", "Parallelen"]],
+    render(p, view) {
+      const a = p.alpha, b = 180 - a, C = "var(--brand)", D = "var(--accent)";
+      const cross = (cx, cy, len, labels) => {
+        const [x1, y1] = polar(cx, cy, len, a), [x2, y2] = polar(cx, cy, len, a + 180);
+        return line(cx - len * 1.3, cy, cx + len * 1.3, cy, "var(--ink)", 2) + line(x1, y1, x2, y2, "var(--ink)", 2)
+          + angleMark(cx, cy, 0, a, labels[0], C, 30) + angleMark(cx, cy, a, 180, labels[1], D, 30)
+          + (labels[2] ? angleMark(cx, cy, 180, 180 + a, labels[2], C, 30) + angleMark(cx, cy, 180 + a, 360, labels[3], D, 30) : "");
+      };
+      let s, steps;
+      if (view === "neighbor") {
+        s = cross(280, 230, 150, [`α=${a}°`, `β=${b}°`]) + tx(280, 40, `α + β = ${a}° + ${b}° = 180°`, {anchor: "middle", size: 20, weight: 700});
+        steps = ["Nebenwinkel liegen nebeneinander an einer Geraden.", "Zusammen bilden sie einen gestreckten Winkel: 180°.", `β = 180° − α = 180° − ${a}° = ${b}°.`];
+      } else if (view === "vertical") {
+        s = cross(280, 200, 150, [`α=${a}°`, `β=${b}°`, `α'=${a}°`, `β'=${b}°`]) + tx(280, 30, `Scheitelwinkel: α = α' = ${a}°, β = β' = ${b}°`, {anchor: "middle", size: 18, weight: 700});
+        steps = ["Zwei Geraden schneiden sich. Gegenüberliegende Winkel heißen Scheitelwinkel.", "Scheitelwinkel sind immer gleich groß.", "Begründung: α + β = 180° und α' + β = 180°, also α = α'."];
+      } else {
+        s = line(40, 120, 520, 120, "var(--ink)", 2) + line(40, 280, 520, 280, "var(--ink)", 2) + tx(530, 125, "g", {weight: 700}) + tx(530, 285, "h", {weight: 700});
+        const dx = 160 / Math.tan(a * Math.PI / 180), xt = 280 + dx / 2, xb = 280 - dx / 2, ext = 40 / Math.sin(a * Math.PI / 180);
+        const [ux, uy] = [Math.cos(a * Math.PI / 180), -Math.sin(a * Math.PI / 180)];
+        s += line(xb - ux * ext, 280 - uy * ext, xt + ux * ext, 120 + uy * ext, "var(--ink)", 2)
+          + angleMark(xt, 120, 0, a, `α=${a}°`, C, 28) + angleMark(xb, 280, 0, a, `α'=${a}°`, C, 28) + angleMark(xb, 280, a, 180, `β=${b}°`, D, 28)
+          + tx(280, 40, "g ∥ h: Stufenwinkel sind gleich groß", {anchor: "middle", size: 18, weight: 700});
+        steps = ["Die Geraden g und h sind parallel (∥). Eine dritte Gerade schneidet beide.", `Stufenwinkel (F-Form) sind gleich: α = α' = ${a}°.`, `Wechselwinkel (Z-Form) sind ebenfalls gleich groß.`, `Nebenwinkel dazu: β = 180° − ${a}° = ${b}°.`];
+      }
+      return {svg: s, alt: `Winkelbild mit α = ${a}° und β = ${b}°.`, summary: `<strong>α = ${a}°</strong> · Nebenwinkel β = ${b}° · Scheitelwinkel = ${a}°`, steps};
+    }
+  };
+  labs.triangle = {
+    title: "Dreiecke: Winkelsumme und Konstruktion",
+    tip: "Ziehe an den Winkeln. Die drei Winkel ergeben immer zusammen 180°.",
+    params: [P("alpha", "Winkel α", 20, 120, 1, 50, "°"), P("beta", "Winkel β", 20, 120, 1, 60, "°"), P("c", "Seite c", 4, 9, 0.5, 7, " cm")],
+    views: [["sum", "Winkelsumme"], ["wsw", "Konstruktion WSW"]],
+    constrain(p) { if (p.alpha + p.beta > 160) p.beta = 160 - p.alpha; },
+    render(p, view, {step}) {
+      const {alpha: a, beta: b, c} = p, g = 180 - a - b, rad = Math.PI / 180;
+      const bLen = c * Math.sin(b * rad) / Math.sin(g * rad), Cx = bLen * Math.cos(a * rad), Cy = bLen * Math.sin(a * rad);
+      const map = fitBox([[0, 0], [c, 0], [Cx, Cy]], 560, 330, 50), A = map([0, 0]), B = map([c, 0]), Cp = map([Cx, Cy]);
+      let s = "";
+      if (view === "sum") {
+        s += poly([A, B, Cp], "var(--brand)", "var(--ink)", 'fill-opacity=".12"') + angleMark(...A, 0, a, `α=${a}°`, "var(--brand)", 28) + angleMark(...B, 180 - b, 180, `β=${b}°`, "var(--accent)", 28) + angleMark(...Cp, 180 + a, 360 - b, `γ=${g}°`, "var(--good)", 28);
+        if (step >= 2) s += line(Cp[0] - 220, Cp[1], Cp[0] + 220, Cp[1], "var(--accent2)", 2, "6 4") + angleMark(...Cp, 180, 180 + a, "α", "var(--brand)", 40) + angleMark(...Cp, 360 - b, 360, "β", "var(--accent)", 40);
+        s += tx(280, 370, `${a}° + ${b}° + ${g}° = 180°`, {anchor: "middle", size: 18, weight: 700});
+        return {svg: s, alt: `Dreieck mit α=${a}°, β=${b}°, γ=${g}°.`, summary: `<strong>γ = 180° − ${a}° − ${b}° = ${g}°</strong>`,
+          steps: ["Ein Dreieck hat drei Innenwinkel α, β und γ.", "Zeichne durch C eine Parallele zu AB (lila gestrichelt).", "An der Parallelen findest du α und β als Wechselwinkel wieder.", "α, γ und β bilden zusammen einen gestreckten Winkel: 180°.", `Also: γ = 180° − α − β = ${g}°.`]};
+      }
+      s += line(...A, ...B, "var(--ink)", 3) + tx((A[0] + B[0]) / 2, A[1] + 22, `c = ${fmt(c)} cm`, {anchor: "middle"}) + dot(...A) + dot(...B) + tx(A[0] - 8, A[1] + 18, "A", {anchor: "end", weight: 700}) + tx(B[0] + 8, B[1] + 18, "B", {weight: 700});
+      const far = 1.5 * map.scale * Math.max(c, bLen);
+      if (step >= 2) { const e = polar(...A, far, a); s += line(...A, ...e, "var(--brand)", 2, "6 4") + angleMark(...A, 0, a, `${a}°`, "var(--brand)", 28); }
+      if (step >= 3) { const e = polar(...B, far, 180 - b); s += line(...B, ...e, "var(--accent)", 2, "6 4") + angleMark(...B, 180 - b, 180, `${b}°`, "var(--accent)", 28); }
+      if (step >= 4) s += poly([A, B, Cp], "var(--good)", "var(--ink)", 'fill-opacity=".15"') + dot(...Cp, "var(--good)", 8) + tx(Cp[0], Cp[1] - 14, "C", {anchor: "middle", weight: 700});
+      return {svg: s, alt: "Schrittweise Dreieckskonstruktion nach WSW.", summary: `<strong>WSW: c = ${fmt(c)} cm, α = ${a}°, β = ${b}°</strong> → eindeutig konstruierbar`,
+        steps: [`Zeichne die Strecke c = AB = ${fmt(c)} cm.`, `Trage in A den Winkel α = ${a}° an.`, `Trage in B den Winkel β = ${b}° an.`, "Der Schnittpunkt der beiden Schenkel ist C. Fertig!", `Kontrolle: γ = 180° − ${a}° − ${b}° = ${g}°. Miss nach!`]};
+    }
+  };
+  labs.shapes = {
+    title: "Flächeninhalt durch Zerlegen und Ergänzen",
+    tip: "Ein Parallelogramm lässt sich in ein Rechteck umlegen, ein Dreieck ist ein halbes Parallelogramm.",
+    params: [P("g", "Grundseite g", 2, 10, 1, 6, " cm"), P("h", "Höhe h", 1, 7, 1, 4, " cm"), P("s", "Verschiebung s", 0, 4, 1, 2, " cm", ["para", "tri", "trap"]), P("c", "obere Seite c", 1, 8, 1, 3, " cm", ["trap"])],
+    views: [["rect", "Rechteck"], ["para", "Parallelogramm"], ["tri", "Dreieck"], ["trap", "Trapez"]],
+    render(p, view) {
+      const {g, h, s: sh, c} = p, u = 34, x0 = 50, y0 = 330, X = x => x0 + x * u, Y = y => y0 - y * u;
+      let s = "";
+      for (let i = 0; i <= 14; i++) s += line(X(i), Y(0), X(i), Y(7.5), "var(--line)", 1);
+      for (let j = 0; j <= 7; j++) s += line(X(0), Y(j), X(14), Y(j), "var(--line)", 1);
+      let area, formula, pts, steps;
+      if (view === "rect") { pts = [[0, 0], [g, 0], [g, h], [0, h]]; area = g * h; formula = `A = g · h = ${g} · ${h}`; steps = ["Zähle die Kästchen: jede Reihe hat g Kästchen.", `Es gibt h = ${h} Reihen.`, `A = ${g} · ${h} = ${area} cm².`]; }
+      else if (view === "para") { pts = [[0, 0], [g, 0], [g + sh, h], [sh, h]]; area = g * h; formula = `A = g · h = ${g} · ${h}`; s += poly([[X(0), Y(0)], [X(sh), Y(h)], [X(sh), Y(0)]].map(q => q), "var(--accent)", "none", 'fill-opacity=".35"') + poly([[X(g), Y(0)], [X(g + sh), Y(h)], [X(g + sh), Y(0)]], "none", "var(--accent)", 'stroke-dasharray="5 4" stroke-width="2"'); steps = ["Schneide links das orange Dreieck ab.", "Lege es rechts wieder an (gestrichelt).", "Es entsteht ein Rechteck mit gleicher Fläche.", `A = g · h = ${area} cm². Die schräge Seite zählt NICHT!`]; }
+      else if (view === "tri") { pts = [[0, 0], [g, 0], [sh, h]]; area = g * h / 2; formula = `A = ½ · g · h = ½ · ${g} · ${h}`; s += poly([[X(0), Y(0)], [X(g), Y(0)], [X(g + sh), Y(h)], [X(sh), Y(h)]], "none", "var(--accent)", 'stroke-dasharray="5 4" stroke-width="2"'); steps = ["Verdopple das Dreieck (gestrichelt): Es entsteht ein Parallelogramm.", `Das Parallelogramm hat A = g · h = ${g * h} cm².`, `Das Dreieck ist die Hälfte: A = ${fmt(area)} cm².`]; }
+      else { pts = [[0, 0], [g, 0], [sh + c, h], [sh, h]]; area = (g + c) / 2 * h; formula = `A = (a + c)/2 · h = (${g} + ${c})/2 · ${h}`; s += line(X(0), Y(h / 2), X(12), Y(h / 2), "var(--accent)", 1, "4 4"); steps = ["Ein Trapez hat zwei parallele Seiten a (unten) und c (oben).", `Mittellinie m = (a + c) : 2 = ${fmt((g + c) / 2)} cm.`, `A = m · h = ${fmt((g + c) / 2)} · ${h} = ${fmt(area)} cm².`]; }
+      s += poly(pts.map(([a, b]) => [X(a), Y(b)]), "var(--brand)", "var(--ink)", 'fill-opacity=".3" stroke-width="2.5"');
+      const hx = view === "rect" ? g : view === "tri" ? sh : sh;
+      s += line(X(hx), Y(0), X(hx), Y(h), "var(--bad)", 2, "6 4") + tx(X(hx) + 6, Y(h / 2), `h = ${h}`, {fill: "var(--bad)", weight: 700}) + tx(X(g / 2), Y(0) + 22, `g = ${g}`, {anchor: "middle", weight: 700}) + tx(280, 28, `${formula} = ${fmt(area)} cm²`, {anchor: "middle", size: 18, weight: 700});
+      return {svg: s, alt: `${view} mit g=${g} cm, h=${h} cm, Fläche ${fmt(area)} cm².`, summary: `<strong>${formula} = ${fmt(area)} cm²</strong> · 1 Kästchen = 1 cm²`, steps};
+    }
+  };
+  labs.transform = {
+    title: "Abbildungen: Verschieben, Spiegeln, Drehen",
+    tip: "Original blau, Bild orange. Bei allen drei Abbildungen bleiben Form und Größe gleich (Kongruenz).",
+    params: [P("dx", "Verschiebung in x", -5, 5, 1, 4, "", ["shift"]), P("dy", "Verschiebung in y", -5, 3, 1, 2, "", ["shift"]), P("sx", "Spiegelachse x = s", -4, 4, 1, 1, "", ["mirror"]), P("rot", "Drehwinkel", 0, 360, 15, 90, "°", ["rotate"])],
+    views: [["shift", "Verschiebung"], ["mirror", "Spiegelung"], ["rotate", "Drehung um O"]],
+    render(p, view) {
+      const tri = [[1, 1], [4, 1], [2, 4]], names = ["A", "B", "C"];
+      let img, desc, steps;
+      if (view === "shift") { img = tri.map(([x, y]) => [x + p.dx, y + p.dy]); desc = `Verschiebung um ${fmt(p.dx)} in x und ${fmt(p.dy)} in y`; steps = [`Jeder Punkt wird um denselben Vektor (${fmt(p.dx)} | ${fmt(p.dy)}) verschoben.`, `A(1|1) → A'(${fmt(1 + p.dx)}|${fmt(1 + p.dy)}).`, "Alle Verschiebungspfeile sind gleich lang und parallel."]; }
+      else if (view === "mirror") { img = tri.map(([x, y]) => [2 * p.sx - x, y]); desc = `Spiegelung an x = ${fmt(p.sx)}`; steps = ["Jeder Punkt und sein Bildpunkt haben denselben Abstand zur Spiegelachse.", "Die Verbindungslinie steht senkrecht zur Achse.", `A(1|1) → A'(${fmt(2 * p.sx - 1)}|1).`, "Der Umlaufsinn dreht sich um (A→B→C wird gegen statt mit dem Uhrzeigersinn)."]; }
+      else { const r = p.rot * Math.PI / 180; img = tri.map(([x, y]) => [x * Math.cos(r) - y * Math.sin(r), x * Math.sin(r) + y * Math.cos(r)]); desc = `Drehung um O um ${p.rot}°`; steps = ["Drehzentrum ist der Ursprung O(0|0).", `Jeder Punkt wird um ${p.rot}° gegen den Uhrzeigersinn gedreht.`, "Abstand zu O bleibt gleich (Kreisbogen).", p.rot === 180 ? "180°-Drehung = Punktspiegelung an O." : `A(1|1) → A'(${fmt(img[0][0])}|${fmt(img[0][1])}).`]; }
+      const extra = (px, py) => {
+        let s = poly(tri.map(([x, y]) => [px(x), py(y)]), "var(--brand)", "var(--brand)", 'fill-opacity=".25" stroke-width="2"') + poly(img.map(([x, y]) => [px(x), py(y)]), "var(--accent)", "var(--accent)", 'fill-opacity=".25" stroke-width="2"');
+        tri.forEach(([x, y], i) => { s += tx(px(x) - 14, py(y) - 6, names[i], {fill: "var(--brand)", weight: 700, size: 13}) + tx(px(img[i][0]) + 6, py(img[i][1]) - 6, names[i] + "'", {fill: "var(--accent)", weight: 700, size: 13}); if (view === "shift") s += arrow(px(x), py(y), px(img[i][0]), py(img[i][1]), "var(--muted)", 1.5); });
+        if (view === "mirror") s += line(px(p.sx), py(-8), px(p.sx), py(8), "var(--bad)", 2, "8 5");
+        if (view === "rotate") s += arc(px(0), py(0), (px(1) - px(0)) * Math.SQRT2, 45, 45 + p.rot, "var(--muted)") + dot(px(0), py(0), "var(--bad)");
+        return s;
+      };
+      return {svg: labPlot({xmin: -9.5, xmax: 9.5, ymin: -6, ymax: 7, xstep: 1, ystep: 1, extra}).svg, alt: `${desc} des Dreiecks ABC.`, summary: `<strong>${desc}</strong>`, steps};
+    }
+  };
+  labs.circle = {
+    title: "Kreis: Umfang, Fläche und Sektor",
+    tip: "Ein Kreis ist etwas mehr als 3 Radiusquadrate groß – genau π ≈ 3,14 Stück.",
+    params: [P("r", "Radius r", 1, 6, 0.5, 3, " cm"), P("alpha", "Mittelpunktswinkel α", 10, 360, 5, 90, "°", ["sector"])],
+    views: [["area", "Fläche (r²-Quadrate)"], ["roll", "Umfang abrollen"], ["sector", "Kreisausschnitt"]],
+    render(p, view) {
+      const {r, alpha} = p, u = 26, A = Math.PI * r * r, U = 2 * Math.PI * r;
+      let s, steps, summary;
+      if (view === "area") {
+        const cx = 170, cy = 200, R = r * u;
+        s = `<circle cx="${cx}" cy="${cy}" r="${R}" fill="var(--brand)" fill-opacity=".25" stroke="var(--ink)" stroke-width="2"/>` + rect(cx, cy - R, R, R, "var(--accent)", "var(--accent)", 'fill-opacity=".25"') + line(cx, cy, cx + R, cy, "var(--bad)", 3) + tx(cx + R / 2, cy + 18, "r", {anchor: "middle", fill: "var(--bad)", weight: 700}) + tx(cx + R / 2, cy - R / 2 + 5, "r²", {anchor: "middle", weight: 700});
+        for (let i = 0; i < 4; i++) s += rect(360 + (i % 2) * 70, 90 + Math.floor(i / 2) * 70, i === 3 ? 60 * 0.14 : 60, 60, "var(--accent)", "var(--ink)", 'fill-opacity=".35"');
+        s += tx(430, 260, "≈ 3,14 Quadrate r²", {anchor: "middle", weight: 700}) + tx(280, 30, `A = π · r² = π · ${fmt(r)}² ≈ ${fmt(A)} cm²`, {anchor: "middle", size: 18, weight: 700});
+        summary = `<strong>A = π · r² ≈ ${fmt(A)} cm²</strong> · U = 2πr ≈ ${fmt(U)} cm`;
+        steps = [`Zeichne ein Quadrat mit der Seite r = ${fmt(r)} cm. Seine Fläche ist r² = ${fmt(r * r)} cm².`, "In den Kreis passen etwa 3,14 solcher Quadrate (Zahl π).", `A = π · ${fmt(r * r)} ≈ ${fmt(A)} cm².`, "Typischer Fehler: π · r statt π · r² oder Durchmesser statt Radius einsetzen."];
+      } else if (view === "roll") {
+        const R = r * 12, cy = 200, len = U * 12;
+        s = `<circle cx="${40 + R}" cy="${cy - R}" r="${R}" fill="var(--brand)" fill-opacity=".2" stroke="var(--brand)" stroke-width="3"/>` + line(40 + R, cy - 2 * R, 40 + R, cy, "var(--bad)", 2) + tx(46 + R, cy - R, `d`, {fill: "var(--bad)", weight: 700})
+          + line(40, cy + 30, 40 + len, cy + 30, "var(--brand)", 5);
+        for (let i = 0; i < 3; i++) s += line(40 + i * 2 * R, cy + 50, 40 + (i + 1) * 2 * R, cy + 50, i % 2 ? "var(--bad)" : "var(--accent)", 5);
+        s += tx(280, cy + 85, `U ≈ ${fmt(U)} cm = π · d = etwas mehr als 3 Durchmesser`, {anchor: "middle", weight: 700}) + tx(280, 30, `U = 2 · π · r = 2 · π · ${fmt(r)} ≈ ${fmt(U)} cm`, {anchor: "middle", size: 18, weight: 700});
+        summary = `<strong>U = π · d ≈ ${fmt(U)} cm</strong>`;
+        steps = ["Rolle den Kreis einmal auf dem Boden ab – die Strecke ist der Umfang.", "Der Umfang ist etwas mehr als dreimal so lang wie der Durchmesser.", `U = π · d = π · ${fmt(2 * r)} ≈ ${fmt(U)} cm.`, "d = 2 · r: erst den Durchmesser bestimmen!"];
+      } else {
+        const cx = 190, cy = 200, R = r * 26, As = A * alpha / 360, b = U * alpha / 360;
+        s = `<circle cx="${cx}" cy="${cy}" r="${R}" fill="none" stroke="var(--muted)" stroke-width="1.5"/>` + arc(cx, cy, R, 0, alpha, "var(--ink)", "var(--accent)") + angleMark(cx, cy, 0, alpha, `${alpha}°`, "var(--brand)", 24)
+          + tx(390, 120, `Anteil: ${alpha}/360 = ${fmt(alpha / 360, 3)}`, {}) + tx(390, 160, `A = ${fmt(As)} cm²`, {weight: 700}) + tx(390, 200, `Bogen b = ${fmt(b)} cm`, {weight: 700});
+        summary = `<strong>A<sub>Sektor</sub> = π r² · α/360° ≈ ${fmt(As)} cm²</strong> · b ≈ ${fmt(b)} cm`;
+        steps = [`Der Sektor ist der Anteil ${alpha}° von 360°.`, `Vollkreis: A = ${fmt(A)} cm², U = ${fmt(U)} cm.`, `Sektor: ${fmt(A)} · ${alpha}/360 ≈ ${fmt(As)} cm².`, `Bogen: ${fmt(U)} · ${alpha}/360 ≈ ${fmt(b)} cm.`];
+      }
+      return {svg: s, alt: `Kreis mit Radius ${fmt(r)} cm.`, summary, steps};
+    }
+  };
+  function iso(x, y, z) { return [280 + (x - y) * 0.87, 300 - z + (x + y) * 0.42]; }
+  labs.solids = {
+    title: "Körper: Volumen und Oberfläche",
+    tip: "Volumen = Grundfläche · Höhe (bei Spitzkörpern ein Drittel davon). Ändere die Maße und beobachte die Formel.",
+    params: [P("r", "Radius / Seite a", 1, 6, 0.5, 3, " cm"), P("h", "Höhe h", 1, 10, 0.5, 6, " cm", ["cyl", "prism", "pyr", "cone", "comp"]), P("rho", "Dichte ρ (g/cm³)", 0.5, 11, 0.5, 7.8, "", ["comp"])],
+    views: [["cyl", "Zylinder"], ["prism", "Prisma"], ["pyr", "Pyramide"], ["cone", "Kegel"], ["sphere", "Kugel"], ["comp", "Zusammengesetzt"], ["ratio", "Kegel : Halbkugel : Zylinder"]],
+    render(p, view) {
+      const {r, h, rho} = p, k = {comp: 13.5, sphere: 26, ratio: 12.5, prism: 18, pyr: 18}[view] || 23, R = r * k, H = h * k, cx = 220, base = 330, ell = (x, y, rx, ry, dash) => `<ellipse cx="${x}" cy="${y}" rx="${rx}" ry="${ry}" fill="var(--brand)" fill-opacity=".15" stroke="var(--ink)" stroke-width="2"${dash ? ' stroke-dasharray="5 4"' : ""}/>`;
+      const pi = Math.PI, G = {cyl: pi * r * r, cone: pi * r * r, prism: r * r, pyr: r * r};
+      let s = "", V, O, formula, steps;
+      if (view === "cyl" || view === "cone" || view === "comp") {
+        s += ell(cx, base, R, R * .3, view !== "comp");
+        if (view === "cone") s += poly([[cx - R, base], [cx + R, base], [cx, base - H]], "var(--brand)", "var(--ink)", 'fill-opacity=".15"');
+        else s += rect(cx - R, base - H, 2 * R, H, "var(--brand)", "none", 'fill-opacity=".15"') + line(cx - R, base, cx - R, base - H) + line(cx + R, base, cx + R, base - H) + ell(cx, base - H, R, R * .3);
+        if (view === "comp") s += poly([[cx - R, base - H], [cx + R, base - H], [cx, base - H - R * 1.4]], "var(--accent)", "var(--ink)", 'fill-opacity=".25"');
+        s += line(cx, base, cx + R, base, "var(--bad)", 2) + tx(cx + R / 2, base + 18, "r", {fill: "var(--bad)", weight: 700}) + line(cx + R + 16, base, cx + R + 16, base - H, "var(--good)", 2) + tx(cx + R + 22, base - H / 2, "h", {fill: "var(--good)", weight: 700});
+        if (view === "cyl") { V = G.cyl * h; O = 2 * G.cyl + 2 * pi * r * h; formula = "V = π r² · h"; steps = [`Grundfläche: G = π · ${fmt(r)}² ≈ ${fmt(G.cyl)} cm².`, `V = G · h ≈ ${fmt(G.cyl)} · ${fmt(h)} ≈ ${fmt(V)} cm³.`, `Mantel = Rechteck: 2πr · h ≈ ${fmt(2 * pi * r * h)} cm².`, `O = 2G + M ≈ ${fmt(O)} cm².`]; }
+        else if (view === "cone") { const sl = Math.hypot(r, h); V = G.cone * h / 3; O = G.cone + pi * r * sl; formula = "V = ⅓ π r² · h"; steps = [`G = π · ${fmt(r)}² ≈ ${fmt(G.cone)} cm².`, `V = ⅓ · G · h ≈ ${fmt(V)} cm³ – ein Drittel des Zylinders!`, `Mantellinie s = √(r² + h²) ≈ ${fmt(sl)} cm (Pythagoras).`, `O = G + π r s ≈ ${fmt(O)} cm².`]; }
+        else { const hc = 1.4 * r, Vz = G.cyl * h, Vk = G.cyl * hc / 3; V = Vz + Vk; O = null; formula = "V = V_Zylinder + V_Kegel"; steps = ["Zerlege den Körper in einfache Teile: Zylinder + Kegel.", `V_Zylinder ≈ ${fmt(Vz)} cm³.`, `V_Kegel (Höhe ${fmt(hc)} cm) ≈ ${fmt(Vk)} cm³.`, `V ≈ ${fmt(V)} cm³.`, `Masse m = ρ · V = ${fmt(rho)} · ${fmt(V)} ≈ ${fmt(rho * V / 1000, 3)} kg.`]; }
+      } else if (view === "prism" || view === "pyr") {
+        const a = r, b0 = [[0, 0], [a, 0], [a, a], [0, a]].map(([x, y]) => iso(x * k, y * k, 0)), top = [[0, 0], [a, 0], [a, a], [0, a]].map(([x, y]) => iso(x * k, y * k, H)), apex = iso(a * k / 2, a * k / 2, H);
+        s += poly(b0, "var(--brand)", "var(--ink)", 'fill-opacity=".15"');
+        if (view === "prism") { s += poly(top, "var(--brand)", "var(--ink)", 'fill-opacity=".15"'); b0.forEach((q, i) => s += line(...q, ...top[i])); V = a * a * h; O = 2 * a * a + 4 * a * h; formula = "V = G · h"; steps = [`Grundfläche (Quadrat): G = ${fmt(a)}² = ${fmt(a * a)} cm².`, `V = G · h = ${fmt(a * a)} · ${fmt(h)} = ${fmt(V)} cm³.`, `O = 2 · G + 4 Rechtecke = ${fmt(O)} cm².`]; }
+        else { b0.forEach(q => s += line(...q, ...apex)); const hs = Math.hypot(a / 2, h); V = a * a * h / 3; O = a * a + 2 * a * hs; formula = "V = ⅓ · G · h"; steps = [`G = ${fmt(a)}² = ${fmt(a * a)} cm².`, `V = ⅓ · G · h = ${fmt(V)} cm³ – genau ein Drittel des Prismas!`, `Höhe der Seitenfläche h_s = √((a/2)² + h²) ≈ ${fmt(hs)} cm.`, `O = G + 4 · ½ · a · h_s ≈ ${fmt(O)} cm².`]; }
+        s += tx(...iso(a * k / 2, -14, 0), `a = ${fmt(a)}`, {anchor: "middle", fill: "var(--bad)", weight: 700});
+      } else if (view === "sphere") {
+        s += `<circle cx="${cx}" cy="200" r="${R}" fill="var(--brand)" fill-opacity=".2" stroke="var(--ink)" stroke-width="2"/>` + `<ellipse cx="${cx}" cy="200" rx="${R}" ry="${R * .3}" fill="none" stroke="var(--ink)" stroke-dasharray="5 4"/>` + line(cx, 200, cx + R, 200, "var(--bad)", 2) + tx(cx + R / 2, 194, "r", {fill: "var(--bad)", weight: 700});
+        V = 4 / 3 * pi * r ** 3; O = 4 * pi * r * r; formula = "V = 4/3 π r³"; steps = [`V = 4/3 · π · ${fmt(r)}³ ≈ ${fmt(V)} cm³.`, `O = 4 · π · r² ≈ ${fmt(O)} cm² – genau 4 Kreisflächen.`, "Typischer Fehler: r² und r³ verwechseln. Volumen → hoch 3, Fläche → hoch 2."];
+      } else {
+        const parts = [["Kegel", 1, "var(--accent)"], ["Halbkugel", 2, "var(--good)"], ["Zylinder", 3, "var(--brand)"]];
+        parts.forEach(([n, f], i) => { const x = 90 + i * 170; s += i === 0 ? poly([[x - R, 300], [x + R, 300], [x, 300 - R]], parts[i][2], "var(--ink)", 'fill-opacity=".3"') : i === 1 ? `<path d="M${x - R} 300 A${R} ${R} 0 0 1 ${x + R} 300 Z" fill="${parts[i][2]}" fill-opacity=".3" stroke="var(--ink)" stroke-width="2"/>` : rect(x - R, 300 - R, 2 * R, R, parts[i][2], "var(--ink)", 'fill-opacity=".3"'); s += tx(x, 330, n, {anchor: "middle", weight: 700}) + tx(x, 352, `${f} · ⅓πr³ ≈ ${fmt(f * pi * r ** 3 / 3)}`, {anchor: "middle", size: 13}); });
+        V = pi * r ** 3; formula = "1 : 2 : 3"; O = null; steps = ["Alle drei Körper haben Radius r und Höhe r.", "Kegel: ⅓ π r³, Halbkugel: ⅔ π r³, Zylinder: π r³.", "Verhältnis 1 : 2 : 3 – schon Archimedes war davon begeistert."];
+      }
+      s += tx(450, 40, formula, {anchor: "middle", size: 18, weight: 700}) + tx(450, 70, `V ≈ ${fmt(V)} cm³`, {anchor: "middle", fill: "var(--brand)", weight: 700}) + (O ? tx(450, 96, `O ≈ ${fmt(O)} cm²`, {anchor: "middle", fill: "var(--accent)", weight: 700}) : "");
+      return {svg: s, alt: `Körper ${view}, Volumen etwa ${fmt(V)} Kubikzentimeter.`, summary: `<strong>${formula}</strong> → V ≈ ${fmt(V)} cm³${O ? ` · O ≈ ${fmt(O)} cm²` : ""}${view === "comp" ? ` · m ≈ ${fmt(rho * V / 1000, 3)} kg` : ""}`, steps};
+    }
+  };
+  labs.pythagoras = {
+    title: "Satz des Pythagoras und Satzgruppe",
+    tip: "Die beiden Kathetenquadrate sind zusammen genau so groß wie das Hypotenusenquadrat.",
+    params: [P("a", "Kathete a", 1, 8, 0.5, 3, " cm"), P("b", "Kathete b", 1, 8, 0.5, 4, " cm")],
+    views: [["squares", "Quadrate"], ["height", "Höhensatz"], ["leg", "Kathetensatz"]],
+    render(p, view) {
+      const {a, b} = p, c = Math.hypot(a, b), q = b * b / c, pp = a * a / c, h = a * b / c;
+      const C = [0, 0], A = [b, 0], B = [0, a], F = [b * pp / c, a * q / c];
+      const sqOut = (P1, P2, ins) => { const dx = P2[0] - P1[0], dy = P2[1] - P1[1]; const n = ins ? [dy, -dx] : [-dy, dx]; return [P1, P2, [P2[0] + n[0], P2[1] + n[1]], [P1[0] + n[0], P1[1] + n[1]]]; };
+      const sqA = sqOut(B, C, true), sqB = sqOut(C, A, true), sqC = sqOut(A, B, true);
+      const nx = (sqC[3][0] - A[0]) / c, ny = (sqC[3][1] - A[1]) / c, rectPQ = [F, B, [B[0] + nx * q, B[1] + ny * q], [F[0] + nx * q, F[1] + ny * q]], sqH = sqOut(F, C, true);
+      const fitPts = view === "squares" ? [...sqA, ...sqB, ...sqC] : view === "height" ? [A, B, C, ...rectPQ, ...sqH] : [A, B, C, ...sqA, ...sqC];
+      const m = fitBox(fitPts, 560, 380, 34), M = pts => pts.map(m);
+      let s = "", steps, summary;
+      if (view === "squares") {
+        s += poly(M(sqA), "var(--brand)", "var(--ink)", 'fill-opacity=".3"') + poly(M(sqB), "var(--accent)", "var(--ink)", 'fill-opacity=".3"') + poly(M(sqC), "var(--good)", "var(--ink)", 'fill-opacity=".3"');
+        const cen = q4 => m([q4.reduce((t, v) => t + v[0], 0) / 4, q4.reduce((t, v) => t + v[1], 0) / 4]);
+        s += tx(...cen(sqA), `a² = ${fmt(a * a)}`, {anchor: "middle", weight: 700}) + tx(...cen(sqB), `b² = ${fmt(b * b)}`, {anchor: "middle", weight: 700}) + tx(...cen(sqC), `c² = ${fmt(c * c)}`, {anchor: "middle", weight: 700});
+        summary = `<strong>a² + b² = c² → ${fmt(a * a)} + ${fmt(b * b)} = ${fmt(c * c)}</strong> · c ≈ ${fmt(c)} cm`;
+        steps = ["Der rechte Winkel liegt bei C. Die Seite gegenüber ist die Hypotenuse c (längste Seite).", `Kathetenquadrate: a² = ${fmt(a * a)}, b² = ${fmt(b * b)}.`, `Zusammen: ${fmt(a * a + b * b)} = c².`, `c = √${fmt(c * c)} ≈ ${fmt(c)} cm.`, "Typischer Fehler: c = a + b. Die Wurzel aus der Summe ist nicht die Summe!"];
+      } else {
+        s += poly(M([A, B, C]), "var(--brand)", "var(--ink)", 'fill-opacity=".12"') + line(...m(C), ...m(F), "var(--bad)", 2, "6 4") + tx(...m([(C[0] + F[0]) / 2, (C[1] + F[1]) / 2]), " h", {fill: "var(--bad)", weight: 700});
+        if (view === "height") {
+          s += poly(M(sqH), "var(--accent)", "var(--ink)", 'fill-opacity=".3"') + poly(M(rectPQ), "var(--accent)", "var(--ink)", 'fill-opacity=".3" stroke-dasharray="5 4"') + tx(...m([(F[0] + B[0]) / 2 + nx * q / 2, (F[1] + B[1]) / 2 + ny * q / 2]), "p · q", {anchor: "middle", weight: 700}) + tx(...m([(F[0] + B[0]) / 2 - nx * .5, (F[1] + B[1]) / 2 - ny * .5]), "p", {anchor: "middle", fill: "var(--accent2)", weight: 700}) + tx(...m([(F[0] + A[0]) / 2 - nx * .5, (F[1] + A[1]) / 2 - ny * .5]), "q", {anchor: "middle", fill: "var(--accent2)", weight: 700}) + tx(...m(sqH.reduce((t, v) => [t[0] + v[0] / 4, t[1] + v[1] / 4], [0, 0])), "h²", {anchor: "middle", weight: 700});
+          summary = `<strong>h² = p · q → ${fmt(h * h)} = ${fmt(pp)} · ${fmt(q)}</strong> · h ≈ ${fmt(h)} cm`;
+          steps = ["Die Höhe h teilt die Hypotenuse in die Abschnitte p (bei B) und q (bei A).", `p ≈ ${fmt(pp)} cm, q ≈ ${fmt(q)} cm.`, "Höhensatz: Das Quadrat über h ist so groß wie das Rechteck aus p und q (gestrichelt).", `h = √(${fmt(pp)} · ${fmt(q)}) ≈ ${fmt(h)} cm.`];
+        } else {
+          const S1 = sqOut(B, C, true), R = sqC, Rp = [B, F, [F[0] + (R[3][0] - A[0]), F[1] + (R[3][1] - A[1])], R[2]];
+          s += poly(M(S1), "var(--brand)", "var(--ink)", 'fill-opacity=".3"') + poly(M(Rp), "var(--brand)", "var(--ink)", 'fill-opacity=".3" stroke-dasharray="5 4"');
+          summary = `<strong>a² = c · p → ${fmt(a * a)} = ${fmt(c)} · ${fmt(pp)}</strong>`;
+          steps = ["Kathetensatz: Das Quadrat über einer Kathete ist so groß wie das Rechteck aus Hypotenuse und anliegendem Abschnitt.", `a² = ${fmt(a * a)} cm².`, `c · p = ${fmt(c)} · ${fmt(pp)} ≈ ${fmt(c * pp)} cm².`, "Beide blauen Flächen sind gleich groß."];
+        }
+      }
+      s += tx(...m(C).map((v, i) => v + (i ? 16 : -10)), "C", {weight: 700}) + tx(...m(A).map((v, i) => v + (i ? 16 : 6)), "A", {weight: 700}) + tx(...m(B).map((v, i) => v + (i ? -6 : -16)), "B", {weight: 700});
+      return {svg: s, alt: `Rechtwinkliges Dreieck mit a=${fmt(a)}, b=${fmt(b)}, c≈${fmt(c)}.`, summary, steps};
+    }
+  };
+  labs.scale = {
+    title: "Ähnlichkeit, Strahlensatz und Maßstab",
+    tip: "Beim Vergrößern mit Faktor k werden alle Längen k-mal so lang, die Fläche aber k²-mal so groß.",
+    params: [P("k", "Streckfaktor k", 0.5, 3, 0.25, 2, "", ["similar", "ray"]), P("len", "Länge auf der Karte", 1, 20, 0.5, 4, " cm", ["map"]), P("M", "Maßstab 1 : M", 1000, 100000, 1000, 25000, "", ["map"])],
+    views: [["similar", "Ähnliche Figuren"], ["ray", "Strahlensatz"], ["map", "Maßstab"]],
+    render(p, view) {
+      const {k} = p;
+      if (view === "map") {
+        const real = p.len * p.M / 100, km = real / 1000;
+        let s = rect(40, 120, 480, 20, "var(--surface)");
+        for (let i = 0; i < 20; i++) s += (i % 2 ? "" : rect(40 + i * 24, 120, 24, 20, "var(--ink)", "none", 'fill-opacity=".7"')) + (i % 5 ? "" : tx(40 + i * 24, 160, `${i} cm`, {anchor: "middle", size: 12}));
+        s += line(40, 200, 40 + Math.min(p.len, 20) * 24, 200, "var(--accent)", 6) + tx(40, 235, `Karte: ${fmt(p.len)} cm`, {fill: "var(--accent)", weight: 700}) + tx(280, 60, `1 : ${p.M.toLocaleString("de-DE")}`, {anchor: "middle", size: 24, weight: 700}) + tx(280, 95, `1 cm auf der Karte = ${(p.M / 100).toLocaleString("de-DE")} m in der Wirklichkeit`, {anchor: "middle"}) + tx(280, 290, `Wirklichkeit: ${fmt(p.len)} · ${p.M.toLocaleString("de-DE")} cm = ${real.toLocaleString("de-DE")} m = ${fmt(km, 3)} km`, {anchor: "middle", weight: 700, fill: "var(--brand)"});
+        return {svg: s, h: 320, alt: `Maßstab 1 zu ${p.M}; ${p.len} cm entsprechen ${fmt(km, 3)} km.`, summary: `<strong>${fmt(p.len)} cm ≙ ${fmt(km, 3)} km</strong>`,
+          steps: [`Maßstab 1 : ${p.M} heißt: 1 cm auf der Karte sind ${p.M} cm in echt.`, `${fmt(p.len)} cm · ${p.M} = ${fmt(p.len * p.M)} cm.`, `Umrechnen: : 100 → ${fmt(real)} m, : 1000 → ${fmt(km, 3)} km.`, "Typischer Fehler: Einheiten nicht umrechnen. 100 cm = 1 m, 1000 m = 1 km."]};
+      }
+      if (view === "ray") {
+        const Z = [40, 320], a1 = 150, ang = -30 * Math.PI / 180, A1 = [Z[0] + a1, Z[1]], A2 = [Z[0] + a1 * k, Z[1]], dir = [Math.cos(ang), Math.sin(ang)], B1 = [Z[0] + 170 * dir[0], Z[1] + 170 * dir[1]], B2 = [Z[0] + 170 * k * dir[0], Z[1] + 170 * k * dir[1]];
+        const cl = q => [Math.min(q[0], 540), Math.max(q[1], 20)];
+        let s = line(...Z, 545, 320, "var(--ink)", 2) + line(...Z, ...cl([Z[0] + 600 * dir[0], Z[1] + 600 * dir[1]]), "var(--ink)", 2) + line(...A1, ...B1, "var(--brand)", 3) + line(...A2, ...B2, "var(--accent)", 3) + dot(...Z, "var(--ink)") + tx(Z[0] - 6, Z[1] + 20, "Z", {weight: 700});
+        s += tx(...A1.map((v, i) => v + (i ? 20 : 0)), "A₁", {anchor: "middle"}) + tx(...A2.map((v, i) => v + (i ? 20 : 0)), "A₂", {anchor: "middle"}) + tx(B1[0], B1[1] - 10, "B₁", {anchor: "middle"}) + tx(B2[0], B2[1] - 10, "B₂", {anchor: "middle"});
+        s += tx(280, 30, `ZA₂ : ZA₁ = ZB₂ : ZB₁ = A₂B₂ : A₁B₁ = ${fmt(k)}`, {anchor: "middle", size: 17, weight: 700});
+        return {svg: s, alt: "Strahlensatzfigur mit zwei parallelen Strecken.", summary: `<strong>Alle Verhältnisse = k = ${fmt(k)}</strong> · A₁B₁ ∥ A₂B₂`,
+          steps: ["Zwei Strahlen beginnen im Zentrum Z und werden von zwei Parallelen geschnitten.", "1. Strahlensatz: Abschnitte auf dem einen Strahl verhalten sich wie die auf dem anderen.", "2. Strahlensatz: Die Parallelen verhalten sich wie die zugehörigen Strahlenabschnitte ab Z.", `Hier: alles wird mit k = ${fmt(k)} gestreckt.`, "Typischer Fehler: Beim 2. Strahlensatz die Abschnitte NICHT ab Z messen."]};
+      }
+      const base = [[0, 0], [3, 0], [3, 2], [1, 3]], u = 34, o1 = [30, 330], o2 = [190, 330];
+      const draw = (o, f, color) => poly(base.map(([x, y]) => [o[0] + x * u * f, o[1] - y * u * f]), color, "var(--ink)", 'fill-opacity=".3" stroke-width="2"');
+      const A0 = 7.5;
+      let s = draw(o1, 1, "var(--brand)") + draw(o2, k, "var(--accent)") + tx(o1[0] + 51, o1[1] + 22, `Original: A = ${fmt(A0)}`, {anchor: "middle", size: 13}) + tx(o2[0] + 51 * k, o2[1] + 22, `Bild: A = ${fmt(A0 * k * k)}`, {anchor: "middle", size: 13});
+      s += tx(280, 30, `Längen · ${fmt(k)}   |   Fläche · ${fmt(k * k)}   |   Winkel bleiben gleich`, {anchor: "middle", size: 16, weight: 700});
+      return {svg: s, alt: `Ähnliche Figuren mit Streckfaktor ${fmt(k)}.`, summary: `<strong>k = ${fmt(k)}</strong> → Längen ×${fmt(k)}, Flächen ×${fmt(k * k)}, Volumen ×${fmt(k ** 3)}`,
+        steps: ["Ähnliche Figuren haben gleiche Winkel und gleiche Seitenverhältnisse.", `Jede Länge wird mit k = ${fmt(k)} multipliziert.`, `Die Fläche wächst mit k² = ${fmt(k * k)}.`, k < 1 ? "k < 1 bedeutet Verkleinerung." : k > 1 ? "k > 1 bedeutet Vergrößerung." : "k = 1: deckungsgleich (kongruent)."]};
+    }
+  };
+  labs.trig = {
+    title: "Sinus, Kosinus und Tangens",
+    tip: "In jedem rechtwinkligen Dreieck mit gleichem Winkel α sind die Seitenverhältnisse gleich – egal wie groß das Dreieck ist.",
+    params: [P("alpha", "Winkel α", 5, 85, 1, 35, "°", ["tri", "unit"]), P("c", "Hypotenuse c", 2, 10, 0.5, 6, " cm", ["tri"]), P("gamma", "Winkel γ", 20, 160, 1, 60, "°", ["cos"]), P("a2", "Seite a", 2, 8, 0.5, 5, " cm", ["cos"]), P("b2", "Seite b", 2, 8, 0.5, 6, " cm", ["cos"])],
+    views: [["tri", "Rechtwinkliges Dreieck"], ["unit", "Einheitskreis"], ["cos", "Kosinussatz"]],
+    render(p, view) {
+      const rad = Math.PI / 180, al = p.alpha, sn = Math.sin(al * rad), cs = Math.cos(al * rad), tn = Math.tan(al * rad);
+      if (view === "unit") {
+        const cx = 200, cy = 200, R = 150, [x, y] = polar(cx, cy, R, al);
+        let s = line(30, cy, 380, cy, "var(--ink)", 1.5) + line(cx, 30, cx, 370, "var(--ink)", 1.5) + `<circle cx="${cx}" cy="${cy}" r="${R}" fill="none" stroke="var(--muted)" stroke-width="1.5"/>`
+          + line(cx, cy, x, y, "var(--ink)", 3) + line(x, y, x, cy, "var(--bad)", 4) + line(cx, cy, x, cy, "var(--brand)", 4) + angleMark(cx, cy, 0, al, "α", "var(--accent)", 30) + dot(x, y, "var(--accent)")
+          + tx(x + 6, (y + cy) / 2, `sin α = ${fmt(sn, 3)}`, {fill: "var(--bad)", weight: 700}) + tx((cx + x) / 2, cy + 22, `cos α = ${fmt(cs, 3)}`, {anchor: "middle", fill: "var(--brand)", weight: 700}) + tx(cx - 8, cy - R - 6, "1", {anchor: "end"});
+        s += tx(400, 100, "Radius = 1", {}) + tx(400, 140, `(cos α | sin α)`, {weight: 700}) + tx(400, 170, `= (${fmt(cs, 3)} | ${fmt(sn, 3)})`, {}) + tx(400, 220, `sin² + cos² = 1`, {fill: "var(--good)", weight: 700});
+        return {svg: s, alt: `Einheitskreis mit α = ${al}°.`, summary: `<strong>sin ${al}° ≈ ${fmt(sn, 3)} · cos ${al}° ≈ ${fmt(cs, 3)}</strong>`, steps: ["Im Einheitskreis ist der Radius (Hypotenuse) genau 1.", "Dann ist die senkrechte Kathete direkt sin α, die waagrechte cos α.", "Wird α größer, wächst sin α und cos α schrumpft.", "Pythagoras: sin²α + cos²α = 1."]};
+      }
+      if (view === "cos") {
+        const {gamma: g, a2: a, b2: b} = p, c = Math.sqrt(a * a + b * b - 2 * a * b * Math.cos(g * rad));
+        const Cc = [0, 0], Bp = [a, 0], Ap = [b * Math.cos(g * rad), b * Math.sin(g * rad)], m = fitBox([Cc, Bp, Ap], 560, 330, 50);
+        let s = poly([Cc, Bp, Ap].map(m), "var(--brand)", "var(--ink)", 'fill-opacity=".12"') + angleMark(...m(Cc), 0, g, `γ=${g}°`, "var(--accent)", 30) + line(...m(Bp), ...m(Ap), "var(--bad)", 4)
+          + tx(...m([a / 2, 0]).map((v, i) => v + (i ? 20 : 0)), `a = ${fmt(a)}`, {anchor: "middle"}) + tx(...m([Ap[0] / 2, Ap[1] / 2]).map((v, i) => v + (i ? 0 : -14)), `b = ${fmt(b)}`, {anchor: "end"}) + tx(...m([(a + Ap[0]) / 2, Ap[1] / 2]).map((v, i) => i ? v : Math.min(v + 10, 470)), `c ≈ ${fmt(c)}`, {fill: "var(--bad)", weight: 700});
+        s += tx(280, 370, `c² = a² + b² − 2ab·cos γ`, {anchor: "middle", size: 18, weight: 700});
+        return {svg: s, alt: `Dreieck mit a=${a}, b=${b}, γ=${g}°, c≈${fmt(c)}.`, summary: `<strong>c ≈ ${fmt(c)} cm</strong>${g === 90 ? " (γ = 90° → Pythagoras!)" : ""}`,
+          steps: ["Gegeben sind zwei Seiten und der eingeschlossene Winkel (SWS).", `c² = ${fmt(a)}² + ${fmt(b)}² − 2 · ${fmt(a)} · ${fmt(b)} · cos ${g}°.`, `c² ≈ ${fmt(c * c)} → c ≈ ${fmt(c)} cm.`, "Bei γ = 90° ist cos γ = 0: Es bleibt der Satz des Pythagoras.", "Sinussatz: a/sin α = b/sin β = c/sin γ – nützlich bei WSW oder SsW."]};
+      }
+      const c = p.c, a = c * sn, b = c * cs, m = fitBox([[0, 0], [b, 0], [b, a]], 560, 320, 50), A = m([0, 0]), C = m([b, 0]), B = m([b, a]);
+      let s = poly([A, C, B], "var(--brand)", "var(--ink)", 'fill-opacity=".12"') + line(...C, ...B, "var(--bad)", 5) + line(...A, ...C, "var(--brand)", 5) + line(...A, ...B, "var(--ink)", 3) + angleMark(...A, 0, al, `α=${al}°`, "var(--accent)", 32) + rect(C[0] - 14, C[1] - 14, 14, 14, "none", "var(--ink)");
+      s += tx(C[0] + 8, (B[1] + C[1]) / 2, `GK ≈ ${fmt(a)}`, {fill: "var(--bad)", weight: 700}) + tx((A[0] + C[0]) / 2, C[1] + 22, `AK ≈ ${fmt(b)}`, {anchor: "middle", fill: "var(--brand)", weight: 700}) + tx((A[0] + B[0]) / 2 - 12, (A[1] + B[1]) / 2 - 8, `H = ${fmt(c)}`, {anchor: "end", weight: 700});
+      s += tx(280, 370, `sin α = GK/H ≈ ${fmt(sn, 3)}  ·  cos α = AK/H ≈ ${fmt(cs, 3)}  ·  tan α = GK/AK ≈ ${fmt(tn, 3)}`, {anchor: "middle", size: 14, weight: 700});
+      return {svg: s, alt: `Rechtwinkliges Dreieck, α = ${al}°, Hypotenuse ${c}.`, summary: `<strong>GK ≈ ${fmt(a)} cm · AK ≈ ${fmt(b)} cm</strong> · Verhältnisse hängen nur von α ab!`,
+        steps: ["Vom Winkel α aus: Gegenkathete (GK) liegt gegenüber, Ankathete (AK) liegt an α, Hypotenuse (H) gegenüber dem rechten Winkel.", `sin α = GK : H → GK = ${fmt(c)} · sin ${al}° ≈ ${fmt(a)} cm.`, `cos α = AK : H → AK = ${fmt(c)} · cos ${al}° ≈ ${fmt(b)} cm.`, `tan α = GK : AK ≈ ${fmt(tn, 3)}.`, "Merkhilfe: GAGA HHAA – Sinus = G/H, Kosinus = A/H, Tangens = G/A. Taschenrechner auf DEG stellen!"]};
+    }
+  };
+  labs.vector = {
+    title: "Koordinaten und Vektoren",
+    tip: "Ein Vektor ist ein Verschiebungspfeil: x Schritte nach rechts, y Schritte nach oben.",
+    params: [P("ax", "a: x-Wert", -5, 5, 1, 3), P("ay", "a: y-Wert", -5, 5, 1, 1), P("bx", "b: x-Wert", -5, 5, 1, 1), P("by", "b: y-Wert", -5, 5, 1, 3)],
+    views: [["add", "Vektoraddition"], ["seg", "Strecke AB"]],
+    render(p, view) {
+      const {ax, ay, bx, by} = p;
+      if (view === "seg") {
+        const d = Math.hypot(bx - ax, by - ay), M = [(ax + bx) / 2, (ay + by) / 2];
+        const svg = labPlot({xmin: -7, xmax: 7, ymin: -6, ymax: 6, xstep: 1, ystep: 1, extra: (px, py) => line(px(ax), py(ay), px(bx), py(ay), "var(--accent)", 2, "5 4") + line(px(bx), py(ay), px(bx), py(by), "var(--good)", 2, "5 4") + arrow(px(ax), py(ay), px(bx), py(by), "var(--brand)", 3) + dot(px(ax), py(ay), "var(--brand)") + dot(px(M[0]), py(M[1]), "var(--bad)") + tx(px(ax) - 8, py(ay) - 8, "A", {anchor: "end", weight: 700}) + tx(px(bx) + 8, py(by) - 8, "B", {weight: 700}) + tx(px(M[0]) + 8, py(M[1]) + 16, "M", {fill: "var(--bad)", weight: 700})}).svg;
+        return {svg, alt: `Strecke von A(${ax}|${ay}) nach B(${bx}|${by}).`, summary: `<strong>AB→ = (${fmt(bx - ax)} | ${fmt(by - ay)}) · |AB| ≈ ${fmt(d)} · M(${fmt(M[0])} | ${fmt(M[1])})</strong>`,
+          steps: [`Verbindungsvektor: „Spitze minus Fuß“ = (${bx} − ${par(ax)} | ${by} − ${par(ay)}) = (${fmt(bx - ax)} | ${fmt(by - ay)}).`, `Länge mit Pythagoras: √(${fmt(bx - ax)}² + ${fmt(by - ay)}²) ≈ ${fmt(d)}.`, `Mittelpunkt: Mittelwert der Koordinaten → M(${fmt(M[0])} | ${fmt(M[1])}).`]};
+      }
+      const sx = ax + bx, sy = ay + by;
+      const svg = labPlot({xmin: -10, xmax: 10, ymin: -7, ymax: 7, xstep: 1, ystep: 1, extra: (px, py) => arrow(px(0), py(0), px(ax), py(ay), "var(--brand)", 4) + arrow(px(ax), py(ay), px(sx), py(sy), "var(--accent)", 4) + arrow(px(0), py(0), px(sx), py(sy), "var(--good)", 3) + tx(px(ax / 2) - 6, py(ay / 2) - 6, "a", {fill: "var(--brand)", weight: 700, anchor: "end"}) + tx(px(ax + bx / 2) + 6, py(ay + by / 2), "b", {fill: "var(--accent)", weight: 700}) + tx(px(sx) + 8, py(sy) + 4, "a + b", {fill: "var(--good)", weight: 700})}).svg;
+      return {svg, alt: "Vektoraddition: b wird an die Spitze von a gehängt.", summary: `<strong>a + b = (${fmt(ax)} | ${fmt(ay)}) + (${fmt(bx)} | ${fmt(by)}) = (${fmt(sx)} | ${fmt(sy)})</strong>`,
+        steps: ["Hänge den Fuß von b an die Spitze von a.", "Der Summenvektor geht vom Anfang von a zur Spitze von b.", `Rechnerisch: x-Werte addieren (${fmt(sx)}), y-Werte addieren (${fmt(sy)}).`, `Länge: √(${fmt(sx)}² + ${fmt(sy)}²) ≈ ${fmt(Math.hypot(sx, sy))}.`]};
+    }
+  };
+  labs.data = {
+    title: "Daten darstellen und auswerten",
+    tip: "Verändere einzelne Werte. Beobachte: Ein Ausreißer verschiebt den Mittelwert stark, den Median kaum.",
+    params: [1, 2, 3, 4, 5, 6].map(i => P("v" + i, `Wert ${i}`, 0, 20, 1, [4, 6, 7, 8, 9, 12][i - 1])),
+    views: [["dots", "Punktdiagramm"], ["bars", "Säulendiagramm"], ["box", "Boxplot"], ["cut", "Abgeschnittene Achse"]],
+    render(p, view, {labels}) {
+      const vals = [1, 2, 3, 4, 5, 6].map(i => p["v" + i]), sorted = [...vals].sort((a, b) => a - b), n = 6;
+      const mean = vals.reduce((a, b) => a + b, 0) / n, med = (sorted[2] + sorted[3]) / 2, q1 = sorted[1], q3 = sorted[4], range = sorted[5] - sorted[0];
+      const names = labels || ["Mo", "Di", "Mi", "Do", "Fr", "Sa"], px = v => 40 + v * 24;
+      let s = "";
+      if (view === "bars" || view === "cut") {
+        const lo = view === "cut" ? Math.max(0, sorted[0] - 2) : 0, sc = 260 / Math.max(20 - lo, 1);
+        for (let v = lo; v <= 20; v += 2) s += line(60, 320 - (v - lo) * sc, 540, 320 - (v - lo) * sc, "var(--line)", 1) + tx(52, 324 - (v - lo) * sc, String(v), {anchor: "end", size: 12, fill: "var(--muted)"});
+        vals.forEach((v, i) => s += rect(80 + i * 76, 320 - (v - lo) * sc, 50, Math.max(0, (v - lo) * sc), "var(--brand)", "none", 'fill-opacity=".7"') + tx(105 + i * 76, 340, names[i], {anchor: "middle", size: 13}) + tx(105 + i * 76, 314 - (v - lo) * sc, String(v), {anchor: "middle", size: 12, weight: 700}));
+        s += line(60, 320 - (mean - lo) * sc, 540, 320 - (mean - lo) * sc, "var(--accent)", 2, "6 4") + tx(540, 314 - (mean - lo) * sc, `x̄ = ${fmt(mean)}`, {anchor: "end", fill: "var(--accent)", weight: 700});
+        if (view === "cut") s += tx(280, 30, `⚠ Achse beginnt bei ${lo} – Unterschiede wirken größer!`, {anchor: "middle", fill: "var(--bad)", weight: 700}) + `<path d="M54 316 l12 -6 M54 324 l12 -6" stroke="var(--bad)" stroke-width="2"/>`;
+      } else {
+        s += line(40, 260, 520, 260, "var(--ink)", 2);
+        for (let v = 0; v <= 20; v++) s += line(px(v), 255, px(v), 265, "var(--ink)", 1) + (v % 2 ? "" : tx(px(v), 285, String(v), {anchor: "middle", size: 12}));
+        if (view === "dots") { const cnt = {}; vals.forEach(v => { cnt[v] = (cnt[v] || 0) + 1; s += dot(px(v), 260 - cnt[v] * 22, "var(--brand)", 9); }); }
+        else s += line(px(sorted[0]), 180, px(q1), 180, "var(--ink)", 2) + line(px(q3), 180, px(sorted[5]), 180, "var(--ink)", 2) + rect(px(q1), 150, px(q3) - px(q1), 60, "var(--brand)", "var(--ink)", 'fill-opacity=".3"') + line(px(med), 150, px(med), 210, "var(--bad)", 4) + line(px(sorted[0]), 165, px(sorted[0]), 195) + line(px(sorted[5]), 165, px(sorted[5]), 195)
+          + tx(px(sorted[0]), 140, "Min", {anchor: "middle", size: 12}) + tx(px(q1), 140, "Q₁", {anchor: "middle", size: 12}) + tx(px(med), 135, "Median", {anchor: "middle", size: 12, fill: "var(--bad)", weight: 700}) + tx(px(q3), 140, "Q₃", {anchor: "middle", size: 12}) + tx(px(sorted[5]), 140, "Max", {anchor: "middle", size: 12});
+        s += `<path d="M${px(mean)} 300 l-8 14 h16 z" fill="var(--accent)"/>` + tx(px(mean), 335, `x̄ = ${fmt(mean)}`, {anchor: "middle", fill: "var(--accent)", weight: 700});
+        s += tx(280, 40, `Sortiert: ${sorted.join(" · ")}`, {anchor: "middle", size: 16, weight: 700});
+      }
+      return {svg: s, alt: `Datenreihe ${vals.join(", ")}; Mittelwert ${fmt(mean)}, Median ${fmt(med)}.`, summary: `<strong>x̄ = ${fmt(mean)} · Median = ${fmt(med)}</strong> · Spannweite = ${range} · Q₁ = ${q1}, Q₃ = ${q3}`,
+        steps: [`Werte sortieren: ${sorted.join(", ")}.`, `Mittelwert: Summe ${vals.reduce((a, b) => a + b, 0)} : 6 = ${fmt(mean)}.`, `Median: Mitte der sortierten Liste → (${sorted[2]} + ${sorted[3]}) : 2 = ${fmt(med)}.`, `Spannweite: ${sorted[5]} − ${sorted[0]} = ${range}. Quartile: Q₁ = ${q1}, Q₃ = ${q3}.`, "Stelle einen Wert auf 20: Der Mittelwert springt, der Median bleibt fast gleich."]};
+    }
+  };
+  labs.urn = {
+    title: "Wahrscheinlichkeit und Simulation",
+    tip: "Die Wahrscheinlichkeit ist der Anteil günstiger Kugeln. Bei vielen Versuchen nähert sich die relative Häufigkeit diesem Wert an.",
+    params: [P("red", "rote Kugeln", 0, 10, 1, 3), P("blue", "blaue Kugeln", 0, 10, 1, 2), P("green", "grüne Kugeln", 0, 10, 1, 1), P("n", "Anzahl Ziehungen", 10, 1000, 10, 100, "", ["sim"])],
+    views: [["urn", "Urne"], ["prob", "Wahrscheinlichkeiten"], ["sim", "Simulation"]],
+    simulate: true,
+    constrain(p) { if (p.red + p.blue + p.green === 0) p.red = 1; },
+    render(p, view, {seed}) {
+      const cols = [["rot", p.red, "#d64545"], ["blau", p.blue, "#2f6fd6"], ["grün", p.green, "#2e9b5f"]], N = p.red + p.blue + p.green;
+      let s = "";
+      if (view === "urn") {
+        s += `<path d="M150 80 Q140 330 280 340 Q420 330 410 80" fill="var(--surface)" stroke="var(--ink)" stroke-width="3"/>`;
+        let i = 0; cols.forEach(([, c, color]) => { for (let j = 0; j < c; j++, i++) s += `<circle cx="${190 + (i % 6) * 36}" cy="${310 - Math.floor(i / 6) * 36}" r="15" fill="${color}" stroke="var(--ink)"/>`; });
+        cols.forEach(([name, c, color], k) => s += tx(425, 140 + k * 40, `P(${name}) = ${c}/${N}`, {fill: color, weight: 700, size: 14}));
+      } else if (view === "prob") {
+        let x = 30; cols.forEach(([name, c, color]) => { const w = c / N * 500; if (w > 0) s += rect(x, 120, w, 60, color, "var(--ink)", 'fill-opacity=".8"') + (w > 50 ? tx(x + w / 2, 156, `${fmt(c / N * 100, 1)} %`, {anchor: "middle", fill: "#fff", weight: 700}) : ""); x += w; });
+        s += tx(280, 80, "Alle Wahrscheinlichkeiten zusammen ergeben 1 (= 100 %)", {anchor: "middle", weight: 700}) + cols.map(([name, c], k) => tx(30 + k * 180, 230, `P(${name}) = ${c}/${N} ≈ ${fmt(c / N, 3)}`, {size: 14})).join("");
+      } else {
+        const rnd = seededRandom(seed), counts = [0, 0, 0], path = [];
+        for (let t = 1; t <= p.n; t++) { const z = rnd() * N; const k = z < p.red ? 0 : z < p.red + p.blue ? 1 : 2; counts[k]++; path.push(counts[0] / t); }
+        const plot = labPlot({xmin: 0, xmax: p.n, ymin: 0, ymax: 1, ystep: 0.1, xlabel: "Versuche", ylabel: "rel. H. rot", H: 300, fns: [{f: () => p.red / N, color: "var(--accent)", dash: "6 4", width: 2}], extra: (px, py) => `<path d="${path.map((v, i) => `${i ? "L" : "M"}${r1(px(i + 1))} ${r1(py(v))}`).join(" ")}" fill="none" stroke="#d64545" stroke-width="2"/>`});
+        s = plot.svg + cols.map(([name, , color], k) => tx(60 + k * 170, 330, `${name}: ${counts[k]} (${fmt(counts[k] / p.n * 100, 1)} %)`, {fill: color, weight: 700, size: 14})).join("");
+        return {svg: s, h: 350, alt: `Simulation von ${p.n} Ziehungen.`, summary: `<strong>Rot: ${counts[0]} von ${p.n} = ${fmt(counts[0] / p.n * 100, 1)} %</strong> · erwartet ${fmt(p.red / N * 100, 1)} %`,
+          steps: [`Theoretische Wahrscheinlichkeit für rot: ${p.red}/${N} ≈ ${fmt(p.red / N * 100, 1)} %.`, "Die rote Kurve zeigt die relative Häufigkeit nach jedem Zug (mit Zurücklegen).", "Am Anfang schwankt sie stark, später pendelt sie sich ein (Gesetz der großen Zahlen).", "Klicke „Neu simulieren“ – jede Simulation sieht anders aus, nähert sich aber demselben Wert."]};
+      }
+      return {svg: s, h: view === "prob" ? 260 : 360, alt: `Urne mit ${p.red} roten, ${p.blue} blauen, ${p.green} grünen Kugeln.`, summary: `<strong>P(rot) = ${p.red}/${N} ≈ ${fmt(p.red / N * 100, 1)} %</strong> · P(nicht rot) = ${N - p.red}/${N}`,
+        steps: [`Insgesamt ${N} Kugeln – alle gleich wahrscheinlich (Laplace-Experiment).`, "P(Ereignis) = Anzahl günstiger : Anzahl möglicher Ergebnisse.", `P(rot) = ${p.red}/${N}, P(blau) = ${p.blue}/${N}, P(grün) = ${p.green}/${N}.`, `Gegenereignis: P(nicht rot) = 1 − ${p.red}/${N} = ${N - p.red}/${N}.`]};
+    }
+  };
+  labs.combinatorics = {
+    title: "Kombinatorik: Zählen mit System",
+    tip: "Produktregel: Anzahl der Möglichkeiten in Stufe 1 · Stufe 2 · …",
+    params: [P("a", "Möglichkeiten Stufe 1", 1, 5, 1, 3, "", ["tree", "table"]), P("b", "Möglichkeiten Stufe 2", 1, 5, 1, 2, "", ["tree", "table"]), P("k", "Anzahl Personen", 1, 6, 1, 3, "", ["perm"])],
+    views: [["tree", "Baumdiagramm"], ["table", "Tabelle"], ["perm", "Anordnungen"]],
+    render(p, view) {
+      const {a, b, k} = p;
+      if (view === "perm") {
+        const fac = [1, 1, 2, 6, 24, 120, 720][k], names = "ABCDEF".slice(0, k).split("");
+        let s = tx(280, 40, `${k}! = ${names.map((_, i) => k - i).join(" · ")} = ${fac}`, {anchor: "middle", size: 22, weight: 700});
+        names.forEach((_, i) => s += rect(40 + i * 82, 90, 70, 60, "var(--brand)", "var(--ink)", 'fill-opacity=".2" rx="10"') + tx(75 + i * 82, 118, `Platz ${i + 1}`, {anchor: "middle", size: 12}) + tx(75 + i * 82, 140, `${k - i} Mögl.`, {anchor: "middle", weight: 700}));
+        const perms = []; const rec = (arr, rest) => { if (perms.length >= 12) return; if (!rest.length) { perms.push(arr.join("")); return; } rest.forEach((x, i) => rec([...arr, x], rest.filter((_, j) => j !== i))); }; rec([], names);
+        [perms.slice(0, 6), perms.slice(6)].forEach((row, i) => row.length && (s += tx(280, 190 + i * 26, row.join("   ") + (i && fac > 12 ? "   …" : ""), {anchor: "middle", size: 15})));
+        return {svg: s, h: 240, alt: `${k} Personen können auf ${fac} Arten angeordnet werden.`, summary: `<strong>${fac} Anordnungen</strong>`, steps: [`Für Platz 1 gibt es ${k} Möglichkeiten.`, `Für Platz 2 nur noch ${Math.max(k - 1, 1)} – einer sitzt ja schon.`, `Produktregel: ${names.map((_, i) => k - i).join(" · ")} = ${fac}.`, "Schreibweise: k! (k Fakultät)."]};
+      }
+      const A = ["T-Shirt", "Hemd", "Pulli", "Top", "Jacke"].slice(0, a), B = ["Jeans", "Rock", "Shorts", "Chino", "Leggings"].slice(0, b), total = a * b;
+      let s = "";
+      if (view === "tree") {
+        const leafH = 340 / total;
+        A.forEach((x, i) => { const y1 = 20 + (i + 0.5) * b * leafH; s += line(40, 190, 200, y1, "var(--brand)", 2) + tx(205, y1 + 5, x, {weight: 700, size: 13}); B.forEach((y, j) => { const y2 = 20 + (i * b + j + 0.5) * leafH; s += line(270, y1, 400, y2, "var(--accent)", 1.5) + tx(405, y2 + 4, `${y} (${x})`, {size: Math.min(13, leafH * 0.8)}); }); });
+      } else s = svgTable([["", ...B], ...A.map(x => [x, ...B.map(() => "✓")])], {y: 30, firstColW: 110}) + tx(280, 30 + (a + 1) * 40 + 30, `${a} Zeilen · ${b} Spalten = ${total} Felder`, {anchor: "middle", weight: 700});
+      return {svg: s, h: view === "tree" ? 370 : 340, alt: `${a} mal ${b} gleich ${total} Kombinationen.`, summary: `<strong>${a} · ${b} = ${total} Outfits</strong>`, steps: [`Stufe 1: ${a} Oberteile.`, `Stufe 2: Zu JEDEM Oberteil passen ${b} Hosen.`, `Produktregel: ${a} · ${b} = ${total}.`, "Typischer Fehler: addieren statt multiplizieren."]};
+    }
+  };
+  labs.tree = {
+    title: "Mehrstufige Zufallsexperimente",
+    tip: "Pfadregel: Entlang eines Pfades multiplizieren. Summenregel: Mehrere Pfade addieren.",
+    params: [P("r", "rote Kugeln", 1, 8, 1, 3), P("b", "blaue Kugeln", 1, 8, 1, 2)],
+    views: [["with", "Mit Zurücklegen"], ["without", "Ohne Zurücklegen"]],
+    render(p, view) {
+      const {r, b} = p, N = r + b, wo = view === "without";
+      const p1 = [[r, N], [b, N]], p2 = wo ? [[[r - 1, N - 1], [b, N - 1]], [[r, N - 1], [b - 1, N - 1]]] : [[[r, N], [b, N]], [[r, N], [b, N]]];
+      const fr = ([z, n]) => `${z}/${n}`, val = ([z, n]) => n ? z / n : 0, color = ["#d64545", "#2f6fd6"], nm = ["r", "b"];
+      let s = "", res = [];
+      [0, 1].forEach(i => {
+        const y1 = 100 + i * 180; s += line(40, 190, 200, y1, color[i], 3) + tx(110, (190 + y1) / 2 + (i ? 20 : -8), fr(p1[i]), {anchor: "middle", fill: color[i], weight: 700}) + `<circle cx="210" cy="${y1}" r="12" fill="${color[i]}"/>`;
+        [0, 1].forEach(j => {
+          const y2 = y1 - 45 + j * 90, pr = val(p1[i]) * val(p2[i][j]); res.push([nm[i] + nm[j], pr, `${fr(p1[i])} · ${fr(p2[i][j])}`]);
+          s += line(222, y1, 360, y2, color[j], 2) + tx(290, (y1 + y2) / 2 + (j ? 18 : -6), fr(p2[i][j]), {anchor: "middle", fill: color[j], size: 13, weight: 700}) + `<circle cx="370" cy="${y2}" r="10" fill="${color[j]}"/>` + tx(388, y2 + 5, `${nm[i]}${nm[j]}: ${fmt(pr * 100, 1)} %`, {size: 13});
+        });
+      });
+      const same = res[0][1] + res[3][1];
+      return {svg: s, alt: `Baumdiagramm ${wo ? "ohne" : "mit"} Zurücklegen.`, summary: `<strong>P(rr) = ${res[0][2]} ≈ ${fmt(res[0][1] * 100, 1)} %</strong> · P(gleiche Farbe) ≈ ${fmt(same * 100, 1)} %`,
+        steps: [`1. Zug: P(rot) = ${r}/${N}, P(blau) = ${b}/${N}.`, wo ? "Ohne Zurücklegen: Im 2. Zug ist eine Kugel weniger in der Urne – Nenner und ggf. Zähler werden kleiner." : "Mit Zurücklegen: Der 2. Zug hat dieselben Wahrscheinlichkeiten.", `Pfadregel: P(rr) = ${res[0][2]} ≈ ${fmt(res[0][1], 3)}.`, `Summenregel: P(gleiche Farbe) = P(rr) + P(bb) ≈ ${fmt(same, 3)}.`, "Kontrolle: Alle Pfadwahrscheinlichkeiten zusammen ergeben 1."]};
+    }
+  };
+  labs.fourfold = {
+    title: "Vierfeldertafel und bedingte Wahrscheinlichkeit",
+    tip: "Bedingte Wahrscheinlichkeit: Man schaut nur noch auf eine Teilgruppe. „Von denen, die A haben, …“",
+    params: [P("N", "Gesamtzahl", 100, 2000, 100, 1000), P("pA", "Anteil A (z. B. krank)", 1, 50, 1, 10, " %"), P("pBA", "Test positiv, falls A", 50, 100, 1, 90, " %"), P("pBnA", "Test positiv, falls nicht A", 0, 30, 1, 5, " %")],
+    views: [["table", "Vierfeldertafel"], ["area", "Flächenbild"], ["tree", "Baum"]],
+    render(p, view) {
+      const {N} = p, A = N * p.pA / 100, nA = N - A, AB = A * p.pBA / 100, AnB = A - AB, nAB = nA * p.pBnA / 100, nAnB = nA - nAB, B = AB + nAB, PAB = B ? AB / B : 0;
+      const f0 = v => fmt(v, 0);
+      let s;
+      if (view === "table") s = svgTable([["", "B (positiv)", "B̄ (negativ)", "Summe"], ["A", f0(AB), f0(AnB), f0(A)], ["Ā", f0(nAB), f0(nAnB), f0(nA)], ["Summe", f0(B), f0(N - B), f0(N)]], {y: 40, rowH: 50, firstColW: 100, size: 16, highlightCol: 1}) + tx(280, 280, `P(A | B) = ${f0(AB)} : ${f0(B)} ≈ ${fmt(PAB * 100, 1)} %`, {anchor: "middle", size: 18, weight: 700, fill: "var(--accent)"});
+      else if (view === "area") {
+        const W = 480, H = 260, wA = W * A / N;
+        s = rect(40, 50, wA, H * p.pBA / 100, "var(--bad)", "var(--ink)", 'fill-opacity=".7"') + rect(40, 50 + H * p.pBA / 100, wA, H * (1 - p.pBA / 100), "var(--bad)", "var(--ink)", 'fill-opacity=".2"') + rect(40 + wA, 50, W - wA, H * p.pBnA / 100, "var(--brand)", "var(--ink)", 'fill-opacity=".7"') + rect(40 + wA, 50 + H * p.pBnA / 100, W - wA, H * (1 - p.pBnA / 100), "var(--brand)", "var(--ink)", 'fill-opacity=".15"')
+          + tx(40 + wA / 2, 335, "A", {anchor: "middle", weight: 700}) + tx(40 + wA + (W - wA) / 2, 335, "nicht A", {anchor: "middle", weight: 700}) + tx(280, 30, "Kräftig gefärbt = Test positiv", {anchor: "middle", weight: 700}) + tx(280, 365, `Von allen Positiven gehören nur ${fmt(PAB * 100, 1)} % zu A!`, {anchor: "middle", fill: "var(--accent)", weight: 700});
+      } else {
+        const node = (x, y, t) => tx(x, y, t, {weight: 700, size: 13});
+        s = line(40, 190, 180, 100) + line(40, 190, 180, 280) + node(110, 130, `${p.pA} %`) + node(110, 255, `${100 - p.pA} %`) + node(186, 105, `A: ${f0(A)}`) + node(186, 285, `Ā: ${f0(nA)}`)
+          + line(260, 100, 380, 55) + line(260, 100, 380, 145) + line(260, 280, 380, 235) + line(260, 280, 380, 325) + node(300, 70, `${p.pBA} %`) + node(300, 140, `${100 - p.pBA} %`) + node(300, 250, `${p.pBnA} %`) + node(300, 320, `${100 - p.pBnA} %`)
+          + node(386, 60, `B: ${f0(AB)}`) + node(386, 150, `B̄: ${f0(AnB)}`) + node(386, 240, `B: ${f0(nAB)}`) + node(386, 330, `B̄: ${f0(nAnB)}`);
+      }
+      return {svg: s, alt: `Vierfeldertafel; P(A|B) etwa ${fmt(PAB * 100, 1)} Prozent.`, summary: `<strong>P(A | B) ≈ ${fmt(PAB * 100, 1)} %</strong> · P(B | A) = ${p.pBA} %`,
+        steps: [`Von ${N} Personen haben ${f0(A)} das Merkmal A (${p.pA} %).`, `Davon testen ${p.pBA} % positiv: ${f0(AB)}. Von den ${f0(nA)} ohne A testen ${p.pBnA} % positiv: ${f0(nAB)}.`, `Positiv insgesamt: ${f0(AB)} + ${f0(nAB)} = ${f0(B)}.`, `P(A | B) = ${f0(AB)} : ${f0(B)} ≈ ${fmt(PAB * 100, 1)} %.`, "Typischer Fehler: P(A | B) und P(B | A) verwechseln – sie sind meist sehr verschieden!"]};
+    }
+  };
+  const labConfig = {
+    "rationale-zahlen": {type: "numberline"}, "brueche": {type: "fraction"}, "prozent": {type: "percent"},
+    "proportional": {type: "prop"}, "antiproportional": {type: "antiprop"}, "terme": {type: "area", views: ["dist", "sq"]},
+    "gleichungen": {type: "balance", view: "one"}, "ungleichungen": {type: "inequality"}, "winkel": {type: "angles"},
+    "dreieck-konstruktion": {type: "triangle", view: "wsw"}, "flaechen": {type: "shapes"}, "daten-basis": {type: "data", views: ["dots", "bars"]},
+    "binomische-formeln": {type: "area", view: "sq", views: ["sq", "diff", "conj"]}, "faktorisieren": {type: "area", view: "dist"},
+    "bruchterme": {type: "bruchterm"}, "gleichungen-mehrschritt": {type: "balance", view: "both"}, "lineare-funktionen": {type: "linear"},
+    "gleichungssysteme": {type: "system"}, "abbildungen": {type: "transform"}, "vierecke-kreis": {type: "circle"},
+    "prisma-zylinder": {type: "solids", view: "prism", views: ["prism", "cyl"]}, "wahrscheinlichkeit-basis": {type: "urn", views: ["urn", "prob", "sim"]},
+    "kombinatorik": {type: "combinatorics"}, "diagramme": {type: "data", view: "bars", views: ["bars", "cut", "dots"], labels: ["Bus", "Rad", "Auto", "Fuß", "Bahn", "Roller"]},
+    "datenerhebung": {type: "data", view: "dots", views: ["dots", "bars", "box"]}, "zufallssimulation": {type: "urn", view: "sim", views: ["sim", "prob"], values: {red: 1, blue: 1, green: 0}},
+    "potenzen": {type: "powers", views: ["factors", "stairs", "sci"]}, "wurzeln": {type: "roots"},
+    "quadratische-gleichungen": {type: "parabola", view: "zeros"}, "quadratische-funktionen": {type: "parabola"},
+    "pythagoras": {type: "pythagoras"}, "hoehen-katheten": {type: "pythagoras", view: "height", views: ["height", "leg", "squares"]},
+    "aehnlichkeit": {type: "scale"}, "pyramiden": {type: "solids", view: "pyr", views: ["pyr", "prism"]},
+    "kegel": {type: "solids", view: "cone", views: ["cone", "cyl", "ratio"]}, "kugel": {type: "solids", view: "sphere", views: ["sphere", "ratio"]},
+    "baumdiagramme": {type: "tree"}, "zinsen": {type: "growth", view: "table", values: {K: 1000, p: 3, n: 5}},
+    "trigonometrie": {type: "trig", views: ["tri", "unit"]}, "sinus-kosinussatz": {type: "trig", view: "cos", views: ["cos", "tri"]},
+    "exponentialfunktionen": {type: "growth"}, "logarithmen": {type: "powers", view: "log", views: ["log", "stairs"]},
+    "wachstumsmodelle": {type: "growth", values: {p: -10}}, "zusammengesetzte-koerper": {type: "solids", view: "comp", views: ["comp", "cyl", "cone", "sphere"]},
+    "bedingte-wahrscheinlichkeit": {type: "fourfold"}, "statistik-vertiefung": {type: "data", view: "box", views: ["box", "dots", "bars"], values: {v1: 6, v2: 7, v3: 7, v4: 8, v5: 9, v6: 20}},
+    "funktionen-vergleichen": {type: "compare"}, "koordinaten-vektoren": {type: "vector"},
+    "pruefung-algebra": {type: "system"}, "pruefung-geometrie": {type: "pythagoras"}
+  };
+  function labMarkup(topic, place) {
+    const cfg = labConfig[topic.id], lab = cfg && labs[cfg.type];
+    if (!lab) return "";
+    const views = lab.views.filter(([key]) => !cfg.views || cfg.views.includes(key));
+    const view = cfg.view || views[0][0];
+    const defaults = Object.fromEntries(lab.params.map(q => [q.key, cfg.values?.[q.key] ?? q.def]));
+    const heading = place === "practice" ? "Visuelle Hilfe zu den Aufgaben" : "Interaktives Modell";
+    return `<div class="lab" id="lab-${place}" data-lab="${cfg.type}" data-topic="${topic.id}" data-current-view="${view}" data-seed="${(++labUid) * 7919}" data-defaults='${JSON.stringify(defaults)}'>
+      <div class="lab-head"><span class="lab-badge">${heading}</span><h3>${escapeHTML(lab.title)}</h3><p>${escapeHTML(lab.tip)}</p></div>
+      ${views.length > 1 ? `<div class="lab-views" role="group" aria-label="Darstellung wählen"><span class="small muted">Darstellung:</span>${views.map(([key, label]) => `<button type="button" data-view="${key}" aria-pressed="${key === view}">${escapeHTML(label)}</button>`).join("")}</div>` : ""}
+      <div class="lab-grid">
+        <figure><svg viewBox="0 0 560 380" role="img" aria-label="Interaktive Darstellung" xmlns="http://www.w3.org/2000/svg" font-family="system-ui,sans-serif"></svg></figure>
+        <div class="lab-panel">
+          <p class="small muted">Ziehe an den Reglern und beobachte, was sich im Bild ändert.</p>
+          ${lab.params.map(q => `<label class="lab-slider" data-param-wrap="${q.key}"><span>${escapeHTML(q.label)}: <output>${q.def}</output></span><input type="range" data-param="${q.key}" min="${q.min}" max="${q.max}" step="${q.step}" value="${defaults[q.key]}"></label>`).join("")}
+          <div class="lab-buttons"><button type="button" class="secondary" data-lab-action="reset">↺ Startwerte</button>${lab.simulate ? '<button type="button" class="primary" data-lab-action="simulate">🎲 Neu simulieren</button>' : ""}</div>
+          <p class="lab-summary" aria-live="polite"></p>
+        </div>
+      </div>
+      <div class="lab-steps"><div class="lab-step-control"><label class="lab-slider"><span>Rechenweg aufdecken: <output>Schritt 1</output></span><input type="range" data-step-slider min="1" max="1" step="1" value="1"></label><button type="button" class="secondary" data-lab-action="next">Nächster Schritt ›</button></div><ol></ol></div>
+    </div>`;
+  }
+  function updateLab(el) {
+    const lab = labs[el.dataset.lab], view = el.dataset.currentView, cfg = labConfig[el.dataset.topic] || {};
+    const p = {};
+    el.querySelectorAll("[data-param]").forEach(input => { p[input.dataset.param] = Number(input.value); });
+    lab.constrain?.(p, view);
+    el.querySelectorAll("[data-param-wrap]").forEach(wrap => {
+      const spec = lab.params.find(q => q.key === wrap.dataset.paramWrap), input = wrap.querySelector("input"), text = `${fmt(p[spec.key], 2)}${spec.unit}`;
+      if (Number(input.value) !== p[spec.key]) input.value = p[spec.key];
+      wrap.hidden = Boolean(spec.views) && !spec.views.includes(view);
+      wrap.querySelector("output").textContent = text;
+      input.setAttribute("aria-valuetext", text);
+    });
+    const stepSlider = el.querySelector("[data-step-slider]"), ctx = {step: Number(stepSlider.value) || 1, seed: Number(el.dataset.seed), labels: cfg.labels};
+    let out = lab.render(p, view, ctx);
+    const total = out.steps.length;
+    if (ctx.step > total) { ctx.step = total; out = lab.render(p, view, ctx); }
+    stepSlider.max = total;
+    stepSlider.value = ctx.step;
+    stepSlider.setAttribute("aria-valuetext", `Schritt ${ctx.step} von ${total}`);
+    el.querySelector(".lab-step-control output").textContent = `Schritt ${ctx.step} von ${total}`;
+    el.querySelector('[data-lab-action="next"]').disabled = ctx.step >= total;
+    el.querySelector(".lab-steps ol").innerHTML = out.steps.map((text, i) => `<li${i >= ctx.step ? " hidden" : ""}${i === ctx.step - 1 ? ' class="current"' : ""}>${escapeHTML(text)}</li>`).join("");
+    const svg = el.querySelector("figure svg");
+    svg.setAttribute("viewBox", `0 0 ${out.w || 560} ${out.h || 380}`);
+    svg.setAttribute("aria-label", out.alt);
+    svg.innerHTML = out.svg;
+    el.querySelector(".lab-summary").innerHTML = out.summary;
+  }
+  function handleLabClick(event) {
+    const el = event.target.closest(".lab");
+    const jump = event.target.closest("[data-lab-jump]");
+    if (jump) {
+      const target = document.getElementById("lab-practice");
+      if (!target) return true;
+      target.scrollIntoView({behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start"});
+      target.querySelector("[data-param-wrap]:not([hidden]) input")?.focus({preventScroll: true});
+      return true;
+    }
+    if (!el) return false;
+    const viewButton = event.target.closest("[data-view]");
+    if (viewButton) {
+      el.dataset.currentView = viewButton.dataset.view;
+      el.querySelectorAll("[data-view]").forEach(button => button.setAttribute("aria-pressed", String(button === viewButton)));
+      el.querySelector("[data-step-slider]").value = 1;
+      updateLab(el);
+      return true;
+    }
+    const action = event.target.closest("[data-lab-action]")?.dataset.labAction;
+    if (!action) return false;
+    if (action === "reset") {
+      const defaults = JSON.parse(el.dataset.defaults);
+      el.querySelectorAll("[data-param]").forEach(input => { input.value = defaults[input.dataset.param]; });
+      el.querySelector("[data-step-slider]").value = 1;
+    }
+    if (action === "simulate") el.dataset.seed = Math.floor(Math.random() * 1e9);
+    if (action === "next") { const slider = el.querySelector("[data-step-slider]"); slider.value = Number(slider.value) + 1; }
+    updateLab(el);
+    return true;
   }
   function setHash() {
     const hash = selected ? `#${selected}/${activeSection}` : `#klasse-${grade}`;
@@ -1069,7 +2069,6 @@
   function openTopic(id) {
     const topic = topics.find(t => t.id === id);
     if (!topic) return;
-    previousGraphModel = null;
     renderTopic(topic);
     setHash();
   }
@@ -1080,7 +2079,6 @@
     if (topic) {
       const targetSection = sections.some(([key]) => key === section) ? section : "intro";
       if (selected === id && activeSection === targetSection) return;
-      previousGraphModel = null;
       renderTopic(topic,targetSection,focus);
     } else {
       const match = /^klasse-(7|8|9|10)$/.exec(id);
@@ -1108,13 +2106,13 @@
     saveProgress();
     if (selected) {
       const topic = topics.find(t => t.id === selected);
-      previousGraphModel = null;
       renderTopic(topic,activeSection);
     } else renderNavigation();
   });
   content.addEventListener("click", event => {
     const open = event.target.closest("[data-open]");
     if (open) { event.preventDefault(); openTopic(open.dataset.open); return; }
+    if (handleLabClick(event)) return;
     const tab = event.target.closest("[data-section]");
     if (tab) { switchSection(tab.dataset.section, tab.getAttribute("role") === "tab"); return; }
     const level = event.target.closest("[data-practice-level]");
@@ -1157,16 +2155,8 @@
     if (next !== undefined) { event.preventDefault(); switchSection(sections[next][0],true); }
   });
   content.addEventListener("input", event => {
-    if (["graph-a","graph-b"].includes(event.target.id)) drawGraph();
-    if (event.target.id === "percent-visual") {
-      const percent = Number(event.target.value);
-      document.getElementById("percent-output").textContent = `${percent} %`;
-      document.getElementById("percent-fill").style.width = `${percent}%`;
-      event.target.closest(".visual").querySelector('[role="img"]').setAttribute("aria-label",`Balken: ${percent} Prozent des Ganzen`);
-    }
-  });
-  content.addEventListener("change", event => {
-    if (event.target.id === "graph-model") drawGraph();
+    const lab = event.target.closest(".lab");
+    if (lab && (event.target.matches("[data-param]") || event.target.matches("[data-step-slider]"))) updateLab(lab);
   });
   window.addEventListener("hashchange",() => readHash());
   let closedDetailsBeforePrint = [];
