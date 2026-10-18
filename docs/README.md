@@ -1,5 +1,7 @@
 # Dokumentation: Mathe-Lernwerkstatt – fit für Klasse 8
 
+> Historische Dokumentation: Die temporäre Lernwerkstatt wurde entfernt. Die nachfolgenden Beschreibungen beziehen sich auf den früheren Stand. [index.html](../index.html) leitet jetzt zum unverändert erhaltenen [MatheKompass Klasse 7–10](../mathematik-realschule-7-10.html) weiter. Aktuelle Informationen stehen in der [Projektübersicht](../README.md).
+
 ## Ziel und Ablauf
 
 Die Lernwerkstatt bereitet mit sechs Themen auf eine Klassenarbeit vor. Zu jedem Thema gibt es Erklärungen und Übungen, die Lernende zuerst selbst bearbeiten können. Bei Bedarf stehen Tipps und Lösungswege bereit; richtiger Fortschritt wird in einer Fortschrittsanzeige dargestellt.
