@@ -156,7 +156,7 @@
       "Prozent bedeutet Hundertstel. Der Grundwert G ist das Ganze, der Prozentwert W ein Anteil und der Prozentsatz p % beschreibt dessen Größe. Beim Einkaufen helfen Prozente, Rabatte und Preissteigerungen zu vergleichen.",
       "Brüche, Dezimalzahlen",
       ["W = G · p/100; p = (W/G) · 100; G = W/(p/100). Dabei ist p die Prozentzahl, zum Beispiel 15.","Neuer Wert = alter Wert · (1 + p/100) bei Erhöhung, · (1 − p/100) bei Senkung.","Prozentpunkte beschreiben die Differenz zweier Prozentsätze: von 20 % auf 25 % sind +5 Prozentpunkte, aber relativ +25 %."],
-      {question:"Eine Jacke kostet 80 €. Du bekommst 15 % Rabatt.",steps:["Rabatt: 80 · 0,15 = 12 €. ","Neuer Preis: 80 − 12 = 68 €. ","Direkt geht es mit dem Faktor 0,85."],result:"68 €"},
+      {question:"Eine Jacke kostet 80 €. Du bekommst 15 % Rabatt. Berechne den neuen Preis.",steps:["Rabatt: 80 · 0,15 = 12 €. ","Neuer Preis: 80 − 12 = 68 €. ","Direkt geht es mit dem Faktor 0,85."],result:"68 €"},
       [N("Wie viel sind 18 % von 250 €?",45,"€","18 % = 0,18.","250 · 0,18 = 45 €."),
        N("24 von 80 Kindern kommen mit dem Fahrrad. Wie viel Prozent sind das?",30,"%","Anteil durch Ganzes teilen.","24/80 · 100 = 30 %."),
        N("Nach 20 % Rabatt kostet ein Rucksack 56 €. Wie hoch war der alte Preis?",70,"€","56 € entsprechen 80 % des alten Preises.","56 : 0,8 = 70 €. ")],
@@ -1087,8 +1087,14 @@
     if (highlightCol > 0) s += `<rect x="${r1(x + fw + (highlightCol - 1) * cw)}" y="${y}" width="${r1(cw)}" height="${rows.length * rowH}" fill="none" stroke="var(--brand)" stroke-width="3" rx="4"/>`;
     return s;
   }
-  function labPlot({xmin, xmax, ymin, ymax, fns = [], W = 560, H = 380, xstep, ystep, xlabel = "x", ylabel = "y", extra}) {
-    const L = 50, R = W - 18, Tp = 14, B = H - 30;
+  function labPlot({xmin, xmax, ymin, ymax, fns = [], W = 560, H = 380, xstep, ystep, xlabel = "x", ylabel = "y", equalUnits = false, extra}) {
+    let L = 50, R = W - 18, Tp = 14, B = H - 30;
+    if (equalUnits) {
+      const unit = Math.min((R - L) / (xmax - xmin), (B - Tp) / (ymax - ymin));
+      const cx = (L + R) / 2, cy = (Tp + B) / 2;
+      L = cx - (xmax - xmin) * unit / 2; R = cx + (xmax - xmin) * unit / 2;
+      Tp = cy - (ymax - ymin) * unit / 2; B = cy + (ymax - ymin) * unit / 2;
+    }
     const px = x => L + (x - xmin) / (xmax - xmin) * (R - L), py = y => B - (y - ymin) / (ymax - ymin) * (B - Tp);
     xstep = xstep || niceStep(xmax - xmin); ystep = ystep || niceStep(ymax - ymin);
     const clip = `lab-clip-${++labUid}`;
@@ -1187,10 +1193,10 @@
         `Der Zähler ${z} sagt: ${z} dieser Teile werden genommen (gefärbt).`,
         k > 1 ? `Erweitern mit ${k}: Jedes Teil wird in ${k} kleinere Stücke zerlegt. ${z}/${n} = ${z}·${k} / ${n}·${k} = ${z * k}/${parts}. Die gefärbte Fläche bleibt gleich groß.` : `Erweitern: Stelle „Erweitern mit k“ auf 2 oder 3. Die Stücke werden kleiner, die Menge bleibt gleich.`,
         g > 1 ? `Kürzen durch ${g} (größter gemeinsamer Teiler): ${z}/${n} = ${z / g}/${n / g}.` : `${z}/${n} ist vollständig gekürzt (ggT = 1).`,
-        `Dezimalzahl: ${z} : ${n} = ${fmt(value, 4)} · Prozent: ${fmt(value * 100, 2)} %.`];
+        `Dezimalzahl: ${z} : ${n} ≈ ${fmt(value, 4)} · Prozent: ≈ ${fmt(value * 100, 2)} % (gegebenenfalls gerundet).`];
       return {svg: s, h: view === "strip" ? 40 + wholes * 110 : view === "line" ? 280 : 380,
         alt: `${z} von ${n} Teilen gefärbt${k > 1 ? `, erweitert auf ${z * k} von ${parts} Teilen` : ""}. Wert ${fmt(value, 4)}.`,
-        summary: `<strong>${z}/${n}${k > 1 ? ` = ${z * k}/${parts}` : ""}${g > 1 ? ` = ${z / g}/${n / g}` : ""} = ${fmt(value, 4)} = ${fmt(value * 100, 2)} %</strong>${z > n ? ` · gemischt: ${Math.floor(z / n)} ${z % n ? `${z % n}/${n}` : ""}` : ""}`, steps};
+        summary: `<strong>${z}/${n}${k > 1 ? ` = ${z * k}/${parts}` : ""}${g > 1 ? ` = ${z / g}/${n / g}` : ""} ≈ ${fmt(value, 4)} ≈ ${fmt(value * 100, 2)} %</strong>${z > n ? ` · gemischt: ${Math.floor(z / n)} ${z % n ? `${z % n}/${n}` : ""}` : ""}`, steps};
     }
   };
   labs.percent = {
@@ -1241,21 +1247,21 @@
       let s = "", steps, summary, alt;
       const box = (x, y, w, h, fill, label) => rect(x, y, w, h, fill, "var(--ink)", 'fill-opacity=".45"') + (w > 26 && h > 20 ? tx(x + w / 2, y + h / 2 + 5, label, {anchor: "middle", weight: 700}) : "");
       if (view === "dist") {
-        const u = Math.min(40, 440 / (b + c), 300 / a), x0 = 70, y0 = 40;
+        const u = 35, x0 = 70, y0 = 40;
         s += box(x0, y0, b * u, a * u, A, `${a}·${b}`) + box(x0 + b * u, y0, c * u, a * u, B, `${a}·${c}`)
           + tx(x0 + b * u / 2, y0 - 10, `b = ${b}`, {anchor: "middle"}) + tx(x0 + b * u + c * u / 2, y0 - 10, `c = ${c}`, {anchor: "middle"}) + tx(x0 - 10, y0 + a * u / 2 + 5, `a = ${a}`, {anchor: "end"});
         summary = `<strong>${a} · (${b} + ${c}) = ${a}·${b} + ${a}·${c} = ${a * b} + ${a * c} = ${a * (b + c)}</strong>`;
         alt = `Rechteck mit Höhe ${a} und Breite ${b} plus ${c}, zerlegt in zwei Teilrechtecke.`;
         steps = ["Das große Rechteck hat die Höhe a und die Breite b + c. Fläche: a · (b + c).", `Es zerfällt in zwei Teile: a · b = ${a * b} und a · c = ${a * c}.`, "Distributivgesetz: a · (b + c) = a·b + a·c. Jeder Summand in der Klammer wird mit a multipliziert.", `Probe: ${a} · ${b + c} = ${a * (b + c)} und ${a * b} + ${a * c} = ${a * b + a * c}. ✓`, "Rückwärts gelesen ist das Ausklammern (Faktorisieren): a·b + a·c = a · (b + c)."];
       } else if (view === "sq") {
-        const u = Math.min(40, 300 / (a + b)), x0 = 150, y0 = 40;
+        const u = 300 / 14, x0 = 150, y0 = 40;
         s += box(x0, y0, a * u, a * u, A, "a²") + box(x0 + a * u, y0, b * u, a * u, B, "ab") + box(x0, y0 + a * u, a * u, b * u, B, "ab") + box(x0 + a * u, y0 + a * u, b * u, b * u, C, "b²")
           + tx(x0 + a * u / 2, y0 - 10, `a = ${a}`, {anchor: "middle"}) + tx(x0 + a * u + b * u / 2, y0 - 10, `b = ${b}`, {anchor: "middle"}) + tx(x0 - 10, y0 + a * u / 2, `a`, {anchor: "end"}) + tx(x0 - 10, y0 + a * u + b * u / 2 + 5, `b`, {anchor: "end"});
         summary = `<strong>(${a} + ${b})² = ${a}² + 2·${a}·${b} + ${b}² = ${a * a} + ${2 * a * b} + ${b * b} = ${(a + b) ** 2}</strong>`;
         alt = `Quadrat mit Seite ${a} plus ${b}, zerlegt in a², zweimal ab und b².`;
         steps = ["(a + b)² ist ein Quadrat mit der Seitenlänge a + b.", "Es besteht aus einem großen Quadrat a², einem kleinen Quadrat b² und ZWEI gleichen Rechtecken a·b.", "1. binomische Formel: (a + b)² = a² + 2ab + b².", `Probe: ${a + b}² = ${(a + b) ** 2} und ${a * a} + ${2 * a * b} + ${b * b} = ${a * a + 2 * a * b + b * b}. ✓`, `Typischer Fehler: (a + b)² ≠ a² + b². Es fehlen die zwei Rechtecke (${2 * a * b}).`];
       } else if (view === "diff") {
-        const u = Math.min(40, 280 / a), x0 = 70, y0 = 30, d = a - b;
+        const u = 35, x0 = 70, y0 = 30, d = a - b;
         s += rect(x0, y0, a * u, a * u, "var(--surface)") + box(x0, y0, d * u, d * u, A, "(a−b)²")
           + rect(x0 + d * u, y0, b * u, a * u, B, "var(--ink)", 'fill-opacity=".35"') + rect(x0, y0 + d * u, a * u, b * u, B, "var(--ink)", 'fill-opacity=".35"')
           + rect(x0 + d * u, y0 + d * u, b * u, b * u, C, "var(--ink)", 'fill-opacity=".7"') + tx(x0 + a * u + 12, y0 + a * u / 2, "− ab", {fill: "var(--accent)", weight: 700}) + tx(x0 + a * u / 2, y0 + a * u + 22, "− ab", {anchor: "middle", fill: "var(--accent)", weight: 700})
@@ -1264,7 +1270,7 @@
         alt = `Quadrat a² mit zwei abgezogenen Streifen a mal b; das Eckquadrat b² wurde doppelt abgezogen.`;
         steps = ["Starte mit dem großen Quadrat a².", "Ziehe zwei Streifen der Größe a·b ab (orange).", "Das kleine Eckquadrat b² (grün) wurde dabei zweimal abgezogen – also einmal wieder addieren.", "2. binomische Formel: (a − b)² = a² − 2ab + b².", `Probe: ${d}² = ${d * d} und ${a * a} − ${2 * a * b} + ${b * b} = ${a * a - 2 * a * b + b * b}. ✓`];
       } else {
-        const u = Math.min(36, 230 / (a + b), 300 / a), x0 = 30, y0 = 40, d = a - b;
+        const u = 230 / 14, x0 = 30, y0 = 40, d = a - b;
         s += rect(x0, y0, a * u, a * u, "none", "var(--ink)", 'stroke-dasharray="4 4"') + box(x0, y0, d * u, a * u, A, "") + box(x0 + d * u, y0, b * u, d * u, B, "")
           + rect(x0 + d * u, y0 + d * u, b * u, b * u, "var(--muted)", "var(--ink)", 'fill-opacity=".2"') + tx(x0 + d * u + b * u / 2, y0 + d * u + b * u / 2 + 5, "b²", {anchor: "middle"})
           + tx(x0 + a * u / 2, y0 - 10, `a² − b² (a = ${a}, b = ${b})`, {anchor: "middle", size: 14});
@@ -1318,9 +1324,9 @@
       const sign = view === "le" ? "≤" : "<", flip = p.a < 0, bound = (p.c - p.b) / p.a;
       const finalSign = flip ? (view === "le" ? "≥" : ">") : sign;
       const ok = view === "le" ? p.a * p.t + p.b <= p.c : p.a * p.t + p.b < p.c;
-      const px = x => 40 + (x + 12) * 20, bx = px(Math.max(-12.5, Math.min(12.5, bound)));
+      const px = x => 40 + (x + 20) * 12, bx = px(bound);
       let s = line(28, 180, 532, 180, "var(--ink)", 2);
-      for (let x = -12; x <= 12; x++) s += line(px(x), 172, px(x), 188, "var(--ink)", x % 4 ? 1 : 2) + (x % 2 ? "" : tx(px(x), 210, fmt(x), {anchor: "middle", size: 13}));
+      for (let x = -20; x <= 20; x++) s += line(px(x), 172, px(x), 188, "var(--ink)", x % 4 ? 1 : 2) + (x % 4 ? "" : tx(px(x), 210, fmt(x), {anchor: "middle", size: 13}));
       s += rect(flip ? bx : 28, 168, flip ? 532 - bx : bx - 28, 24, "var(--brand)", "none", 'fill-opacity=".3"')
         + `<circle cx="${r1(bx)}" cy="180" r="9" fill="${view === "le" ? "var(--brand)" : "var(--surface)"}" stroke="var(--brand)" stroke-width="3"/>`
         + tx(bx, 150, `x ${finalSign} ${fmt(bound)}`, {anchor: "middle", weight: 700, fill: "var(--brand)", size: 18})
@@ -1340,10 +1346,10 @@
     params: [P("a", "Zahl a im Zähler (x + a)", -5, 5, 1, 2), P("b", "Zahl b im Nenner (x − b)", -4, 4, 1, 1), P("x", "Einsetzwert x", -6, 6, 0.5, 3)],
     views: [["table", "Wertetabelle"], ["graph", "Graph"]],
     render(p, view) {
-      const f = x => (x + p.a) / (x - p.b), term = `(x${signed(p.a, 0)}) / (x${signed(-p.b, 0)})`, defined = p.x !== p.b;
+      const f = x => (x + p.a) / (x - p.b), term = `(x${signed(p.a, 0)}) / (x${signed(-p.b, 0)})`, defined = p.x !== p.b, removable = p.a === -p.b;
       let s;
       if (view === "graph") {
-        s = labPlot({xmin: -6, xmax: 6, ymin: -8, ymax: 8, fns: [{f, gap: p.b}], extra: (px, py) => line(px(p.b), py(8), px(p.b), py(-8), "var(--bad)", 2, "6 5") + tx(px(p.b) + 6, py(7), `x = ${fmt(p.b)} verboten`, {fill: "var(--bad)", size: 13, weight: 700}) + (defined && Math.abs(f(p.x)) < 8 ? dot(px(p.x), py(f(p.x)), "var(--accent)") : "")}).svg;
+        s = labPlot({xmin: -6, xmax: 6, ymin: -8, ymax: 8, fns: [{f, gap: p.b}], extra: (px, py) => (removable ? `<circle cx="${px(p.b)}" cy="${py(1)}" r="7" fill="var(--surface)" stroke="var(--bad)" stroke-width="3"/>` : line(px(p.b), py(8), px(p.b), py(-8), "var(--bad)", 2, "6 5")) + tx(px(p.b) + 6, py(7), `x = ${fmt(p.b)} verboten`, {fill: "var(--bad)", size: 13, weight: 700}) + (defined && Math.abs(f(p.x)) < 8 ? dot(px(p.x), py(f(p.x)), "var(--accent)") : "")}).svg;
       } else {
         const xs = [...new Set([p.b - 2, p.b - 1, p.b, p.b + 1, p.b + 2, p.x])].sort((m, n) => m - n);
         s = svgTable([["x", ...xs.map(x => fmt(x))], ["Zähler x" + signed(p.a, 0), ...xs.map(x => fmt(x + p.a))], ["Nenner x" + signed(-p.b, 0), ...xs.map(x => fmt(x - p.b))], ["Termwert", ...xs.map(x => x === p.b ? "n. d." : fmt(f(x)))]], {highlightCol: xs.indexOf(p.x) + 1, firstColW: 150, y: 60});
@@ -1351,7 +1357,7 @@
       }
       return {svg: s, h: view === "graph" ? 380 : 270, alt: `Bruchterm ${term}; bei x = ${fmt(p.b)} nicht definiert.`,
         summary: `<strong>D = ℚ \\ {${fmt(p.b)}}</strong> · T(${fmt(p.x)}) = ${defined ? fmt(f(p.x), 3) : "nicht definiert"}`,
-        steps: [`Definitionsmenge: Der Nenner darf nicht 0 sein. x${signed(-p.b, 0)} ≠ 0 → x ≠ ${fmt(p.b)}.`, `Einsetzen x = ${fmt(p.x)}: Zähler ${fmt(p.x + p.a)}, Nenner ${fmt(p.x - p.b)}.`, defined ? `T(${fmt(p.x)}) = ${fmt(p.x + p.a)} : ${par(p.x - p.b)} = ${fmt(f(p.x), 3)}.` : "Nenner 0: Der Term ist hier nicht definiert. Am Graphen siehst du eine Lücke (senkrechte Asymptote).", -p.a !== p.b ? `Der Term wird 0, wenn der Zähler 0 ist: x = ${fmt(-p.a)}.` : "Zähler und Nenner werden gleichzeitig 0 – auch dort ist der Term nicht definiert."]};
+        steps: [`Definitionsmenge: Der Nenner darf nicht 0 sein. x${signed(-p.b, 0)} ≠ 0 → x ≠ ${fmt(p.b)}.`, `Einsetzen x = ${fmt(p.x)}: Zähler ${fmt(p.x + p.a)}, Nenner ${fmt(p.x - p.b)}.`, defined ? `T(${fmt(p.x)}) = ${fmt(p.x + p.a)} : ${par(p.x - p.b)} ≈ ${fmt(f(p.x), 3)}.` : `Nenner 0: Der Term ist hier nicht definiert. ${removable ? "Im Graphen fehlt nur der Punkt auf der Geraden y = 1 (hebbare Lücke)." : "Die gestrichelte Gerade ist eine senkrechte Asymptote."}`, !removable ? `Der Term wird 0, wenn der Zähler 0 ist: x = ${fmt(-p.a)}.` : "Außer an der verbotenen Stelle gilt T(x) = 1. Kürzen schließt die ursprüngliche Lücke nicht."]};
     }
   };
   labs.powers = {
@@ -1364,16 +1370,17 @@
       const {a, n} = p;
       if (view === "factors") {
         const val = a ** n, cnt = Math.abs(n);
-        let s = tx(280, 40, `${a}^${n} = ${fmt(val, 6)}`, {anchor: "middle", size: 24, weight: 700});
+        const relation = n < 0 ? "≈" : "=";
+        let s = tx(280, 40, `${a}^${n} ${relation} ${fmt(val, 6)}`, {anchor: "middle", size: 24, weight: 700});
         const w = Math.min(60, 500 / Math.max(cnt, 1));
         for (let i = 0; i < cnt; i++) s += rect(30 + i * w, 110, w - 8, 60, "var(--brand)", "var(--ink)", 'fill-opacity=".25" rx="8"') + tx(30 + i * w + (w - 8) / 2, 147, String(a), {anchor: "middle", size: 20, weight: 700}) + (i < cnt - 1 ? tx(30 + i * w + w - 4, 147, "·", {anchor: "middle", size: 20}) : "");
         s += tx(280, 220, n === 0 ? `Exponent 0: Jede Zahl (außer 0) hoch 0 ergibt 1.` : n < 0 ? `Negativer Exponent: 1 geteilt durch ${cnt} Faktoren ${a}` : `${cnt} gleiche Faktoren ${a}`, {anchor: "middle", size: 16, fill: "var(--accent)", weight: 700});
-        if (n < 0) s += tx(280, 260, `${a}^${n} = 1 / ${a}^${cnt} = 1 / ${a ** cnt} = ${fmt(val, 6)}`, {anchor: "middle", size: 18});
-        return {svg: s, h: 290, alt: `${a} hoch ${n} als ${cnt} Faktoren dargestellt.`, summary: `<strong>${a}<sup>${n}</sup> = ${fmt(val, 6)}</strong>`,
-          steps: ["Basis = die Zahl, die multipliziert wird. Exponent = wie oft.", n >= 0 ? `${a}^${n} = ${n ? Array(n).fill(a).join(" · ") : "1"} = ${val}.` : `${a}^${n} = 1 / ${a}^${cnt}.`, `Typischer Fehler: ${a}^${Math.max(n, 2)} ist NICHT ${a} · ${Math.max(n, 2)} = ${a * Math.max(n, 2)}.`, "Potenzgesetz: a^m · a^n = a^(m+n) – Exponenten addieren, wenn die Basis gleich ist."]};
+        if (n < 0) s += tx(280, 260, `${a}^${n} = 1 / ${a}^${cnt} = 1 / ${a ** cnt} ≈ ${fmt(val, 6)}`, {anchor: "middle", size: 18});
+        return {svg: s, h: 290, alt: `${a} hoch ${n} als ${cnt} Faktoren dargestellt.`, summary: `<strong>${a}<sup>${n}</sup> ${relation} ${fmt(val, 6)}</strong>`,
+          steps: ["Bei positivem ganzzahligem Exponenten zählt dieser die gleichen Faktoren.", n >= 0 ? `${a}^${n} = ${n ? Array(n).fill(a).join(" · ") : "1"} = ${val}.` : `${a}^${n} = 1 / ${a}^${cnt}.`, a ** Math.max(n, 2) === a * Math.max(n, 2) ? `Hier haben ${a}^${Math.max(n, 2)} und ${a} · ${Math.max(n, 2)} zufällig denselben Wert. Potenzieren und Multiplizieren sind trotzdem verschiedene Rechenarten.` : `Typischer Fehler: ${a}^${Math.max(n, 2)} ist NICHT ${a} · ${Math.max(n, 2)} = ${a * Math.max(n, 2)}.`, "Potenzgesetz: a^m · a^n = a^(m+n) – Exponenten addieren, wenn die Basis gleich ist."]};
       }
       if (view === "stairs") {
-        const ks = [-3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8].filter(k => k >= Math.min(n, 0) - 1 && k <= Math.max(n, 3) + 1).slice(0, 9);
+        const start = Math.max(-3, Math.min(n - 4, 0)), ks = Array.from({length: 9}, (_, i) => start + i);
         let s = "";
         ks.forEach((k, i) => {
           const x = 20 + i * 60, hl = k === n;
@@ -1381,11 +1388,11 @@
           if (i < ks.length - 1) s += arrow(x + 30, 160, x + 84, 160, "var(--good)", 2) + tx(x + 57, 185, `·${a}`, {anchor: "middle", size: 13, fill: "var(--good)"}) + arrow(x + 84, 205, x + 30, 205, "var(--bad)", 2) + tx(x + 57, 230, `:${a}`, {anchor: "middle", size: 13, fill: "var(--bad)"});
         });
         s += tx(280, 40, "Eine Stufe nach rechts: · a   |   eine Stufe nach links: : a", {anchor: "middle"});
-        return {svg: s, h: 260, alt: "Treppe der Potenzen von a mit Pfeilen mal a und geteilt durch a.", summary: `<strong>${a}^${n} = ${fmt(a ** n, 6)}</strong> · Darum gilt a⁰ = 1 und a⁻¹ = 1/a.`,
-          steps: [`Gehe von ${a}^1 = ${a} eine Stufe nach links: ${a} : ${a} = 1. Also ist ${a}^0 = 1.`, `Noch eine Stufe: 1 : ${a} = ${fmt(1 / a, 4)}. Also ${a}^−1 = 1/${a}.`, "Das Muster setzt sich logisch fort – das ist der Grund für die Regeln, nicht Zauberei."]};
+        return {svg: s, h: 260, alt: "Treppe der Potenzen von a mit Pfeilen mal a und geteilt durch a.", summary: `<strong>${a}^${n} ${n < 0 ? "≈" : "="} ${fmt(a ** n, 6)}</strong> · Darum gilt a⁰ = 1 und a⁻¹ = 1/a.`,
+          steps: [`Gehe von ${a}^1 = ${a} eine Stufe nach links: ${a} : ${a} = 1. Also ist ${a}^0 = 1.`, `Noch eine Stufe: 1 : ${a} ≈ ${fmt(1 / a, 4)}. Also ${a}^−1 = 1/${a}.`, "Das Muster setzt sich logisch fort – das ist der Grund für die Regeln, nicht Zauberei."]};
       }
       if (view === "sci") {
-        const {m, k} = p, val = m * 10 ** k, str = k >= 0 ? (m * 10 ** k).toLocaleString("de-DE", {maximumFractionDigits: 0}) : fmt(val, 8);
+        const {m, k} = p, val = m * 10 ** k, str = fmt(val, Math.max(0, 1 - k));
         let s = tx(280, 50, `${fmt(m, 1)} · 10^${k}`, {anchor: "middle", size: 28, weight: 700}) + tx(280, 100, `= ${str}`, {anchor: "middle", size: 22, fill: "var(--brand)"});
         const shown = Math.min(Math.abs(k), 9);
         for (let i = 0; i < shown; i++) s += arrow(280 + (k > 0 ? i : -i) * 26, 160, 280 + (k > 0 ? i + 1 : -i - 1) * 24, 160, "var(--accent)", 2);
@@ -1395,7 +1402,7 @@
           steps: ["Die Mantisse liegt immer zwischen 1 und 10 (z. B. 3,5).", `10^${k} gibt an, um wie viele Stellen das Komma verschoben wird.`, `Positiver Exponent → nach rechts, negativer → nach links. Hier: ${Math.abs(k)} Stellen.`, "Typischer Fehler: 35 · 10³ ist nicht korrekt normiert – richtig wäre 3,5 · 10⁴."]};
       }
       const y = p.y, L = Math.log(y) / Math.log(a);
-      const plot = labPlot({xmin: -1, xmax: 10, ymin: 0, ymax: 1000, ystep: 100, fns: [{f: x => a ** x}], extra: (px, py) => y <= 1000 ? line(px(-1), py(y), px(L), py(y), "var(--accent)", 2, "5 4") + line(px(L), py(y), px(L), py(0), "var(--accent)", 2, "5 4") + dot(px(L), py(y), "var(--accent)") + tx(px(L) + 6, py(0) - 8, `x ≈ ${fmt(L, 2)}`, {fill: "var(--accent)", weight: 700}) : ""});
+      const plot = labPlot({xmin: -1, xmax: 10, ymin: 0, ymax: 1000, ystep: 100, fns: [{f: x => a ** x}], extra: (px, py) => y <= 1000 ? line(px(-1), py(y), px(L), py(y), "var(--accent)", 2, "5 4") + line(px(L), py(y), px(L), py(0), "var(--accent)", 2, "5 4") + dot(px(L), py(y), "var(--accent)") + tx(px(L) + (L > 8 ? -6 : 6), py(0) - 8, `x ≈ ${fmt(L, 2)}`, {anchor: L > 8 ? "end" : "start", fill: "var(--accent)", weight: 700}) : ""});
       return {svg: plot.svg, alt: `Graph von ${a} hoch x; bei y = ${y} ist x ungefähr ${fmt(L, 2)}.`, summary: `<strong>log<sub>${a}</sub>(${y}) ≈ ${fmt(L, 3)}</strong>, denn ${a}<sup>${fmt(L, 3)}</sup> ≈ ${y}`,
         steps: [`Frage: ${a} hoch WIE VIEL ergibt ${y}?`, "Lies am Graphen ab: Gehe bei y waagrecht zur Kurve und dann senkrecht nach unten.", `x = log_${a}(${y}) ≈ ${fmt(L, 3)}.`, `Mit dem Taschenrechner: log(${y}) : log(${a}) = ${fmt(L, 3)}.`, `Probe: ${a}^${fmt(L, 3)} ≈ ${fmt(a ** L, 1)}.`]};
     }
@@ -1449,7 +1456,7 @@
       let s;
       if (view === "rect") {
         const w = Math.min(x * 36, 480), h = Math.min(y * 300 / 60, 300);
-        s = rect(50, 340 - h, w, h, "var(--brand)", "var(--ink)", 'fill-opacity=".3"') + tx(50 + w / 2, 360, `x = ${x} Personen`, {anchor: "middle"}) + tx(45, 340 - h / 2, `y = ${fmt(y)} h`, {anchor: "end", size: 13}) + tx(50 + w / 2, 340 - h / 2 + 5, `Fläche = ${k}`, {anchor: "middle", weight: 700}) + tx(300, 40, `${x} · ${fmt(y)} = ${k}`, {anchor: "middle", size: 22, weight: 700});
+        s = rect(50, 340 - h, w, h, "var(--brand)", "var(--ink)", 'fill-opacity=".3"') + tx(50 + w / 2, 360, `x = ${x} Personen`, {anchor: "middle"}) + tx(50, 328 - h, `y ≈ ${fmt(y)} h`, {size: 13}) + tx(50 + w / 2, 340 - h / 2 + 5, `Fläche = ${k}`, {anchor: "middle", weight: 700}) + tx(300, 40, `${x} · (${k}/${x}) = ${k}`, {anchor: "middle", size: 22, weight: 700});
       } else if (view === "graph") s = labPlot({xmin: 0, xmax: 12, ymin: 0, ymax: 60, ystep: 10, xlabel: "Personen", ylabel: "Stunden", fns: [{f: t => t > 0.2 ? k / t : NaN}], extra: (px, py) => rect(px(0), py(y), px(x) - px(0), py(0) - py(y), "var(--accent)", "none", 'fill-opacity=".2"') + dot(px(x), py(y), "var(--accent)")}).svg;
       else s = svgTable([["Personen x", ...[1, 2, 3, 4, 6, x].map(String)], ["Stunden y", ...[1, 2, 3, 4, 6, x].map(t => fmt(k / t))], ["x · y", ...[1, 2, 3, 4, 6, x].map(() => String(k))]], {y: 40, firstColW: 130, highlightCol: 6});
       return {svg: s, h: view === "table" ? 200 : 380, alt: `Antiproportional: x mal y gleich ${k}; bei ${x} Personen ${fmt(y)} Stunden.`, summary: `<strong>y = ${k} : x</strong> → ${x} Personen brauchen ${fmt(y)} h`,
@@ -1509,17 +1516,16 @@
     tip: "Bei exponentiellem Wachstum wird pro Schritt mit demselben Faktor multipliziert – nicht derselbe Betrag addiert.",
     params: [P("K", "Startwert K₀", 100, 1000, 50, 500), P("p", "Prozent pro Jahr", -50, 50, 1, 10, " %"), P("n", "Jahre n", 0, 20, 1, 5)],
     views: [["graph", "Graph"], ["table", "Tabelle"], ["bars", "Balken"]],
-    constrain(p) { if (p.p === 0) p.p = 1; },
     render(p, view) {
       const {K, n} = p, q = 1 + p.p / 100, f = t => K * q ** t, lin = t => K + K * p.p / 100 * t, Kn = f(n);
-      const T = Math.log(p.p > 0 ? 2 : 0.5) / Math.log(q), ymax = Math.max(K * 2, Math.min(f(20), K * 8));
+      const T = q === 1 ? null : Math.log(p.p > 0 ? 2 : 0.5) / Math.log(q), ymax = Math.max(K * 2, Math.min(f(20), K * 8));
       let s;
-      if (view === "graph") s = labPlot({xmin: 0, xmax: 20, ymin: 0, ymax, xlabel: "Jahre", ylabel: "Wert", fns: [{f}, {f: lin, color: "var(--muted)", dash: "6 5", width: 1.5}], extra: (px, py) => Kn <= ymax ? dot(px(n), py(Kn), "var(--accent)") + tx(px(n) + 8, py(Kn) - 8, fmt(Kn, 0), {fill: "var(--accent)", weight: 700}) : ""}).svg;
-      else if (view === "table") { const ts = [0, 1, 2, 3, 4, n]; s = svgTable([["Jahr", ...ts.map(String)], ["Wert", ...ts.map(t => fmt(f(t), 1))], ["Faktor", "–", ...ts.slice(1).map(() => "· " + fmt(q, 2))]], {y: 40, highlightCol: 6}); }
-      else { const N = Math.min(n, 10), bw = 480 / (N + 1), mx = Math.max(...Array.from({length: N + 1}, (_, i) => f(i))); s = Array.from({length: N + 1}, (_, i) => { const h = f(i) / mx * 280; return rect(50 + i * bw, 330 - h, bw - 6, h, i === N ? "var(--accent)" : "var(--brand)", "none", 'fill-opacity=".7"') + tx(50 + i * bw + bw / 2 - 3, 350, String(i), {anchor: "middle", size: 12}); }).join("") + tx(280, 30, "Jede Säule = vorherige Säule · " + fmt(q, 2), {anchor: "middle", weight: 700}); }
+      if (view === "graph") s = labPlot({xmin: 0, xmax: 20, ymin: 0, ymax, xlabel: "Jahre", ylabel: "Wert", fns: [{f}, {f: lin, color: "var(--muted)", dash: "6 5", width: 1.5}], extra: (px, py) => Kn <= ymax ? dot(px(n), py(Kn), "var(--accent)") + tx(px(n) + (n > 16 ? -8 : 8), py(Kn) - 8, fmt(Kn, 0), {anchor: n > 16 ? "end" : "start", fill: "var(--accent)", weight: 700}) : ""}).svg;
+      else if (view === "table") { const ts = [...new Set([0, 1, 2, 3, 4, n])].sort((a, b) => a - b); s = svgTable([["Jahr", ...ts.map(String)], ["Wert", ...ts.map(t => fmt(f(t), 1))], ["Faktor seit links", "–", ...ts.slice(1).map((t, i) => `· ${fmt(q, 2)}${t - ts[i] === 1 ? "" : "^" + (t - ts[i])}`)]], {y: 40, firstColW: 130, highlightCol: ts.indexOf(n) + 1}); }
+      else { const bw = 480 / (n + 1), mx = Math.max(K, f(20)); s = Array.from({length: n + 1}, (_, i) => { const h = f(i) / mx * 280; return rect(50 + i * bw, 330 - h, bw - 6, h, i === n ? "var(--accent)" : "var(--brand)", "none", 'fill-opacity=".7"') + tx(50 + i * bw + bw / 2 - 3, 350, String(i), {anchor: "middle", size: 12}); }).join("") + tx(280, 30, "Jede Säule = vorherige Säule · " + fmt(q, 2), {anchor: "middle", weight: 700}); }
       return {svg: s, h: view === "table" ? 200 : 380, alt: `Exponentielle Entwicklung mit Faktor ${fmt(q, 2)}; nach ${n} Jahren ${fmt(Kn, 1)}.`,
-        summary: `<strong>K(n) = ${K} · ${fmt(q, 2)}<sup>n</sup></strong> → K(${n}) ≈ ${fmt(Kn, 1)} · ${p.p > 0 ? "Verdopplungszeit" : "Halbwertszeit"} ≈ ${fmt(T, 1)} Jahre`,
-        steps: [`Wachstumsfaktor: q = 1 ${p.p >= 0 ? "+" : "−"} ${Math.abs(p.p)} % = ${fmt(q, 2)}.`, `Jedes Jahr wird mit ${fmt(q, 2)} multipliziert.`, `K(${n}) = ${K} · ${fmt(q, 2)}^${n} ≈ ${fmt(Kn, 1)}.`, "Grau gestrichelt: lineares Wachstum mit gleichem Betrag pro Jahr – exponentiell wird es später viel schneller.", `${p.p > 0 ? "Verdopplung" : "Halbierung"} nach etwa ${fmt(T, 1)} Jahren – egal, wo man startet.`]};
+        summary: `<strong>K(n) = ${K} · ${fmt(q, 2)}<sup>n</sup></strong> → K(${n}) ≈ ${fmt(Kn, 1)} · ${T === null ? "konstant: keine Verdopplung oder Halbierung" : `${p.p > 0 ? "Verdopplungszeit" : "Halbwertszeit"} ≈ ${fmt(T, 1)} Jahre`}${view === "graph" && Kn > ymax ? " · Gewählter Punkt liegt oberhalb des Bildausschnitts." : ""}`,
+        steps: [`Wachstumsfaktor: q = 1 ${p.p >= 0 ? "+" : "−"} ${Math.abs(p.p)} % = ${fmt(q, 2)}.`, `Jedes Jahr wird mit ${fmt(q, 2)} multipliziert.`, `K(${n}) = ${K} · ${fmt(q, 2)}^${n} ≈ ${fmt(Kn, 1)}.`, p.p > 0 ? "Grau gestrichelt: lineare Zunahme. Bei positivem Wachstum überholt das exponentielle Modell langfristig." : p.p < 0 ? "Grau gestrichelt: lineare Abnahme. Sie erreicht null; das exponentielle Modell bleibt positiv." : "Bei 0 % Änderung bleiben beide Modelle konstant.", T === null ? "Bei q = 1 gibt es keine endliche Verdopplungs- oder Halbwertszeit." : `${p.p > 0 ? "Verdopplung" : "Halbierung"} nach etwa ${fmt(T, 1)} Jahren – egal, wo man startet.`]};
     }
   };
   labs.compare = {
@@ -1558,11 +1564,12 @@
         s = cross(280, 200, 150, [`α=${a}°`, `β=${b}°`, `α'=${a}°`, `β'=${b}°`]) + tx(280, 30, `Scheitelwinkel: α = α' = ${a}°, β = β' = ${b}°`, {anchor: "middle", size: 18, weight: 700});
         steps = ["Zwei Geraden schneiden sich. Gegenüberliegende Winkel heißen Scheitelwinkel.", "Scheitelwinkel sind immer gleich groß.", "Begründung: α + β = 180° und α' + β = 180°, also α = α'."];
       } else {
-        s = line(40, 120, 520, 120, "var(--ink)", 2) + line(40, 280, 520, 280, "var(--ink)", 2) + tx(530, 125, "g", {weight: 700}) + tx(530, 285, "h", {weight: 700});
-        const dx = 160 / Math.tan(a * Math.PI / 180), xt = 280 + dx / 2, xb = 280 - dx / 2, ext = 40 / Math.sin(a * Math.PI / 180);
+        const gap = Math.min(160, 260 * Math.abs(Math.tan(a * Math.PI / 180))), yt = 200 - gap / 2, yb = 200 + gap / 2;
+        s = line(40, yt, 520, yt, "var(--ink)", 2) + line(40, yb, 520, yb, "var(--ink)", 2) + tx(530, yt + 5, "g", {weight: 700}) + tx(530, yb + 5, "h", {weight: 700});
+        const dx = gap / Math.tan(a * Math.PI / 180), xt = 280 + dx / 2, xb = 280 - dx / 2, ext = 40;
         const [ux, uy] = [Math.cos(a * Math.PI / 180), -Math.sin(a * Math.PI / 180)];
-        s += line(xb - ux * ext, 280 - uy * ext, xt + ux * ext, 120 + uy * ext, "var(--ink)", 2)
-          + angleMark(xt, 120, 0, a, `α=${a}°`, C, 28) + angleMark(xb, 280, 0, a, `α'=${a}°`, C, 28) + angleMark(xb, 280, a, 180, `β=${b}°`, D, 28)
+        s += line(xb - ux * ext, yb - uy * ext, xt + ux * ext, yt + uy * ext, "var(--ink)", 2)
+          + angleMark(xt, yt, 0, a, `α=${a}°`, C, 28) + angleMark(xb, yb, 0, a, `α'=${a}°`, C, 28) + angleMark(xb, yb, a, 180, `β=${b}°`, D, 28)
           + tx(280, 40, "g ∥ h: Stufenwinkel sind gleich groß", {anchor: "middle", size: 18, weight: 700});
         steps = ["Die Geraden g und h sind parallel (∥). Eine dritte Gerade schneidet beide.", `Stufenwinkel (F-Form) sind gleich: α = α' = ${a}°.`, `Wechselwinkel (Z-Form) sind ebenfalls gleich groß.`, `Nebenwinkel dazu: β = 180° − ${a}° = ${b}°.`];
       }
@@ -1578,21 +1585,21 @@
     render(p, view, {step}) {
       const {alpha: a, beta: b, c} = p, g = 180 - a - b, rad = Math.PI / 180;
       const bLen = c * Math.sin(b * rad) / Math.sin(g * rad), Cx = bLen * Math.cos(a * rad), Cy = bLen * Math.sin(a * rad);
-      const map = fitBox([[0, 0], [c, 0], [Cx, Cy]], 560, 330, 50), A = map([0, 0]), B = map([c, 0]), Cp = map([Cx, Cy]);
+      const map = fitBox([[-9, 0], [18, 26]], 560, 400, 50), A = map([0, 0]), B = map([c, 0]), Cp = map([Cx, Cy]);
       let s = "";
       if (view === "sum") {
         s += poly([A, B, Cp], "var(--brand)", "var(--ink)", 'fill-opacity=".12"') + angleMark(...A, 0, a, `α=${a}°`, "var(--brand)", 28) + angleMark(...B, 180 - b, 180, `β=${b}°`, "var(--accent)", 28) + angleMark(...Cp, 180 + a, 360 - b, `γ=${g}°`, "var(--good)", 28);
         if (step >= 2) s += line(Cp[0] - 220, Cp[1], Cp[0] + 220, Cp[1], "var(--accent2)", 2, "6 4") + angleMark(...Cp, 180, 180 + a, "α", "var(--brand)", 40) + angleMark(...Cp, 360 - b, 360, "β", "var(--accent)", 40);
-        s += tx(280, 370, `${a}° + ${b}° + ${g}° = 180°`, {anchor: "middle", size: 18, weight: 700});
-        return {svg: s, alt: `Dreieck mit α=${a}°, β=${b}°, γ=${g}°.`, summary: `<strong>γ = 180° − ${a}° − ${b}° = ${g}°</strong>`,
+        s += tx(280, 425, `${a}° + ${b}° + ${g}° = 180°`, {anchor: "middle", size: 18, weight: 700});
+        return {svg: s, h: 450, alt: `Dreieck mit α=${a}°, β=${b}°, γ=${g}°.`, summary: `<strong>γ = 180° − ${a}° − ${b}° = ${g}°</strong> · Fester Zeichenmaßstab.`,
           steps: ["Ein Dreieck hat drei Innenwinkel α, β und γ.", "Zeichne durch C eine Parallele zu AB (lila gestrichelt).", "An der Parallelen findest du α und β als Wechselwinkel wieder.", "α, γ und β bilden zusammen einen gestreckten Winkel: 180°.", `Also: γ = 180° − α − β = ${g}°.`]};
       }
       s += line(...A, ...B, "var(--ink)", 3) + tx((A[0] + B[0]) / 2, A[1] + 22, `c = ${fmt(c)} cm`, {anchor: "middle"}) + dot(...A) + dot(...B) + tx(A[0] - 8, A[1] + 18, "A", {anchor: "end", weight: 700}) + tx(B[0] + 8, B[1] + 18, "B", {weight: 700});
-      const far = 1.5 * map.scale * Math.max(c, bLen);
-      if (step >= 2) { const e = polar(...A, far, a); s += line(...A, ...e, "var(--brand)", 2, "6 4") + angleMark(...A, 0, a, `${a}°`, "var(--brand)", 28); }
-      if (step >= 3) { const e = polar(...B, far, 180 - b); s += line(...B, ...e, "var(--accent)", 2, "6 4") + angleMark(...B, 180 - b, 180, `${b}°`, "var(--accent)", 28); }
+      const farA = Math.hypot(Cp[0] - A[0], Cp[1] - A[1]) + 15, farB = Math.hypot(Cp[0] - B[0], Cp[1] - B[1]) + 15;
+      if (step >= 2) { const e = polar(...A, farA, a); s += line(...A, ...e, "var(--brand)", 2, "6 4") + angleMark(...A, 0, a, `${a}°`, "var(--brand)", 28); }
+      if (step >= 3) { const e = polar(...B, farB, 180 - b); s += line(...B, ...e, "var(--accent)", 2, "6 4") + angleMark(...B, 180 - b, 180, `${b}°`, "var(--accent)", 28); }
       if (step >= 4) s += poly([A, B, Cp], "var(--good)", "var(--ink)", 'fill-opacity=".15"') + dot(...Cp, "var(--good)", 8) + tx(Cp[0], Cp[1] - 14, "C", {anchor: "middle", weight: 700});
-      return {svg: s, alt: "Schrittweise Dreieckskonstruktion nach WSW.", summary: `<strong>WSW: c = ${fmt(c)} cm, α = ${a}°, β = ${b}°</strong> → eindeutig konstruierbar`,
+      return {svg: s, h: 450, alt: "Schrittweise Dreieckskonstruktion nach WSW.", summary: `<strong>WSW: c = ${fmt(c)} cm, α = ${a}°, β = ${b}°</strong> → eindeutig konstruierbar · Fester Zeichenmaßstab.`,
         steps: [`Zeichne die Strecke c = AB = ${fmt(c)} cm.`, `Trage in A den Winkel α = ${a}° an.`, `Trage in B den Winkel β = ${b}° an.`, "Der Schnittpunkt der beiden Schenkel ist C. Fertig!", `Kontrolle: γ = 180° − ${a}° − ${b}° = ${g}°. Miss nach!`]};
     }
   };
@@ -1601,6 +1608,7 @@
     tip: "Ein Parallelogramm lässt sich in ein Rechteck umlegen, ein Dreieck ist ein halbes Parallelogramm.",
     params: [P("g", "Grundseite g", 2, 10, 1, 6, " cm"), P("h", "Höhe h", 1, 7, 1, 4, " cm"), P("s", "Verschiebung s", 0, 4, 1, 2, " cm", ["para", "tri", "trap"]), P("c", "obere Seite c", 1, 8, 1, 3, " cm", ["trap"])],
     views: [["rect", "Rechteck"], ["para", "Parallelogramm"], ["tri", "Dreieck"], ["trap", "Trapez"]],
+    constrain(p, view) { if (view === "para" && p.s > p.g) p.s = p.g; },
     render(p, view) {
       const {g, h, s: sh, c} = p, u = 34, x0 = 50, y0 = 330, X = x => x0 + x * u, Y = y => y0 - y * u;
       let s = "";
@@ -1610,7 +1618,7 @@
       if (view === "rect") { pts = [[0, 0], [g, 0], [g, h], [0, h]]; area = g * h; formula = `A = g · h = ${g} · ${h}`; steps = ["Zähle die Kästchen: jede Reihe hat g Kästchen.", `Es gibt h = ${h} Reihen.`, `A = ${g} · ${h} = ${area} cm².`]; }
       else if (view === "para") { pts = [[0, 0], [g, 0], [g + sh, h], [sh, h]]; area = g * h; formula = `A = g · h = ${g} · ${h}`; s += poly([[X(0), Y(0)], [X(sh), Y(h)], [X(sh), Y(0)]].map(q => q), "var(--accent)", "none", 'fill-opacity=".35"') + poly([[X(g), Y(0)], [X(g + sh), Y(h)], [X(g + sh), Y(0)]], "none", "var(--accent)", 'stroke-dasharray="5 4" stroke-width="2"'); steps = ["Schneide links das orange Dreieck ab.", "Lege es rechts wieder an (gestrichelt).", "Es entsteht ein Rechteck mit gleicher Fläche.", `A = g · h = ${area} cm². Die schräge Seite zählt NICHT!`]; }
       else if (view === "tri") { pts = [[0, 0], [g, 0], [sh, h]]; area = g * h / 2; formula = `A = ½ · g · h = ½ · ${g} · ${h}`; s += poly([[X(0), Y(0)], [X(g), Y(0)], [X(g + sh), Y(h)], [X(sh), Y(h)]], "none", "var(--accent)", 'stroke-dasharray="5 4" stroke-width="2"'); steps = ["Verdopple das Dreieck (gestrichelt): Es entsteht ein Parallelogramm.", `Das Parallelogramm hat A = g · h = ${g * h} cm².`, `Das Dreieck ist die Hälfte: A = ${fmt(area)} cm².`]; }
-      else { pts = [[0, 0], [g, 0], [sh + c, h], [sh, h]]; area = (g + c) / 2 * h; formula = `A = (a + c)/2 · h = (${g} + ${c})/2 · ${h}`; s += line(X(0), Y(h / 2), X(12), Y(h / 2), "var(--accent)", 1, "4 4"); steps = ["Ein Trapez hat zwei parallele Seiten a (unten) und c (oben).", `Mittellinie m = (a + c) : 2 = ${fmt((g + c) / 2)} cm.`, `A = m · h = ${fmt((g + c) / 2)} · ${h} = ${fmt(area)} cm².`]; }
+      else { pts = [[0, 0], [g, 0], [sh + c, h], [sh, h]]; area = (g + c) / 2 * h; formula = `A = (g + c)/2 · h = (${g} + ${c})/2 · ${h}`; s += line(X(sh / 2), Y(h / 2), X((g + sh + c) / 2), Y(h / 2), "var(--accent)", 3, "4 4") + tx(X(sh + c / 2), Y(h) - 12, `c = ${c}`, {anchor: "middle", weight: 700}); steps = ["Ein Trapez hat zwei parallele Seiten g (unten) und c (oben).", `Mittellinie m = (g + c) : 2 = ${fmt((g + c) / 2)} cm.`, `A = m · h = ${fmt((g + c) / 2)} · ${h} = ${fmt(area)} cm².`]; }
       s += poly(pts.map(([a, b]) => [X(a), Y(b)]), "var(--brand)", "var(--ink)", 'fill-opacity=".3" stroke-width="2.5"');
       const hx = view === "rect" ? g : view === "tri" ? sh : sh;
       s += line(X(hx), Y(0), X(hx), Y(h), "var(--bad)", 2, "6 4") + tx(X(hx) + 6, Y(h / 2), `h = ${h}`, {fill: "var(--bad)", weight: 700}) + tx(X(g / 2), Y(0) + 22, `g = ${g}`, {anchor: "middle", weight: 700}) + tx(280, 28, `${formula} = ${fmt(area)} cm²`, {anchor: "middle", size: 18, weight: 700});
@@ -1635,7 +1643,7 @@
         if (view === "rotate") s += arc(px(0), py(0), (px(1) - px(0)) * Math.SQRT2, 45, 45 + p.rot, "var(--muted)") + dot(px(0), py(0), "var(--bad)");
         return s;
       };
-      return {svg: labPlot({xmin: -9.5, xmax: 9.5, ymin: -6, ymax: 7, xstep: 1, ystep: 1, extra}).svg, alt: `${desc} des Dreiecks ABC.`, summary: `<strong>${desc}</strong>`, steps};
+      return {svg: labPlot({xmin: -13, xmax: 10, ymin: -6, ymax: 8, xstep: 1, ystep: 1, equalUnits: true, extra}).svg, alt: `${desc} des Dreiecks ABC.`, summary: `<strong>${desc}</strong> · Gleicher Maßstab auf beiden Achsen.`, steps};
     }
   };
   labs.circle = {
@@ -1719,8 +1727,7 @@
       const sqOut = (P1, P2, ins) => { const dx = P2[0] - P1[0], dy = P2[1] - P1[1]; const n = ins ? [dy, -dx] : [-dy, dx]; return [P1, P2, [P2[0] + n[0], P2[1] + n[1]], [P1[0] + n[0], P1[1] + n[1]]]; };
       const sqA = sqOut(B, C, true), sqB = sqOut(C, A, true), sqC = sqOut(A, B, true);
       const nx = (sqC[3][0] - A[0]) / c, ny = (sqC[3][1] - A[1]) / c, rectPQ = [F, B, [B[0] + nx * q, B[1] + ny * q], [F[0] + nx * q, F[1] + ny * q]], sqH = sqOut(F, C, true);
-      const fitPts = view === "squares" ? [...sqA, ...sqB, ...sqC] : view === "height" ? [A, B, C, ...rectPQ, ...sqH] : [A, B, C, ...sqA, ...sqC];
-      const m = fitBox(fitPts, 560, 380, 34), M = pts => pts.map(m);
+      const m = fitBox([[-8, -8], [16, 16]], 560, 380, 34), M = pts => pts.map(m);
       let s = "", steps, summary;
       if (view === "squares") {
         s += poly(M(sqA), "var(--brand)", "var(--ink)", 'fill-opacity=".3"') + poly(M(sqB), "var(--accent)", "var(--ink)", 'fill-opacity=".3"') + poly(M(sqC), "var(--good)", "var(--ink)", 'fill-opacity=".3"');
@@ -1762,8 +1769,8 @@
       }
       if (view === "ray") {
         const Z = [40, 320], a1 = 150, ang = -30 * Math.PI / 180, A1 = [Z[0] + a1, Z[1]], A2 = [Z[0] + a1 * k, Z[1]], dir = [Math.cos(ang), Math.sin(ang)], B1 = [Z[0] + 170 * dir[0], Z[1] + 170 * dir[1]], B2 = [Z[0] + 170 * k * dir[0], Z[1] + 170 * k * dir[1]];
-        const cl = q => [Math.min(q[0], 540), Math.max(q[1], 20)];
-        let s = line(...Z, 545, 320, "var(--ink)", 2) + line(...Z, ...cl([Z[0] + 600 * dir[0], Z[1] + 600 * dir[1]]), "var(--ink)", 2) + line(...A1, ...B1, "var(--brand)", 3) + line(...A2, ...B2, "var(--accent)", 3) + dot(...Z, "var(--ink)") + tx(Z[0] - 6, Z[1] + 20, "Z", {weight: 700});
+        const rayLength = Math.min((545 - Z[0]) / dir[0], (20 - Z[1]) / dir[1]);
+        let s = line(...Z, 545, 320, "var(--ink)", 2) + line(...Z, Z[0] + rayLength * dir[0], Z[1] + rayLength * dir[1], "var(--ink)", 2) + line(...A1, ...B1, "var(--brand)", 3) + line(...A2, ...B2, "var(--accent)", 3) + dot(...Z, "var(--ink)") + tx(Z[0] - 6, Z[1] + 20, "Z", {weight: 700});
         s += tx(...A1.map((v, i) => v + (i ? 20 : 0)), "A₁", {anchor: "middle"}) + tx(...A2.map((v, i) => v + (i ? 20 : 0)), "A₂", {anchor: "middle"}) + tx(B1[0], B1[1] - 10, "B₁", {anchor: "middle"}) + tx(B2[0], B2[1] - 10, "B₂", {anchor: "middle"});
         s += tx(280, 30, `ZA₂ : ZA₁ = ZB₂ : ZB₁ = A₂B₂ : A₁B₁ = ${fmt(k)}`, {anchor: "middle", size: 17, weight: 700});
         return {svg: s, alt: "Strahlensatzfigur mit zwei parallelen Strecken.", summary: `<strong>Alle Verhältnisse = k = ${fmt(k)}</strong> · A₁B₁ ∥ A₂B₂`,
@@ -1771,7 +1778,7 @@
       }
       const base = [[0, 0], [3, 0], [3, 2], [1, 3]], u = 34, o1 = [30, 330], o2 = [190, 330];
       const draw = (o, f, color) => poly(base.map(([x, y]) => [o[0] + x * u * f, o[1] - y * u * f]), color, "var(--ink)", 'fill-opacity=".3" stroke-width="2"');
-      const A0 = 7.5;
+      const A0 = 6.5;
       let s = draw(o1, 1, "var(--brand)") + draw(o2, k, "var(--accent)") + tx(o1[0] + 51, o1[1] + 22, `Original: A = ${fmt(A0)}`, {anchor: "middle", size: 13}) + tx(o2[0] + 51 * k, o2[1] + 22, `Bild: A = ${fmt(A0 * k * k)}`, {anchor: "middle", size: 13});
       s += tx(280, 30, `Längen · ${fmt(k)}   |   Fläche · ${fmt(k * k)}   |   Winkel bleiben gleich`, {anchor: "middle", size: 16, weight: 700});
       return {svg: s, alt: `Ähnliche Figuren mit Streckfaktor ${fmt(k)}.`, summary: `<strong>k = ${fmt(k)}</strong> → Längen ×${fmt(k)}, Flächen ×${fmt(k * k)}, Volumen ×${fmt(k ** 3)}`,
@@ -1795,18 +1802,18 @@
       }
       if (view === "cos") {
         const {gamma: g, a2: a, b2: b} = p, c = Math.sqrt(a * a + b * b - 2 * a * b * Math.cos(g * rad));
-        const Cc = [0, 0], Bp = [a, 0], Ap = [b * Math.cos(g * rad), b * Math.sin(g * rad)], m = fitBox([Cc, Bp, Ap], 560, 330, 50);
+        const Cc = [0, 0], Bp = [a, 0], Ap = [b * Math.cos(g * rad), b * Math.sin(g * rad)], m = fitBox([[-8, 0], [8, 8]], 560, 330, 50);
         let s = poly([Cc, Bp, Ap].map(m), "var(--brand)", "var(--ink)", 'fill-opacity=".12"') + angleMark(...m(Cc), 0, g, `γ=${g}°`, "var(--accent)", 30) + line(...m(Bp), ...m(Ap), "var(--bad)", 4)
           + tx(...m([a / 2, 0]).map((v, i) => v + (i ? 20 : 0)), `a = ${fmt(a)}`, {anchor: "middle"}) + tx(...m([Ap[0] / 2, Ap[1] / 2]).map((v, i) => v + (i ? 0 : -14)), `b = ${fmt(b)}`, {anchor: "end"}) + tx(...m([(a + Ap[0]) / 2, Ap[1] / 2]).map((v, i) => i ? v : Math.min(v + 10, 470)), `c ≈ ${fmt(c)}`, {fill: "var(--bad)", weight: 700});
         s += tx(280, 370, `c² = a² + b² − 2ab·cos γ`, {anchor: "middle", size: 18, weight: 700});
         return {svg: s, alt: `Dreieck mit a=${a}, b=${b}, γ=${g}°, c≈${fmt(c)}.`, summary: `<strong>c ≈ ${fmt(c)} cm</strong>${g === 90 ? " (γ = 90° → Pythagoras!)" : ""}`,
           steps: ["Gegeben sind zwei Seiten und der eingeschlossene Winkel (SWS).", `c² = ${fmt(a)}² + ${fmt(b)}² − 2 · ${fmt(a)} · ${fmt(b)} · cos ${g}°.`, `c² ≈ ${fmt(c * c)} → c ≈ ${fmt(c)} cm.`, "Bei γ = 90° ist cos γ = 0: Es bleibt der Satz des Pythagoras.", "Sinussatz: a/sin α = b/sin β = c/sin γ – nützlich bei WSW oder SsW."]};
       }
-      const c = p.c, a = c * sn, b = c * cs, m = fitBox([[0, 0], [b, 0], [b, a]], 560, 320, 50), A = m([0, 0]), C = m([b, 0]), B = m([b, a]);
+      const c = p.c, a = c * sn, b = c * cs, m = fitBox([[0, 0], [10, 10]], 560, 320, 50), A = m([0, 0]), C = m([b, 0]), B = m([b, a]);
       let s = poly([A, C, B], "var(--brand)", "var(--ink)", 'fill-opacity=".12"') + line(...C, ...B, "var(--bad)", 5) + line(...A, ...C, "var(--brand)", 5) + line(...A, ...B, "var(--ink)", 3) + angleMark(...A, 0, al, `α=${al}°`, "var(--accent)", 32) + rect(C[0] - 14, C[1] - 14, 14, 14, "none", "var(--ink)");
       s += tx(C[0] + 8, (B[1] + C[1]) / 2, `GK ≈ ${fmt(a)}`, {fill: "var(--bad)", weight: 700}) + tx((A[0] + C[0]) / 2, C[1] + 22, `AK ≈ ${fmt(b)}`, {anchor: "middle", fill: "var(--brand)", weight: 700}) + tx((A[0] + B[0]) / 2 - 12, (A[1] + B[1]) / 2 - 8, `H = ${fmt(c)}`, {anchor: "end", weight: 700});
       s += tx(280, 370, `sin α = GK/H ≈ ${fmt(sn, 3)}  ·  cos α = AK/H ≈ ${fmt(cs, 3)}  ·  tan α = GK/AK ≈ ${fmt(tn, 3)}`, {anchor: "middle", size: 14, weight: 700});
-      return {svg: s, alt: `Rechtwinkliges Dreieck, α = ${al}°, Hypotenuse ${c}.`, summary: `<strong>GK ≈ ${fmt(a)} cm · AK ≈ ${fmt(b)} cm</strong> · Verhältnisse hängen nur von α ab!`,
+      return {svg: s, alt: `Rechtwinkliges Dreieck, α = ${al}°, Hypotenuse ${c} cm. Fester Zeichenmaßstab.`, summary: `<strong>H = ${fmt(c)} cm · GK ≈ ${fmt(a)} cm · AK ≈ ${fmt(b)} cm</strong> · Fester Zeichenmaßstab: Bei gleichem c bleibt H im Bild gleich lang.`,
         steps: ["Vom Winkel α aus: Gegenkathete (GK) liegt gegenüber, Ankathete (AK) liegt an α, Hypotenuse (H) gegenüber dem rechten Winkel.", `sin α = GK : H → GK = ${fmt(c)} · sin ${al}° ≈ ${fmt(a)} cm.`, `cos α = AK : H → AK = ${fmt(c)} · cos ${al}° ≈ ${fmt(b)} cm.`, `tan α = GK : AK ≈ ${fmt(tn, 3)}.`, "Merkhilfe: GAGA HHAA – Sinus = G/H, Kosinus = A/H, Tangens = G/A. Taschenrechner auf DEG stellen!"]};
     }
   };
@@ -1819,12 +1826,12 @@
       const {ax, ay, bx, by} = p;
       if (view === "seg") {
         const d = Math.hypot(bx - ax, by - ay), M = [(ax + bx) / 2, (ay + by) / 2];
-        const svg = labPlot({xmin: -7, xmax: 7, ymin: -6, ymax: 6, xstep: 1, ystep: 1, extra: (px, py) => line(px(ax), py(ay), px(bx), py(ay), "var(--accent)", 2, "5 4") + line(px(bx), py(ay), px(bx), py(by), "var(--good)", 2, "5 4") + arrow(px(ax), py(ay), px(bx), py(by), "var(--brand)", 3) + dot(px(ax), py(ay), "var(--brand)") + dot(px(M[0]), py(M[1]), "var(--bad)") + tx(px(ax) - 8, py(ay) - 8, "A", {anchor: "end", weight: 700}) + tx(px(bx) + 8, py(by) - 8, "B", {weight: 700}) + tx(px(M[0]) + 8, py(M[1]) + 16, "M", {fill: "var(--bad)", weight: 700})}).svg;
+        const svg = labPlot({xmin: -7, xmax: 7, ymin: -7, ymax: 7, xstep: 1, ystep: 1, equalUnits: true, extra: (px, py) => line(px(ax), py(ay), px(bx), py(ay), "var(--accent)", 2, "5 4") + line(px(bx), py(ay), px(bx), py(by), "var(--good)", 2, "5 4") + arrow(px(ax), py(ay), px(bx), py(by), "var(--brand)", 3) + dot(px(ax), py(ay), "var(--brand)") + dot(px(M[0]), py(M[1]), "var(--bad)") + tx(px(ax) - 8, py(ay) - 8, "A", {anchor: "end", weight: 700}) + tx(px(bx) + 8, py(by) - 8, "B", {weight: 700}) + tx(px(M[0]) + 8, py(M[1]) + 16, "M", {fill: "var(--bad)", weight: 700})}).svg;
         return {svg, alt: `Strecke von A(${ax}|${ay}) nach B(${bx}|${by}).`, summary: `<strong>AB→ = (${fmt(bx - ax)} | ${fmt(by - ay)}) · |AB| ≈ ${fmt(d)} · M(${fmt(M[0])} | ${fmt(M[1])})</strong>`,
           steps: [`Verbindungsvektor: „Spitze minus Fuß“ = (${bx} − ${par(ax)} | ${by} − ${par(ay)}) = (${fmt(bx - ax)} | ${fmt(by - ay)}).`, `Länge mit Pythagoras: √(${fmt(bx - ax)}² + ${fmt(by - ay)}²) ≈ ${fmt(d)}.`, `Mittelpunkt: Mittelwert der Koordinaten → M(${fmt(M[0])} | ${fmt(M[1])}).`]};
       }
       const sx = ax + bx, sy = ay + by;
-      const svg = labPlot({xmin: -10, xmax: 10, ymin: -7, ymax: 7, xstep: 1, ystep: 1, extra: (px, py) => arrow(px(0), py(0), px(ax), py(ay), "var(--brand)", 4) + arrow(px(ax), py(ay), px(sx), py(sy), "var(--accent)", 4) + arrow(px(0), py(0), px(sx), py(sy), "var(--good)", 3) + tx(px(ax / 2) - 6, py(ay / 2) - 6, "a", {fill: "var(--brand)", weight: 700, anchor: "end"}) + tx(px(ax + bx / 2) + 6, py(ay + by / 2), "b", {fill: "var(--accent)", weight: 700}) + tx(px(sx) + 8, py(sy) + 4, "a + b", {fill: "var(--good)", weight: 700})}).svg;
+      const svg = labPlot({xmin: -11, xmax: 11, ymin: -11, ymax: 11, xstep: 1, ystep: 1, equalUnits: true, extra: (px, py) => arrow(px(0), py(0), px(ax), py(ay), "var(--brand)", 4) + arrow(px(ax), py(ay), px(sx), py(sy), "var(--accent)", 4) + arrow(px(0), py(0), px(sx), py(sy), "var(--good)", 3) + tx(px(ax / 2) - 6, py(ay / 2) - 6, "a", {fill: "var(--brand)", weight: 700, anchor: "end"}) + tx(px(ax + bx / 2) + 6, py(ay + by / 2), "b", {fill: "var(--accent)", weight: 700}) + tx(px(sx) + 8, py(sy) + 4, "a + b", {fill: "var(--good)", weight: 700})}).svg;
       return {svg, alt: "Vektoraddition: b wird an die Spitze von a gehängt.", summary: `<strong>a + b = (${fmt(ax)} | ${fmt(ay)}) + (${fmt(bx)} | ${fmt(by)}) = (${fmt(sx)} | ${fmt(sy)})</strong>`,
         steps: ["Hänge den Fuß von b an die Spitze von a.", "Der Summenvektor geht vom Anfang von a zur Spitze von b.", `Rechnerisch: x-Werte addieren (${fmt(sx)}), y-Werte addieren (${fmt(sy)}).`, `Länge: √(${fmt(sx)}² + ${fmt(sy)}²) ≈ ${fmt(Math.hypot(sx, sy))}.`]};
     }
