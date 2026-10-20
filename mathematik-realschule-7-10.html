@@ -33,6 +33,8 @@
     .formula{font-family:"Cambria Math",Georgia,serif;font-size:1.17rem;white-space:pre-wrap;overflow-wrap:anywhere}
     .example ol{padding-left:24px}.example li{padding:4px 0}.result{font-weight:750;color:var(--good)}.warning{border-left:3px solid #bd7705;padding:8px 14px;background:var(--bg)}
     .actions{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}.task label{font-size:.9rem}
+    .task-guide{margin:12px 0;padding:10px 12px;border-left:4px solid var(--accent);border-radius:8px;background:var(--bg);color:var(--muted);font-size:.92rem}
+    .task-guide strong{color:var(--ink)}
     .answer-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.answer-row input{width:180px;max-width:100%;padding:9px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink)}
     .feedback{margin:10px 0 0;min-height:1.5em}.feedback.good{color:var(--good)}.feedback.bad{color:var(--bad)}
     details{margin:12px 0}summary{cursor:pointer;font-weight:650;color:var(--brand)}
@@ -850,11 +852,14 @@
           ${["G","M","E"].map(level => `<button type="button" class="level-button" data-practice-level="${level}" aria-pressed="${practiceLevel === level}" ${allowed.includes(level) ? "" : "disabled"}>${level}-Niveau</button>`).join("")}
         </div>
         <p class="small muted">${practiceLevel === "alle" ? `Dieses Thema enthält ${topic.tasks.length} numerische Aufgaben mit Hinweisen und Musterlösungen sowie eine offene Transferaufgabe.` : `Anzeige: ${practiceLevel}-Niveau. Die Aufgaben anderer Niveaus bleiben über „Alle passenden Aufgaben“ erreichbar.`} ${allowed.length < 3 ? `Laut Kompetenzraster ist dieses Teilthema hier für ${allowed.join(" und ")} vorgesehen.` : ""}</p>
+        <div class="concept"><h3>Aufgabenhilfe: So gehst du vor</h3><p><strong>1. Gegebenes markieren:</strong> Unterstreiche Zahlen, Einheiten und wichtige Wörter. <strong>2. Gesuchtes festhalten:</strong> Schreibe auf, was du herausfinden sollst. <strong>3. Rechnen und prüfen:</strong> Notiere mindestens einen Rechenschritt, achte auf die Einheit und frage dich: Passt mein Ergebnis zur Situation?</p></div>
+        ${uniqueVisualMarkup(topicVisualMarkup(topic),"practice")}
         ${labMarkup(topic,"practice")}
         ${topic.tasks.map((task,index) => ({task,index,level:levelForTask(topic,index)}))
           .filter(item => practiceLevel === "alle" || item.level === practiceLevel)
           .map(({task,index,level}) => `<form class="task" data-task="${index}" data-level="${level}" novalidate>
           <h4>Aufgabe ${index + 1} <span class="task-level">· ${level}-Niveau</span></h4><p>${escapeHTML(task.question)}</p>
+          <p class="task-guide"><strong>Dein Auftrag:</strong> Löse die Aufgabe mit einem nachvollziehbaren Rechenweg. Gib unten nur die Zahl ein${task.unit ? `; die Einheit <strong>${escapeHTML(task.unit)}</strong> steht schon daneben` : ""}.</p>
           <label for="answer-${index}">Dein Ergebnis${task.unit ? ` in ${escapeHTML(task.unit)}` : ""}</label>
           <div class="answer-row"><input id="answer-${index}" name="answer" type="text" inputmode="text" autocomplete="off" spellcheck="false" aria-describedby="feedback-${index}">
           <span aria-hidden="true">${escapeHTML(task.unit)}</span><button type="submit" class="primary check-button">Prüfen</button></div>
@@ -957,6 +962,10 @@
       <path d="M250 80 H370 M397 80 V260 M387 80 H407 M387 260 H407" fill="none" stroke="var(--ink)" stroke-width="2"/>
       <g fill="var(--ink)" font-size="19"><text x="306" y="71">r</text><text x="411" y="178">h</text></g></svg></div></div>`;
     return "";
+  }
+  function uniqueVisualMarkup(markup, suffix) {
+    return markup.replace(/\bid="([^"]+)"/g, (_, id) => `id="${id}-${suffix}"`)
+      .replace(/\baria-labelledby="([^"]+)"/g, (_, ids) => `aria-labelledby="${ids.split(/\s+/).map(id => `${id}-${suffix}`).join(" ")}"`);
   }
   function topicVisualMarkup(topic) {
     const id = topic.id;
